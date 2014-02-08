@@ -4,5 +4,23 @@
     <string name="app_name">iAir</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="loginiAirTitle">登录益呼吸</string>
+    <string name="dialog_account">用户名/邮箱/手机</string>
+    <string name="dialog_password">密码</string>
+    <string name="dialog_remember">记住账号密码</string>
+    <string name="sign_in">登 录</string>
+    <string name="go_sign">去注册</string>
+        <string name="thirdPartLoginPrompt">社交账号登录</string>
+    <string name="sinaPrompt">新浪微博</string>
+    <string name="qqPrompt">腾讯QQ</string>
+    
+       <string name="pull_to_refresh_pull_label">下拉刷新…</string>
+  <string name="pull_to_refresh_release_label">放开以刷新…</string>
+  <string name="pull_to_refresh_refreshing_label">正在载入…</string>
+
+    <!-- Just use standard Pull Down String when pulling up. These can be set for languages which require it -->
+    <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_pull_label</string>
+    <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
+    <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
 
 </resources>

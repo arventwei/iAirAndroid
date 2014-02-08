@@ -1,16 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    android:id="@+id/detail_activity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_cloudy_day_blur" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <FrameLayout
+        android:id="@+id/background_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <include
+        android:id="@+id/weather_detail_view_top_bar_includer"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_alignParentTop="true"
+        layout="@layout/include_main_view_top_bar" />
+
+    <RelativeLayout
+        android:id="@+id/screen_indicator_container"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/screen_indicator_height"
+        android:layout_below="@id/weather_detail_view_top_bar_includer"
+        android:background="@color/transparent" >
+
+        <View
+            android:id="@+id/screen_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6.0dip"
+            android:focusable="false"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/publish_time_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="9.0dip"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="0.0dip"
+            android:singleLine="true"
+            android:textColor="@color/white_gray"
+            android:textSize="11.0dip" />
+    </RelativeLayout>
+
+    
+    <com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pull_refresh_viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/screen_indicator_container" 
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrHeaderBackground="@android:color/transparent"
+        ptr:ptrMode="both" />
+    
+
 
 </RelativeLayout>

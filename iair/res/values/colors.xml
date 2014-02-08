@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="current_theme_color">#ff5fafe1</color>
+    <color name="new_bg_color">#ffffffff</color>
+    <color name="news_green">#ff7fc862</color>
+    <color name="green">#ff8bcf3a</color>
+    <color name="white">#ffffffff</color>
+        <color name="white_gray">#dcffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="gray">#ff666666</color>
+    <color name="gray_button_white">#ff666666</color>
+    <color name="black">#ff000000</color>
+
+    <color name="divider_color">#ffefefef</color>
+    <color name="text_color_1">#ff494949</color>
+    <color name="text_color_2">#ff888888</color>
+    <color name="text_color_3">#ffcccccc</color>
+    <color name="text_deepgray">#ff6a7581</color>
+    <color name="text_white">#ffffffff</color>
+    <color name="text_blue">#ff4da6de</color>
+    <color name="text_dark_gray">#ffabb5c2</color>
+</resources>
