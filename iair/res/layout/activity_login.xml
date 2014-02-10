@@ -169,12 +169,12 @@
                 android:background="@color/transparent"
                 android:orientation="horizontal" >
 
-                <ImageButton
+                <Button
                     android:id="@+id/loginSinaRL"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1.0"
-                    android:background="@color/transparent"
+                   
                     android:src="@drawable/sel_sina_imb" />
 
                 <ImageView
@@ -182,28 +182,26 @@
                     android:layout_height="fill_parent"
                     android:src="@color/current_theme_color" />
 
-                <ImageButton
+                <Button
                     android:id="@+id/loginQQRL"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1.0"
-                    android:background="@color/transparent"
+                   
                     android:src="@drawable/sel_qq_imb" />
 
                 <ImageView
                     android:layout_width="2.0px"
                     android:layout_height="fill_parent"
-                    android:src="@color/news_green"
-                    android:visibility="gone" />
+                    android:src="@color/news_green" />
 
-                <ImageButton
+                <Button
                     android:id="@+id/loginWeiboRL"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:background="@color/transparent"
-                    android:src="@drawable/sel_tenweibo_imb"
-                    android:visibility="gone" />
+                   
+                    android:src="@drawable/sel_tenweibo_imb" />
             </LinearLayout>
         </LinearLayout>
 
