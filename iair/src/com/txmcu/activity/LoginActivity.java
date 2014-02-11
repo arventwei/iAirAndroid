@@ -146,7 +146,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			accessToken = Oauth2AccessToken.parseAccessToken(values);
 			if (accessToken.isSessionValid()) {
 				// 显示 Token
-				mWeiboAuth.getAuthInfo()
+				//mWeiboAuth.getAuthInfo()
 				// updateTokenView(false);
 				// 保存 Token 到 SharedPreferences
 				AccessTokenKeeper.writeAccessToken(LoginActivity.this,
