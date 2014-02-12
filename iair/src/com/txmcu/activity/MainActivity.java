@@ -2,6 +2,7 @@ package com.txmcu.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -80,7 +81,7 @@ public class MainActivity extends  Activity implements OnRefreshListener<Vertica
 		protected Void doInBackground(Void... params) {
 			// Simulates a background job.
 			try {
-				Thread.sleep(4000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 			}
 			return null;
@@ -93,6 +94,15 @@ public class MainActivity extends  Activity implements OnRefreshListener<Vertica
 		}
 	}
 
-	
+	public static void TryLoadMainActivity(Activity paramContext) {
+		Intent localIntent = new Intent();
+	    //todo ... add usermanager system
+	   // if (getUserID() > 0)
+	    //    localIntent.setClass(this, HomepageActivity.class);
+	    //  else
+	    localIntent.setClass(paramContext, MainActivity.class);
+	    paramContext.startActivityForResult(localIntent, 1);
+	    paramContext.finish();
+	}
 
 }

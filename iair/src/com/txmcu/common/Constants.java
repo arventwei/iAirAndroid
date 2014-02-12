@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sina.weibo.sdk.demo.openapi;
+package com.txmcu.common;
 
 /**
  * 该类定义了微博授权时所需要的参数。

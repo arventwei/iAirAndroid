@@ -25,7 +25,7 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuth;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
-import com.sina.weibo.sdk.demo.openapi.AccessTokenKeeper;
+import com.sina.weibo.sdk.openapi.AccessTokenKeeper;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.sina.weibo.sdk.net.RequestListener;
 import com.sina.weibo.sdk.openapi.LogoutAPI;
@@ -36,6 +36,7 @@ import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import com.txmcu.common.QQConstants;
 import com.txmcu.common.Util;
 import com.txmcu.iair.R;
 
@@ -45,7 +46,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public static Oauth2AccessToken accessToken; // 访问token
 	public SsoHandler mSsoHandler;
 	public Tencent mTencent;
-	public static String mAppid;
+	//public static String mAppid;
 
 	public Button loginQQ;
 	public Button loginSina;
@@ -63,14 +64,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 		this.loginSina.setOnClickListener(this);
 
 		mWeiboAuth = new WeiboAuth(this,
-				com.sina.weibo.sdk.demo.openapi.Constants.APP_KEY,
-				com.sina.weibo.sdk.demo.openapi.Constants.REDIRECT_URL,
-				com.sina.weibo.sdk.demo.openapi.Constants.SCOPE);
+				com.txmcu.common.Constants.APP_KEY,
+				com.txmcu.common.Constants.REDIRECT_URL,
+				com.txmcu.common.Constants.SCOPE);
 		
 		accessToken = AccessTokenKeeper.readAccessToken(this);
 
-		mAppid = "101017203";
-		mTencent = Tencent.createInstance(mAppid, this.getApplicationContext());
+		//mAppid = "101017203";
+		mTencent = Tencent.createInstance(QQConstants.APP_KEY, this.getApplicationContext());
 
 		updateLoginButton();
 		updateUserInfo();
@@ -227,6 +228,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		if (mTencent != null && mTencent.isSessionValid()) {
 			loginQQ.setTextColor(Color.RED);
 			loginQQ.setText("退出帐号QQ");
+			MainActivity.TryLoadMainActivity(this);
 		} else {
 			loginQQ.setTextColor(Color.BLUE);
 			loginQQ.setText("登录QQ");
@@ -236,6 +238,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			
 			loginSina.setTextColor(Color.RED);
 			loginSina.setText("退出帐号SINA");
+			MainActivity.TryLoadMainActivity(this);
 		} else {
 			loginSina.setTextColor(Color.BLUE);
 			loginSina.setText("登录SINA");
