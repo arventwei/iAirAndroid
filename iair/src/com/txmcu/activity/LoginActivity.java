@@ -1,5 +1,6 @@
 package com.txmcu.activity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -12,6 +13,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -25,6 +27,8 @@ import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.demo.openapi.AccessTokenKeeper;
 import com.sina.weibo.sdk.exception.WeiboException;
+import com.sina.weibo.sdk.net.RequestListener;
+import com.sina.weibo.sdk.openapi.LogoutAPI;
 import com.tencent.open.HttpStatusException;
 import com.tencent.open.NetworkUnavailableException;
 import com.tencent.tauth.Constants;
@@ -100,12 +104,69 @@ public class LoginActivity extends Activity implements OnClickListener {
 			}
 		} else if (paramAnonymousView.getId() == R.id.loginSinaRL) {
 			// mWeiboAuth.anthorize(new AuthListener());
-			mSsoHandler = new SsoHandler(LoginActivity.this, mWeiboAuth);
-			mSsoHandler.authorize(new AuthListener());
+			if(accessToken==null || !accessToken.isSessionValid()){
+				
+				mSsoHandler = new SsoHandler(LoginActivity.this, mWeiboAuth);
+				mSsoHandler.authorize(new AuthListener());
+			}
+			else {
+				new LogoutAPI(accessToken).logout(new LogOutRequestListener());
+			}
+
 		}
 
 	}
 
+	/**
+	 * 注销按钮的监听器,接收注销处理结果。(API请求结果的监听器)
+	 */
+	private class LogOutRequestListener implements RequestListener {
+		@Override
+		public void onComplete(String response) {
+			if (!TextUtils.isEmpty(response)) {
+				try {
+					JSONObject obj = new JSONObject(response);
+					String value = obj.getString("result");
+					if ("true".equalsIgnoreCase(value)) {
+						AccessTokenKeeper.clear(LoginActivity.this);
+						// mTokenView.setText(R.string.weibosdk_demo_logout_success);
+						accessToken = null;
+						updateLoginButton();
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		  @Override
+          public void onComplete4binary(ByteArrayOutputStream responseOS) {
+              //LogUtil.e(TAG, "onComplete4binary...");
+              // Do nothing
+          }
+  
+          @Override
+          public void onIOException(IOException e) {
+             // LogUtil.e(TAG, "onIOException： " + e.getMessage());
+              // 注销失败
+              //setText(R.string.com_sina_weibo_sdk_logout);
+              
+             // if (mLogoutListener != null) {
+             // 	mLogoutListener.onIOException(e);
+             // }
+          }
+  
+          @Override
+          public void onError(WeiboException e) {
+              //LogUtil.e(TAG, "WeiboException： " + e.getMessage());
+              // 注销失败
+             // setText(R.string.com_sina_weibo_sdk_logout);
+              
+             // if (mLogoutListener != null) {
+             // 	mLogoutListener.onError(e);
+             // }
+          }
+
+	}
 	/**
 	 * 当 SSO 授权 Activity 退出时,该函数被调用。 *
 	 * 

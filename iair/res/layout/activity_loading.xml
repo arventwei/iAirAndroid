@@ -14,15 +14,7 @@
 
    
 
-    <com.txmcu.view.LoadingImgView
-        android:id="@+id/mainLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5.0dip"
-        android:scaleType="matrix"
-        android:src="@drawable/loader_frame_1" />
+  
 
 
 </RelativeLayout>
