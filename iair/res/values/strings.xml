@@ -3,7 +3,7 @@
 
     <string name="app_name">益呼吸</string>
     <string name="login_title">自己和家人的家庭空气站!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_quit">注销</string>
     <string name="hello_world">Hello world!</string>
     <string name="loginiAirTitle">登录益呼吸</string>
     <string name="dialog_account">用户名/邮箱/手机</string>

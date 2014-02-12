@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -32,7 +34,25 @@ public class MainActivity extends  Activity implements OnRefreshListener<Vertica
 		VerticalViewPager vp = mPullToRefreshViewPager.getRefreshableView();
 		vp.setAdapter(new SamplePagerAdapter(this));
 	}
-
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		 getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    { 	
+    	//check selected menu item
+    	// R.id.exit is @+id/exit
+    	if(item.getItemId() == R.id.action_quit){
+    		//close the Activity
+    		
+    		LoginActivity.logout(this);
+    		return true;
+    	}
+    	return false;
+    }
 	@Override
 	public void onRefresh(PullToRefreshBase<VerticalViewPager> refreshView) {
 		new GetDataTask().execute();

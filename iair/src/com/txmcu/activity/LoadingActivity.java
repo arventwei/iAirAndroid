@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.txmcu.iair.R;
 
 public class LoadingActivity extends FragmentActivity
@@ -14,7 +15,9 @@ public class LoadingActivity extends FragmentActivity
   //private SharedPreferences sp = null;
   //private ViewFlipper vf;
 
-  public void gotoNextActivity()
+  public static Oauth2AccessToken accessToken;
+
+public void gotoNextActivity()
   {
     Intent localIntent = new Intent();
     //todo ... add usermanager system

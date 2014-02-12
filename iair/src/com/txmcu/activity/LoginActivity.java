@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -42,10 +43,11 @@ import com.txmcu.iair.R;
 
 public class LoginActivity extends Activity implements OnClickListener {
 
+	private static final String TAG = "iair";
 	public WeiboAuth mWeiboAuth;
 	public static Oauth2AccessToken accessToken; // 访问token
 	public SsoHandler mSsoHandler;
-	public Tencent mTencent;
+	public static Tencent mTencent;
 	//public static String mAppid;
 
 	public Button loginQQ;
@@ -69,7 +71,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 				com.txmcu.common.Constants.SCOPE);
 		
 		accessToken = AccessTokenKeeper.readAccessToken(this);
-
+		if (accessToken!=null) {
+			Log.w(TAG, accessToken.getToken());
+		}
 		//mAppid = "101017203";
 		mTencent = Tencent.createInstance(QQConstants.APP_KEY, this.getApplicationContext());
 
@@ -99,9 +103,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 				};
 				mTencent.login(this, "all", listener);
 			} else {
-				mTencent.logout(this);
-				updateUserInfo();
-				updateLoginButton();
+			//	mTencent.logout(this);
+			//	updateUserInfo();
+			//	updateLoginButton();
 			}
 		} else if (paramAnonymousView.getId() == R.id.loginSinaRL) {
 			// mWeiboAuth.anthorize(new AuthListener());
@@ -111,7 +115,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 				mSsoHandler.authorize(new AuthListener());
 			}
 			else {
-				new LogoutAPI(accessToken).logout(new LogOutRequestListener());
+				
+				//new LogoutAPI(accessToken).logout(new LogOutRequestListener());
 			}
 
 		}
@@ -121,53 +126,53 @@ public class LoginActivity extends Activity implements OnClickListener {
 	/**
 	 * 注销按钮的监听器,接收注销处理结果。(API请求结果的监听器)
 	 */
-	private class LogOutRequestListener implements RequestListener {
-		@Override
-		public void onComplete(String response) {
-			if (!TextUtils.isEmpty(response)) {
-				try {
-					JSONObject obj = new JSONObject(response);
-					String value = obj.getString("result");
-					if ("true".equalsIgnoreCase(value)) {
-						AccessTokenKeeper.clear(LoginActivity.this);
-						// mTokenView.setText(R.string.weibosdk_demo_logout_success);
-						accessToken = null;
-						updateLoginButton();
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		  @Override
-          public void onComplete4binary(ByteArrayOutputStream responseOS) {
-              //LogUtil.e(TAG, "onComplete4binary...");
-              // Do nothing
-          }
-  
-          @Override
-          public void onIOException(IOException e) {
-             // LogUtil.e(TAG, "onIOException： " + e.getMessage());
-              // 注销失败
-              //setText(R.string.com_sina_weibo_sdk_logout);
-              
-             // if (mLogoutListener != null) {
-             // 	mLogoutListener.onIOException(e);
-             // }
-          }
-  
-          @Override
-          public void onError(WeiboException e) {
-              //LogUtil.e(TAG, "WeiboException： " + e.getMessage());
-              // 注销失败
-             // setText(R.string.com_sina_weibo_sdk_logout);
-              
-             // if (mLogoutListener != null) {
-             // 	mLogoutListener.onError(e);
-             // }
-          }
-
-	}
+//	private class LogOutRequestListener implements RequestListener {
+//		@Override
+//		public void onComplete(String response) {
+//			if (!TextUtils.isEmpty(response)) {
+//				try {
+//					JSONObject obj = new JSONObject(response);
+//					String value = obj.getString("result");
+//					if ("true".equalsIgnoreCase(value)) {
+//						AccessTokenKeeper.clear(LoginActivity.this);
+//						// mTokenView.setText(R.string.weibosdk_demo_logout_success);
+//						accessToken = null;
+//						//updateLoginButton();
+//					}
+//				} catch (JSONException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		  @Override
+//          public void onComplete4binary(ByteArrayOutputStream responseOS) {
+//              //LogUtil.e(TAG, "onComplete4binary...");
+//              // Do nothing
+//          }
+//  
+//          @Override
+//          public void onIOException(IOException e) {
+//             // LogUtil.e(TAG, "onIOException： " + e.getMessage());
+//              // 注销失败
+//              //setText(R.string.com_sina_weibo_sdk_logout);
+//              
+//             // if (mLogoutListener != null) {
+//             // 	mLogoutListener.onIOException(e);
+//             // }
+//          }
+//  
+//          @Override
+//          public void onError(WeiboException e) {
+//              //LogUtil.e(TAG, "WeiboException： " + e.getMessage());
+//              // 注销失败
+//             // setText(R.string.com_sina_weibo_sdk_logout);
+//              
+//             // if (mLogoutListener != null) {
+//             // 	mLogoutListener.onError(e);
+//             // }
+//          }
+//
+//	}
 	/**
 	 * 当 SSO 授权 Activity 退出时,该函数被调用。 *
 	 * 
@@ -226,22 +231,22 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	private void updateLoginButton() {
 		if (mTencent != null && mTencent.isSessionValid()) {
-			loginQQ.setTextColor(Color.RED);
-			loginQQ.setText("退出帐号QQ");
-			MainActivity.TryLoadMainActivity(this);
+			//loginQQ.setTextColor(Color.RED);
+			//loginQQ.setText("退出帐号QQ");
+			
 		} else {
-			loginQQ.setTextColor(Color.BLUE);
-			loginQQ.setText("登录QQ");
+			//loginQQ.setTextColor(Color.BLUE);
+			//loginQQ.setText("登录QQ");
 		}
 		
 		if(accessToken!= null && accessToken.isSessionValid()){
 			
-			loginSina.setTextColor(Color.RED);
-			loginSina.setText("退出帐号SINA");
+			//loginSina.setTextColor(Color.RED);
+			//loginSina.setText("退出帐号SINA");
 			MainActivity.TryLoadMainActivity(this);
 		} else {
-			loginSina.setTextColor(Color.BLUE);
-			loginSina.setText("登录SINA");
+			//loginSina.setTextColor(Color.BLUE);
+			//loginSina.setText("登录SINA");
 		}
 	}
 
@@ -316,6 +321,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 							Log.i("iair", "nickname" + userName);
 							// mUserInfo.setVisibility(android.view.View.VISIBLE);
 							// mUserInfo.setText(response.getString("nickname"));
+							MainActivity.TryLoadMainActivity(LoginActivity.this);
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -358,6 +364,74 @@ public class LoginActivity extends Activity implements OnClickListener {
 			Util.toastMessage(LoginActivity.this, "onCancel: ");
 			Util.dismissDialog();
 		}
+	}
+	
+	static public void logout(final Activity paramContext)
+	{
+		if (LoadingActivity.accessToken != null
+				&& LoadingActivity.accessToken.isSessionValid()) {
+			new LogoutAPI(LoadingActivity.accessToken)
+					.logout(new RequestListener() {
+						@Override
+						public void onComplete(String response) {
+							if (!TextUtils.isEmpty(response)) {
+								try {
+									JSONObject obj = new JSONObject(response);
+									String value = obj.getString("result");
+									if ("true".equalsIgnoreCase(value)) {
+										AccessTokenKeeper.clear(paramContext);
+										Log.w(TAG, "logout"+accessToken.getToken());
+										// mTokenView.setText(R.string.weibosdk_demo_logout_success);
+										LoadingActivity.accessToken = null;
+										paramContext.finish();
+										//if (accessToken!=null) {
+											//Log.w(TAG, accessToken.getToken());
+										//}
+										// updateLoginButton();
+									}
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+
+						@Override
+						public void onComplete4binary(
+								ByteArrayOutputStream responseOS) {
+							// LogUtil.e(TAG, "onComplete4binary...");
+							// Do nothing
+						}
+
+						@Override
+						public void onIOException(IOException e) {
+							// LogUtil.e(TAG, "onIOException： " +
+							// e.getMessage());
+							// 注销失败
+							// setText(R.string.com_sina_weibo_sdk_logout);
+
+							// if (mLogoutListener != null) {
+							// mLogoutListener.onIOException(e);
+							// }
+						}
+
+						@Override
+						public void onError(WeiboException e) {
+							// LogUtil.e(TAG, "WeiboException： " +
+							// e.getMessage());
+							// 注销失败
+							// setText(R.string.com_sina_weibo_sdk_logout);
+
+							// if (mLogoutListener != null) {
+							// mLogoutListener.onError(e);
+							// }
+						}
+					});
+		}
+		else if (mTencent.isSessionValid()) {
+			mTencent.logout(paramContext);
+			paramContext.finish();
+		}
+		
 	}
 
 }
