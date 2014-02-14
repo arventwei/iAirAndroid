@@ -116,10 +116,7 @@ public class MainActivity extends  Activity implements OnRefreshListener<Vertica
 
 	public static void TryLoadMainActivity(Activity paramContext) {
 		Intent localIntent = new Intent();
-	    //todo ... add usermanager system
-	   // if (getUserID() > 0)
-	    //    localIntent.setClass(this, HomepageActivity.class);
-	    //  else
+	
 	    localIntent.setClass(paramContext, MainActivity.class);
 	    paramContext.startActivityForResult(localIntent, 1);
 	    paramContext.finish();

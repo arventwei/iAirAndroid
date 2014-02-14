@@ -396,7 +396,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 										AccessTokenKeeper.clear(paramContext);
 										//Log.w(TAG, "logout"+accessToken.getToken());
 										// mTokenView.setText(R.string.weibosdk_demo_logout_success);
-										LoadingActivity.accessToken = null;
+										//Log.accessToken = null;
+										
+										Intent localIntent = new Intent();
+										
+									    localIntent.setClass(paramContext, LoginActivity.class);
+									    paramContext.startActivityForResult(localIntent, 1);
+									    
 										paramContext.finish();
 										//if (accessToken!=null) {
 											//Log.w(TAG, accessToken.getToken());
@@ -443,6 +449,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 		else if (tencent.isSessionValid()) {
 			tencent.logout(paramContext);
+			
+			Intent localIntent = new Intent();
+			
+		    localIntent.setClass(paramContext, LoginActivity.class);
+		    paramContext.startActivityForResult(localIntent, 1);
+		    
 			paramContext.finish();
 		}
 		
