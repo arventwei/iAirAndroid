@@ -76,5 +76,7 @@
         <attr name="ptrDrawableTop" format="reference" />
         <attr name="ptrDrawableBottom" format="reference" />
     </declare-styleable>
+    
+    <attr name="attr_roundcorner_bg_middle_selector" format="reference" />
 
 </resources>

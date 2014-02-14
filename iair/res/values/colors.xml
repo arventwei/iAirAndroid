@@ -19,4 +19,8 @@
     <color name="text_white">#ffffffff</color>
     <color name="text_blue">#ff4da6de</color>
     <color name="text_dark_gray">#ffabb5c2</color>
+    
+    
+    <color name="color_bg">#fff8f8f8</color>
+    <color name="color_gray_roundcorner_btn">#ff444444</color>
 </resources>

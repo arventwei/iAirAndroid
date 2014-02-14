@@ -99,14 +99,7 @@
             android:duplicateParentState="true"
             android:src="@drawable/title_bar_setting" />
 
-        <ImageView
-            android:id="@+id/ic_setting_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/ic_new_main"
-            android:visibility="gone" />
+        
     </RelativeLayout>
 
 </LinearLayout>

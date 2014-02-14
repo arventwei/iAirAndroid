@@ -1,69 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/f_f_vertical_style"
-    android:background="@drawable/login_repeat_bg"
-    android:weightSum="1.0" >
-    
-     <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-		android:layout_centerInParent="true"
-        android:scaleType="matrix"
-        android:gravity="center|center_horizontal|center_vertical"  
-            android:orientation="vertical" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/color_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
 
-         <TextView
-             android:id="@+id/textView1"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1.0"
-             android:text="@string/app_name"
-             android:textAppearance="?android:attr/textAppearanceLarge"
-             android:textColor="@color/black"
-             android:textSize="@dimen/title_bar_height" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140.0dip"
+        android:gravity="center_horizontal"
+        android:text="@string/app_name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/login_appname" />
 
-         <TextView
-             android:id="@+id/textView2"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1.0"
-             android:text="@string/login_title"
-             android:textAppearance="?android:attr/textAppearanceMedium"
-             android:textColor="@color/gray"
-             android:textSize="@dimen/weather_detail_activity_title_bar_size" />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:text="@string/login_title"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/black"
+        android:textSize="@dimen/login_app_detail" />
 
-            <Button
-                android:id="@+id/loginSinaRL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/title_bar_btn_width"
-                android:layout_weight="1.0"
-                android:background="@drawable/selector_btn_oauth"
-                android:drawableLeft="@drawable/img_sina"
-                android:gravity="center"
-                android:minHeight="42.0dip"
-                android:paddingLeft="20.0dip"
-                android:paddingRight="20.0dip"
-                android:text="@string/sinaPrompt"
-                android:textColor="#b2000000"
-                android:textSize="16.0sp" />
+    <Button
+        android:id="@+id/loginSinaRL"
+        style="@style/form_item_style"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15.0dip"
+        android:layout_marginRight="15.0dip"
+        android:background="?attr_roundcorner_bg_middle_selector"
+        android:drawableLeft="@drawable/img_sina"
+        android:drawablePadding="17.0dip"
+        android:gravity="left|center"
+        android:paddingLeft="22.0dip"
+        android:text="@string/sinaPrompt"
+        android:textColor="@color/color_gray_roundcorner_btn"
+        android:textSize="16.0sp" />
 
-            <Button
-                android:id="@+id/loginQQRL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_indicator_height"
-                android:layout_weight="1.0"
-                android:background="@drawable/selector_btn_oauth"
-                android:drawableLeft="@drawable/img_qq"
-                android:gravity="center"
-                android:minHeight="42.0dip"
-                android:paddingLeft="20.0dip"
-                android:paddingRight="20.0dip"
-                android:text="@string/qqPrompt"
-                android:textColor="#b2000000"
-                android:textSize="16.0sp" />
+    <Button
+        android:id="@+id/loginQQRL"
+        style="@style/form_item_style"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15.0dip"
+        android:layout_marginRight="15.0dip"
+        android:background="?attr_roundcorner_bg_middle_selector"
+        android:drawableLeft="@drawable/img_qq"
+        android:drawablePadding="17.0dip"
+        android:gravity="left|center"
+        android:paddingLeft="22.0dip"
+        android:text="@string/qqPrompt"
+        android:textColor="@color/color_gray_roundcorner_btn"
+        android:textSize="16.0sp" />
 
-        </LinearLayout>
+   
 
-</RelativeLayout>
+</LinearLayout>

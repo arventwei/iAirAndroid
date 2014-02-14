@@ -74,4 +74,13 @@
         <item name="android:background">@drawable/combin_btn_blue</item>
         <item name="android:singleLine">true</item>
     </style>
+    
+    
+    
+    <style name="form_item_style">
+        <item name="android:paddingLeft">@dimen/form_item_horizontal_padding</item>
+        <item name="android:paddingTop">@dimen/form_item_vertical_padding</item>
+        <item name="android:paddingRight">@dimen/form_item_horizontal_padding</item>
+        <item name="android:paddingBottom">@dimen/form_item_vertical_padding</item>
+    </style>
 </resources>
