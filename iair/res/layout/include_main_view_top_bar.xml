@@ -60,10 +60,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/title_bar_divide" />
 
-    <RelativeLayout
-        android:id="@+id/goto_setting_img"
-        android:layout_width="@dimen/title_bar_btn_width"
-        android:layout_height="fill_parent" >
+   
 
         <ImageView
             android:id="@+id/main_setting"
@@ -75,6 +72,6 @@
             android:src="@drawable/title_bar_setting" />
 
         
-    </RelativeLayout>
+
 
 </LinearLayout>

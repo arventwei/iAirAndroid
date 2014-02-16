@@ -3,6 +3,7 @@ package com.txmcu.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -66,10 +69,13 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	    {
 	    	case R.id.add_city:
 	    		popWindowAdding();
+	    		break;
 	    	case R.id.main_share:
 	    		main_top_share();
+	    		break;
 	    	case R.id.main_setting:
 	    		popWindowSetting();
+	    		break;
 	    }
 	}
 	  
@@ -148,11 +154,23 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	
 	private void popWindowAdding() {
 		
+		View localView = getLayoutInflater().inflate(R.layout.popup_window_add_layout, null, false);
+		PopupWindow popWin = new PopupWindow(localView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+	    popWin.setBackgroundDrawable(new ColorDrawable(0));
+	    popWin.setFocusable(true);
+	    popWin.setTouchable(true);
+	    popWin.setOutsideTouchable(true);
+	    popWin.update();
+	    popWin.setAnimationStyle(R.style.popwindow_anim_style);
+	    //localView.findViewById(net.qihoo.launcher.widget.clockweather.R.id.main_setting_layout).setOnClickListener(new hX(this));
+	    //localView.findViewById(net.qihoo.launcher.widget.clockweather.R.id.barrage_setting_layout).setOnClickListener(new hY(this));
+	 
+	    popWin.showAsDropDown(findViewById(R.id.add_city), 0, 0);
 	}
 	private void main_top_share() {
 		
 	}
 	private void popWindowSetting() {
-		
+		Toast.makeText(this, "asfasd", Toast.LENGTH_LONG).show();
 	}
 }
