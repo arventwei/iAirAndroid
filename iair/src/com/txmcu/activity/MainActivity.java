@@ -28,6 +28,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 
 	
 	private PullToRefreshViewPager mPullToRefreshViewPager;
+	private PopupWindow popWin;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,13 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	    		break;
 	    	case R.id.main_setting:
 	    		popWindowSetting();
+	    		break;
+	    		
+	    	case R.id.add_city_layout:
+	    		popwin_add_city();
+	    		break;
+	    	case R.id.add_device_layout:
+	    		popwin_add_device();
 	    		break;
 	    }
 	}
@@ -154,23 +162,41 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	
 	private void popWindowAdding() {
 		
-		View localView = getLayoutInflater().inflate(R.layout.popup_window_add_layout, null, false);
-		PopupWindow popWin = new PopupWindow(localView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
-	    popWin.setBackgroundDrawable(new ColorDrawable(0));
-	    popWin.setFocusable(true);
-	    popWin.setTouchable(true);
-	    popWin.setOutsideTouchable(true);
-	    popWin.update();
-	    popWin.setAnimationStyle(R.style.popwindow_anim_style);
-	    //localView.findViewById(net.qihoo.launcher.widget.clockweather.R.id.main_setting_layout).setOnClickListener(new hX(this));
-	    //localView.findViewById(net.qihoo.launcher.widget.clockweather.R.id.barrage_setting_layout).setOnClickListener(new hY(this));
-	 
+		if(popWin==null)
+		{
+			View localView = getLayoutInflater().inflate(R.layout.popup_window_add_layout, null, false);
+			popWin = new PopupWindow(localView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+		    popWin.setBackgroundDrawable(new ColorDrawable(0));
+		    popWin.setFocusable(true);
+		    popWin.setTouchable(true);
+		    popWin.setOutsideTouchable(true);
+		    popWin.update();
+		    popWin.setAnimationStyle(R.style.popwindow_anim_style);
+		    localView.findViewById(R.id.add_city_layout).setOnClickListener(this);
+		    localView.findViewById(R.id.add_device_layout).setOnClickListener(this);
+		}
+		
 	    popWin.showAsDropDown(findViewById(R.id.add_city), 0, 0);
+	}
+	private  void popwin_add_city() {
+		if(popWin!=null)
+		{
+			popWin.dismiss();
+			popWin = null;
+		}
+		
+	}
+	private  void popwin_add_device() {
+		if(popWin!=null)
+		{
+			popWin.dismiss();
+			popWin = null;
+		}
 	}
 	private void main_top_share() {
 		
 	}
 	private void popWindowSetting() {
-		Toast.makeText(this, "asfasd", Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, "asfasd", Toast.LENGTH_LONG).show();
 	}
 }

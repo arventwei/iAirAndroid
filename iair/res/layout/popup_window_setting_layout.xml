@@ -2,29 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/popupwindow_bg_left" >
+    android:background="@drawable/popupwindow_bg" >
 
     <RelativeLayout
-        android:id="@+id/add_city_layout"
+        android:id="@+id/set_broad_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10.0dip" >
 
         <ImageView
-            android:id="@+id/add_city_img"
+            android:id="@+id/set_broad_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:src="@drawable/addcity_radio_icon" />
 
         <TextView
-            android:id="@+id/add_city"
+            android:id="@+id/set_broad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14.0dip"
-            android:layout_toRightOf="@id/add_city_img"
-            android:text="@string/popwin_add_city"
+            android:layout_toRightOf="@id/set_broad_img"
+            android:text="@string/popwin_broad"
             android:textSize="16.0sp" />
     </RelativeLayout>
 
@@ -32,35 +32,35 @@
         android:id="@+id/barrage_popup_divider"
         android:layout_width="wrap_content"
         android:layout_height="1.0dip"
-        android:layout_alignLeft="@id/add_city_layout"
-        android:layout_alignRight="@id/add_city_layout"
-        android:layout_below="@id/add_city_layout"
+        android:layout_alignLeft="@id/set_broad_layout"
+        android:layout_alignRight="@id/set_broad_layout"
+        android:layout_below="@id/set_broad_layout"
         android:layout_marginLeft="2.0dip"
         android:background="@drawable/popupwindow_list_divider" />
 
     <RelativeLayout
-        android:id="@+id/add_device_layout"
+        android:id="@+id/setting_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/barrage_popup_divider"
         android:padding="10.0dip" >
 
         <ImageView
-            android:id="@+id/add_device_img"
+            android:id="@+id/setting_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:src="@drawable/addcity_radio_icon" />
 
         <TextView
-            android:id="@+id/add_device"
+            android:id="@+id/setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14.0dip"
-            android:layout_toRightOf="@id/add_device_img"
+            android:layout_toRightOf="@id/setting_img"
             android:drawablePadding="5.0dip"
-            android:text="@string/popwin_add_device"
+            android:text="@string/popwin_setting"
             android:textSize="16.0sp" />
     </RelativeLayout>
 
