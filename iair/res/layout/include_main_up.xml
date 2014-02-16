@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/today_weather_extra_arrow" />
+            android:src="@drawable/main_activity_extra_arrow" />
     </RelativeLayout>
 
     <View

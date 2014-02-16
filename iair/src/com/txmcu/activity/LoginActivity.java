@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 
+
+
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +90,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		// getMenuInflater().inflate(R.menu.main, menu);
+		MainActivity.TryLoadMainActivity(this);
 		return true;
 	}
 
@@ -398,11 +401,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 										// mTokenView.setText(R.string.weibosdk_demo_logout_success);
 										//Log.accessToken = null;
 										
-										Intent localIntent = new Intent();
+										//Intent localIntent = new Intent();
 										
-									    localIntent.setClass(paramContext, LoginActivity.class);
-									    paramContext.startActivityForResult(localIntent, 1);
+									    //localIntent.setClass(paramContext, LoginActivity.class);
+									    //paramContext.startActivityForResult(localIntent, 1);
 									    
+										paramContext.startActivity(new Intent(paramContext, LoginActivity.class));
 										paramContext.finish();
 										//if (accessToken!=null) {
 											//Log.w(TAG, accessToken.getToken());
@@ -450,10 +454,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 		else if (tencent.isSessionValid()) {
 			tencent.logout(paramContext);
 			
-			Intent localIntent = new Intent();
+			paramContext.startActivity(new Intent(paramContext, LoginActivity.class));
 			
-		    localIntent.setClass(paramContext, LoginActivity.class);
-		    paramContext.startActivityForResult(localIntent, 1);
+			//Intent localIntent = new Intent();
+			
+		   // localIntent.setClass(paramContext, LoginActivity.class);
+		   // paramContext.startActivityForResult(localIntent, 1);
 		    
 			paramContext.finish();
 		}

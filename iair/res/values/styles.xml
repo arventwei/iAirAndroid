@@ -18,62 +18,7 @@
    
     </style>
     
-     <style name="f_f_vertical_style">
-        <item name="android:orientation">vertical</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
-    </style>
-     <style name="w_w_vertical_style">
-        <item name="android:orientation">vertical</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-    <style name="f_w_vertical_style">
-        <item name="android:orientation">vertical</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-    <style name="f_w_horizontal_style">
-        <item name="android:orientation">horizontal</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-     <style name="btn_back_style">
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:background">@drawable/btn_back_bg</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">10.0dip</item>
-        <item name="android:layout_alignParentLeft">true</item>
-    </style>
     
-    <style name="edittext_login_style">
-        <item name="android:textSize">18.0dip</item>
-        <item name="android:textColor">@color/text_deepgray</item>
-        <item name="android:textColorHint">@color/text_color_3</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:background">@color/transparent</item>
-        <item name="android:padding">10.0dip</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:scrollHorizontally">true</item>
-        <item name="android:singleLine">true</item>
-    </style>
-    <style name="btn_left_style">
-        <item name="android:textSize">20.0sp</item>
-        <item name="android:textColor">@color/gray_button_white</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/combin_btn_white</item>
-        <item name="android:singleLine">true</item>
-    </style>
-    <style name="btn_right_style">
-        <item name="android:textSize">20.0sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/combin_btn_blue</item>
-        <item name="android:singleLine">true</item>
-    </style>
     
     
     
@@ -82,5 +27,8 @@
         <item name="android:paddingTop">@dimen/form_item_vertical_padding</item>
         <item name="android:paddingRight">@dimen/form_item_horizontal_padding</item>
         <item name="android:paddingBottom">@dimen/form_item_vertical_padding</item>
+    </style>
+        <style name="Common" parent="@android:style/Theme.NoTitleBar">
+        <item name="android:windowBackground">@android:color/black</item>
     </style>
 </resources>

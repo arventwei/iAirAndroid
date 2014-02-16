@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
@@ -18,13 +19,16 @@ import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPage
 import com.handmark.verticalview.VerticalViewPager;
 import com.txmcu.iair.R;
 
-public class MainActivity extends  Activity implements OnRefreshListener<VerticalViewPager> {
+public class MainActivity extends  Activity
+implements OnRefreshListener<VerticalViewPager>,OnClickListener
+{
 
 	
 	private PullToRefreshViewPager mPullToRefreshViewPager;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		setTheme(R.style.Common);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
@@ -33,6 +37,8 @@ public class MainActivity extends  Activity implements OnRefreshListener<Vertica
 
 		VerticalViewPager vp = mPullToRefreshViewPager.getRefreshableView();
 		vp.setAdapter(new SamplePagerAdapter(this));
+		
+		addButtonListener();
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,6 +59,20 @@ public class MainActivity extends  Activity implements OnRefreshListener<Vertica
     	}
     	return false;
     }
+	@Override
+	public void onClick(View paramView)
+	{
+	    switch (paramView.getId())
+	    {
+	    	case R.id.add_city:
+	    		popWindowAdding();
+	    	case R.id.main_share:
+	    		main_top_share();
+	    	case R.id.main_setting:
+	    		popWindowSetting();
+	    }
+	}
+	  
 	@Override
 	public void onRefresh(PullToRefreshBase<VerticalViewPager> refreshView) {
 		new GetDataTask().execute();
@@ -115,11 +135,24 @@ public class MainActivity extends  Activity implements OnRefreshListener<Vertica
 	}
 
 	public static void TryLoadMainActivity(Activity paramContext) {
-		Intent localIntent = new Intent();
-	
-	    localIntent.setClass(paramContext, MainActivity.class);
-	    paramContext.startActivityForResult(localIntent, 1);
+
+	    paramContext.startActivity(new Intent(paramContext, MainActivity.class));
 	    paramContext.finish();
 	}
 
+	private void addButtonListener() {
+		findViewById(R.id.add_city).setOnClickListener(this);
+		findViewById(R.id.main_share).setOnClickListener(this);
+		findViewById(R.id.main_setting).setOnClickListener(this);
+	}
+	
+	private void popWindowAdding() {
+		
+	}
+	private void main_top_share() {
+		
+	}
+	private void popWindowSetting() {
+		
+	}
 }

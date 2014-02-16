@@ -29,36 +29,11 @@
             android:singleLine="true"
             android:text="益呼吸"
             android:textColor="@color/white"
-            android:textSize="@dimen/weather_detail_activity_title_bar_size" />
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="今天21:50发布"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textSize="@dimen/main_activity_title_bar_size" />
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="@dimen/title_bar_btn_width"
-        android:layout_height="fill_parent" >
-
-        <ImageView
-            android:id="@+id/voice_animation"
-            android:layout_width="@dimen/title_bar_btn_width"
-            android:layout_height="fill_parent"
-            android:layout_centerInParent="true"
-            android:background="@drawable/voice_wave_s"
-            android:visibility="invisible" />
-
-        <ImageView
-            android:id="@+id/voice_broadcast"
-            android:layout_width="@dimen/title_bar_btn_width"
-            android:layout_height="fill_parent"
-            android:background="@drawable/main_detail_activity_btn_bg"
-            android:src="@drawable/voice_icon" />
-    </RelativeLayout>
+    
 
     <ImageView
         android:layout_width="wrap_content"
@@ -74,7 +49,7 @@
         android:visibility="gone" />
 
     <ImageView
-        android:id="@+id/title_bar_shared_img"
+        android:id="@+id/main_share"
         android:layout_width="@dimen/title_bar_btn_width"
         android:layout_height="fill_parent"
         android:background="@drawable/main_detail_activity_btn_bg"
@@ -91,7 +66,7 @@
         android:layout_height="fill_parent" >
 
         <ImageView
-            android:id="@+id/goto_setting_img_icon"
+            android:id="@+id/main_setting"
             android:layout_width="@dimen/title_bar_btn_width"
             android:layout_height="fill_parent"
             android:layout_centerVertical="true"
