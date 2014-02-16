@@ -14,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -184,6 +183,9 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			popWin.dismiss();
 			popWin = null;
 		}
+		Intent localIntent = new Intent(this, CityManageActivity.class);
+		startActivity(localIntent);
+	    overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
 		
 	}
 	private  void popwin_add_device() {

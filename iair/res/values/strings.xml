@@ -29,4 +29,14 @@
     <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
     <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
 
+    
+    <string name="change_city_activity_title">城市管理</string>
+    <string name="weather_city_alreadyadded">城市“%s”已添加</string>
+    <string name="choose_city_activity_title">添加城市</string>
+    <string name="clockweather_citymanage_resetdefault">您删除了默认城市，重新设置为“%s”</string>
+    <string name="no_data">暂无数据</string>
+    <string name="weather_detail_top_bar_city">城市</string>
+    <string name="city_mgr_set_city_default">设为默认</string>
+    <string name="drag_tip">长按城市，可拖动改变城市顺序及删除城市</string>
+    
 </resources>
