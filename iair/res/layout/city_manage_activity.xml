@@ -22,5 +22,17 @@
         android:text="@string/drag_tip"
         android:textColor="@color/white"
         android:textSize="13.0dip" />
+    
+      <ca.laplanete.mobile.pageddragdropgrid.PagedDragDropGrid
+		android:id="@+id/gridview"       
+		android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/drag_tip"
+        android:layout_below="@id/top_bar"
+        android:layout_marginLeft="7.5dip"
+        android:layout_marginRight="7.5dip"
+        android:layout_marginTop="@dimen/weather_detail_city_mgr_margin_top"
+        android:background="@color/transparent"
+        android:listSelector="@drawable/item_background" />
 
 </RelativeLayout>

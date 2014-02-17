@@ -28,6 +28,8 @@
  */
 package ca.laplanete.mobile.pageddragdropgrid;
 
+import com.txmcu.iair.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -107,9 +109,10 @@ public class PagedDragDropGrid extends HorizontalScrollView implements PagedCont
 
     private void initGrid() {
         grid = new DragDropGrid(getContext());
-        if (xmlRes != -1) {
-            grid.setBackgroundResource(xmlRes);
-        }
+        //if (xmlRes != -1) {
+            grid.setBackgroundResource(R.color.transparent);
+        //}
+        
         addView(grid);
     }
 
