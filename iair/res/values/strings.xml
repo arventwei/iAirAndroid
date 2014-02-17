@@ -38,5 +38,6 @@
     <string name="weather_detail_top_bar_city">城市</string>
     <string name="city_mgr_set_city_default">设为默认</string>
     <string name="drag_tip">长按城市，可拖动改变城市顺序及删除城市</string>
+    <string name="removeItem">删除</string>
     
 </resources>

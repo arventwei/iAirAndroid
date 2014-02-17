@@ -9,7 +9,7 @@
         android:id="@+id/back_img"
         android:layout_width="@dimen/title_bar_btn_width"
         android:layout_height="fill_parent"
-        android:background="@drawable/weather_detail_activity_btn_bg"
+        android:background="@drawable/main_detail_activity_btn_bg"
         android:src="@drawable/title_bar_return" />
 
     <TextView
@@ -26,7 +26,7 @@
         android:id="@+id/choose_refresh_img"
         android:layout_width="@dimen/title_bar_btn_width"
         android:layout_height="fill_parent"
-        android:background="@drawable/weather_detail_activity_btn_bg"
+        android:background="@drawable/main_detail_activity_btn_bg"
         android:src="@drawable/refresh_icon"
         android:visibility="gone" />
 
@@ -41,7 +41,7 @@
         android:id="@+id/edit_btn"
         android:layout_width="@dimen/title_bar_btn_width"
         android:layout_height="fill_parent"
-        android:background="@drawable/weather_detail_activity_btn_bg"
+        android:background="@drawable/main_detail_activity_btn_bg"
         android:src="@drawable/city_mgr_top_bar_edit_icon"
         android:visibility="gone" />
 
@@ -49,7 +49,7 @@
         android:id="@+id/auto_location_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/weather_detail_activity_btn_bg"
+        android:background="@drawable/main_detail_activity_btn_bg"
         android:drawableLeft="@drawable/clockweather_city_locate_selector"
         android:drawablePadding="-6.0dip"
         android:gravity="center_vertical"
