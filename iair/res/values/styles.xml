@@ -33,4 +33,11 @@
         <item name="android:windowEnterAnimation">@anim/top_enter</item>
         <item name="android:windowExitAnimation">@anim/top_exit</item>
     </style>
+    <style name="clockWeatherText">
+        <item name="android:singleLine">true</item>
+        <item name="android:shadowColor">#aa000000</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">3.0</item>
+        <item name="android:shadowRadius">2.5</item>
+    </style>
 </resources>

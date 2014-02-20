@@ -40,4 +40,6 @@
     <string name="drag_tip">长按城市，可拖动改变城市顺序及删除城市</string>
     <string name="removeItem">删除</string>
     
+    <string name="temperature_with_oc">-2~6°C</string>
+    
 </resources>
