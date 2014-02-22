@@ -3,7 +3,7 @@
     android:id="@+id/detail_activity"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/bg_cloudy_day" >
+    android:background="@drawable/bg_na" >
 
     <FrameLayout
         android:id="@+id/background_layout"
@@ -15,7 +15,7 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/title_bar_height"
         android:layout_alignParentTop="true"
-        layout="@layout/include_main_view_top_bar" />
+        layout="@layout/include_detail_device_main_top_bar" />
 
     <RelativeLayout
         android:id="@+id/screen_indicator_container"

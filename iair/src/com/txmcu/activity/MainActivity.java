@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
@@ -20,6 +22,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
+import com.txmcu.adapter.MainEntry;
 import com.txmcu.adapter.MainEntryAdapter;
 import com.txmcu.iair.R;
 
@@ -99,15 +102,15 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 
 	static class SamplePagerAdapter extends com.handmark.verticalview.PagerAdapter {
 
-		private static int[] sDrawables = { R.layout.include_main_up, R.layout.include_main_down };
-		private Context pageContext;
+		private static int[] sDrawables = { R.layout.include_detail_up, R.layout.include_detail_down };
+		private Activity pageContext;
 		
 		
 		private ListView listView; 
 		MainEntryAdapter adapter;
 		
 		
-		public SamplePagerAdapter(Context paramContext) {
+		public SamplePagerAdapter(Activity paramContext) {
 			pageContext = paramContext;
 		}
 		@Override
@@ -127,7 +130,24 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			     
 			     listView = (ListView) subView.findViewById(R.id.listView1);//实例化ListView  
 			     listView.setAdapter(adapter);//为ListView控件绑定适配器
-			     listView.setDividerHeight(0);
+			    // listView.setDividerHeight(0);
+			     
+			     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() 
+			     {
+					@Override
+					public void onItemClick(AdapterView parent, View view,int position, long id){
+						Log.i("sfs", "asfasds");
+						MainEntry b = (MainEntry)adapter.getItem(position);
+						if(position >0)
+						{
+							Intent localIntent = new Intent(pageContext, DetailActivity.class);
+							pageContext.startActivity(localIntent);
+							pageContext.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+						
+						}
+					}
+			     });
+			     
 			     adapter.addDevice(1, "小新家");
 			}
 			 else {

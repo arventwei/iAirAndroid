@@ -31,7 +31,7 @@ implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.device_manage_activity);
-		findViewById(R.id.device_back_img).setOnClickListener(this);
+		findViewById(R.id.back_img).setOnClickListener(this);
 		mGridview= ((DragableGridview)findViewById(R.id.device_gridview));
 		
 		
@@ -71,7 +71,7 @@ implements OnClickListener{
 	{
 	    switch (paramView.getId())
 	    {
-	    	case R.id.device_back_img:
+	    	case R.id.back_img:
 	    		finish();
 	    		break;
 	    	
