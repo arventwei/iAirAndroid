@@ -1,7 +1,7 @@
 package com.txmcu.activity;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -15,8 +15,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -33,6 +36,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	
 	private PullToRefreshViewPager mPullToRefreshViewPager;
 	private PopupWindow popWin;
+	private PopupWindow popWinSetting;
 	
 	
 	@Override
@@ -77,13 +81,13 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	    switch (paramView.getId())
 	    {
 	    	case R.id.add_city:
-	    		popWindowAdding();
+	    		main_top_add();
 	    		break;
 	    	case R.id.main_share:
 	    		main_top_share();
 	    		break;
 	    	case R.id.main_setting:
-	    		popWindowSetting();
+	    		main_top_setting();
 	    		break;
 	    		
 	    	case R.id.add_city_layout:
@@ -91,6 +95,12 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	    		break;
 	    	case R.id.add_device_layout:
 	    		popwin_add_device();
+	    		break;
+	    	case R.id.set_broad_layout:
+	    		popwin_set_broad();
+	    		break;
+	    	case R.id.setting_layout:
+	    		popwin_setting();
 	    		break;
 	    }
 	}
@@ -102,7 +112,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 
 	static class SamplePagerAdapter extends com.handmark.verticalview.PagerAdapter {
 
-		private static int[] sDrawables = { R.layout.include_detail_up, R.layout.include_detail_down };
+		private static int[] sDrawables = { R.layout.include_up_detail, R.layout.include_down_detail };
 		private Activity pageContext;
 		
 		
@@ -201,7 +211,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		findViewById(R.id.main_setting).setOnClickListener(this);
 	}
 	
-	private void popWindowAdding() {
+	private void main_top_add() {
 		
 		if(popWin==null)
 		{
@@ -219,31 +229,98 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		
 	    popWin.showAsDropDown(findViewById(R.id.add_city), 0, 0);
 	}
-	private  void popwin_add_city() {
+	protected void CloseAddPopWindowAndOpenSubView(Class<?> cls) {
 		if(popWin!=null)
 		{
 			popWin.dismiss();
 			popWin = null;
 		}
-		Intent localIntent = new Intent(this, CityManageActivity.class);
+		
+		Intent localIntent = new Intent(this,cls);
 		startActivity(localIntent);
 	    overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+	}
+	protected void CloseSettingPopWindowAndOpenSubView(Class<?> cls) {
+		if(popWinSetting!=null)
+		{
+			popWinSetting.dismiss();
+			popWinSetting = null;
+		}
+		
+		Intent localIntent = new Intent(this,cls);
+		startActivity(localIntent);
+	    overridePendingTransition(R.anim.right_enter, R.anim.alpha_out);
+	}
+	
+	private  void popwin_add_city() {
+		CloseAddPopWindowAndOpenSubView(CityManageActivity.class);
 		
 	}
+	
 	private  void popwin_add_device() {
-		if(popWin!=null)
-		{
-			popWin.dismiss();
-			popWin = null;
-		}
-		Intent localIntent = new Intent(this, DeviceManageActivity.class);
-		startActivity(localIntent);
-	    overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+		CloseAddPopWindowAndOpenSubView(DeviceManageActivity.class);
 	}
 	private void main_top_share() {
 		
 	}
-	private void popWindowSetting() {
-		//Toast.makeText(this, "asfasd", Toast.LENGTH_LONG).show();
+	private void main_top_setting() {
+		
+		if(popWinSetting==null)
+		{
+			View localView = getLayoutInflater().inflate(R.layout.popup_window_setting_layout, null, false);
+			popWinSetting = new PopupWindow(localView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+			popWinSetting.setBackgroundDrawable(new ColorDrawable(0));
+			popWinSetting.setFocusable(true);
+			popWinSetting.setTouchable(true);
+			popWinSetting.setOutsideTouchable(true);
+			popWinSetting.update();
+			popWinSetting.setAnimationStyle(R.style.popwindow_anim_style);
+		    localView.findViewById(R.id.set_broad_layout).setOnClickListener(this);
+		    localView.findViewById(R.id.setting_layout).setOnClickListener(this);
+		}
+		
+		popWinSetting.showAsDropDown(findViewById(R.id.main_setting), 0, 0);
+	}
+	private void popwin_set_broad() {
+		
+		
+		if(popWinSetting!=null)
+		{
+			popWinSetting.dismiss();
+			popWinSetting = null;
+		}
+		
+		final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.broad_dialog);
+        dialog.setTitle(R.string.broad_dialog_text_title);
+
+        // set the custom dialog components - text, image and button
+        //TextView text = (TextView) dialog.findViewById(R.id.text);
+        //text.setText("Android custom dialog example!");
+       // ImageView image = (ImageView) dialog.findViewById(R.id.image);
+        //image.setImageResource(R.drawable.ic_launcher);
+
+        Button dialogCancelButton = (Button) dialog.findViewById(R.id.correct_cancel_btn);
+        // if button is clicked, close the custom dialog
+        dialogCancelButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button dialogOkButton = (Button) dialog.findViewById(R.id.correct_ok_btn);
+        // if button is clicked, close the custom dialog
+        dialogOkButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                
+            }
+        });
+
+        dialog.show();
+	}
+	private void popwin_setting() {
+		CloseSettingPopWindowAndOpenSubView(SettingActivity.class);
 	}
 }

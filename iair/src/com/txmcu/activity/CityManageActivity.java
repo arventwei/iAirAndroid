@@ -29,7 +29,7 @@ implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.city_manage_activity);
+		setContentView(R.layout.activity_city_manage);
 		findViewById(R.id.back_img).setOnClickListener(this);
 		mGridview= ((DragableGridview)findViewById(R.id.gridview));
 		

@@ -57,7 +57,7 @@ public class DeviceAdapter extends BaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (null == convertView) {
-			convertView = View.inflate(deviceManageActivity, R.layout.change_city_gridview_item, null);
+			convertView = View.inflate(deviceManageActivity, R.layout.gridview_change_city_item, null);
 		}
 		
 		Device b = devices.get(position);

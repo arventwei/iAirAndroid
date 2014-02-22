@@ -31,4 +31,10 @@
     <color name="main_list_functionbar_bg">#00000000</color>
     <color name="mystocks_stocklist_words_color">#ffffffff</color>
     <color name="mystocks_stockcode_color">#ffffffff</color>
+    
+        <color name="dialog_text_dark">#ff414141</color>
+        
+        <color name="setting_bg_color">#ff303030</color>
+          <color name="setting_main_text_bg">#ffffffff</color>
+        
 </resources>

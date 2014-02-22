@@ -40,4 +40,55 @@
         <item name="android:shadowDy">3.0</item>
         <item name="android:shadowRadius">2.5</item>
     </style>
+    
+        <style name="ButtonStyle" parent="@android:style/Widget.Button">
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@drawable/button_bg</item>
+    </style>
+    
+     <style name="setting_item_layout">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">@dimen/setting_item_padding</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/setting_item_height</item>
+    </style>
+     <style name="setting_item_main_text">
+        <item name="android:textSize">@dimen/setting_item_main_text_size</item>
+        <item name="android:textColor">@color/setting_main_text_bg</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    
+    <style name="setting_item_sum_text">
+        <item name="android:textSize">@dimen/setting_item_sum_text_size</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="setting_item_checkbox">
+        <item name="android:background">@drawable/rect_track_bg</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@drawable/checkbox_rect</item>
+    </style>
+    <style name="setting_alarm_checkbox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@drawable/checkbox_circle</item>
+    </style>
+    
+     <style name="setting_menu">
+        <item name="android:textSize">@dimen/setting_item_main_text_size</item>
+        <item name="android:textColor">@color/setting_main_text_bg</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">11.0dip</item>
+    </style>
 </resources>

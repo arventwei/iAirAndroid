@@ -63,11 +63,11 @@ public class MainEntryAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (position==0 ) 
 		{
-			convertView = View.inflate(deviceManageActivity, R.layout.mystocks_portfolio_listitem_functionbar, null);			
+			convertView = View.inflate(deviceManageActivity, R.layout.listitem_detail_functionbar, null);			
 		}
 		else if(position >= 1)
 		{
-			convertView = View.inflate(deviceManageActivity, R.layout.mystocks_portfolio_listitem_stockinfo, null);
+			convertView = View.inflate(deviceManageActivity, R.layout.listitem_detail_info, null);
 			
 			MainEntry b = entries.get(position);
 			

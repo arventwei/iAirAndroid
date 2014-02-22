@@ -52,4 +52,31 @@
     
     <string name="detail_activity_title">小新家</string>
     
+       <string name="broad_dialog_text_title">我要添加公告</string>
+    <string name="broad_dialog_text_hint_content">请输入公告内容(限20字以内)</string>
+    <string name="broad_dialog_text_hint_grey" />
+       <string name="cancel_str">取消</string>
+           <string name="confirm_send">发表</string>
+           
+            <string name="setting_main_title">设置</string>
+    <string name="gps_setting_title">GPS 定位</string>
+    <string name="anim_setting_title">天气动画</string>
+    <string name="background_setting_title">更换天气壁纸</string>
+    <string name="skin_setting_title">天气小工具换肤</string>
+    <string name="skin_setting_sum">只支持4*2天气小工具的换肤</string>
+    <string name="skin_setting_success">时钟天气皮肤设置成功!</string>
+    <string name="auto_update_setting_title">自动更新天气</string>
+    <string name="notification_weather_setting_title">通知栏天气</string>
+    <string name="notification_alert_setting_title">通知栏预警</string>
+    <string name="life_info_setting_title">生活信息个性设定</string>
+    <string name="check_update_setting_title">检查更新</string>
+    <string name="check_update_setting_sum">当前版本： V%s</string>
+    <string name="feedback_setting_title">意见反馈</string>
+    <string name="about_setting_title">关于</string>
+    <string name="weather_source_setting_title">数据来源：中国天气网</string>
+    
+       <string name="voice_alarm">定时语音播报</string>
+       
+           <string name="wallpaper_setting_title">桌面动态壁纸</string>
+    
 </resources>

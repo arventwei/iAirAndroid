@@ -5,6 +5,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="title_bar_height">44.0dip</dimen>
     <dimen name="title_bar_btn_width">43.0dip</dimen>
+    <dimen name="title_bar_title_text_size">20.0sp</dimen>
+    
     <dimen name="main_activity_title_bar_size">30.0sp</dimen>
     <dimen name="screen_indicator_height">14.0dip</dimen>
     <dimen name="indicator_right_padding">10dp</dimen>
@@ -34,4 +36,22 @@
 <dimen name="portfolioItemInfoNameColWidth">92.0dip</dimen>
  <dimen name="portfolioItemInfoPriceColWidth">106.0dip</dimen>
      <dimen name="portfolioItemInfoRisDecColWidth">102.0dip</dimen>
+     
+     
+     
+         <dimen name="chart_rect_width">280.0dip</dimen>
+    <dimen name="chart_rect_height">186.0dip</dimen>
+    <dimen name="button_bar_height">39.0dip</dimen>
+    
+        <dimen name="button_text_size">16.0sp</dimen>
+        
+    
+        <dimen name="main_setting_divider_height">2.0dip</dimen>
+    <dimen name="item_setting_divider_height">1.5dip</dimen>
+    
+        <dimen name="setting_item_height">65.0dip</dimen>
+    <dimen name="setting_item_padding">10.0dip</dimen>
+    <dimen name="setting_item_main_text_size">16.0sp</dimen>
+    <dimen name="setting_item_sum_text_size">13.0sp</dimen>
+    
 </resources>
