@@ -24,5 +24,14 @@
     <dimen name="weather_detail_city_mgr_grid_item_vertical_space">2.0dip</dimen>
     <dimen name="weather_detail_city_mgr_grid_item_horizontal_space">0.0dip</dimen>
     <dimen name="weather_detail_city_mgr_margin_top">14.0dip</dimen>
-
+    
+    
+    <dimen name="portfolioFunctionBarHeight">36.0dip</dimen>
+    <dimen name="portfolioStockInfoItemHeight">50.0dip</dimen>
+    <dimen name="portfolioItemInfoIconNameColWidth">112.0dip</dimen>
+     <dimen name="portfolioItemInfoIconColWidth">20.0dip</dimen>
+<dimen name="listview_divider_line_height">1.1999817dip</dimen>
+<dimen name="portfolioItemInfoNameColWidth">92.0dip</dimen>
+ <dimen name="portfolioItemInfoPriceColWidth">106.0dip</dimen>
+     <dimen name="portfolioItemInfoRisDecColWidth">102.0dip</dimen>
 </resources>

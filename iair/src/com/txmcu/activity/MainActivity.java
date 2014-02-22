@@ -13,12 +13,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
+import com.txmcu.adapter.MainEntryAdapter;
 import com.txmcu.iair.R;
 
 public class MainActivity extends  Activity
@@ -28,7 +30,8 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	
 	private PullToRefreshViewPager mPullToRefreshViewPager;
 	private PopupWindow popWin;
-
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Common);
@@ -42,6 +45,9 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		vp.setAdapter(new SamplePagerAdapter(this));
 		
 		addButtonListener();
+		
+		
+		
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,6 +101,12 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 
 		private static int[] sDrawables = { R.layout.include_main_up, R.layout.include_main_down };
 		private Context pageContext;
+		
+		
+		private ListView listView; 
+		MainEntryAdapter adapter;
+		
+		
 		public SamplePagerAdapter(Context paramContext) {
 			pageContext = paramContext;
 		}
@@ -110,7 +122,16 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			 LayoutInflater localLayoutInflater = LayoutInflater.from(pageContext);
 			 View subView  = localLayoutInflater.inflate(sDrawables[position], null);
 			
-			 
+			 if (position ==0) {
+				 adapter = new MainEntryAdapter(pageContext);//创建一个适配器  
+			        
+			     listView = (ListView) subView.findViewById(R.id.listView1);//实例化ListView  
+			     listView.setAdapter(adapter);//为ListView控件绑定适配器  
+			     adapter.addDevice(1, "小新家");
+			}
+			 else {
+				
+			}
 			// Now just add ImageView to ViewPager and return it
 			container.addView(subView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 

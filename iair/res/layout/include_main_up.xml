@@ -10,112 +10,11 @@
         android:layout_width="0.0dip"
         android:layout_height="0.0dip" />
 
-    <TableLayout
+    <ListView
+        android:id="@+id/listView1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-
-        <TableRow>
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_column="0"
-                android:layout_weight="1"
-                android:text="Name" />
-
-            <TextView
-                android:layout_width="30dp"
-                android:layout_column="1"
-                android:layout_weight="1"
-                android:text="Score" >
-            </TextView>
-
-            <TextView
-                android:layout_width="30dp"
-                android:layout_column="2"
-                android:layout_weight="1"
-                android:text="Level" >
-            </TextView>
-        </TableRow>
-
-        <ScrollView android:layout_height="120dp" >
-
-            <TableLayout
-                android:id="@+id/score_table"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:text="小新家" >
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_column="1"
-                        android:layout_weight="1"
-                        android:text="1000" >
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_column="2"
-                        android:layout_weight="1"
-                        android:text="2" >
-                    </TextView>
-                </TableRow>
-                 <TableRow>
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:text="爸爸家" >
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_column="1"
-                        android:layout_weight="1"
-                        android:text="1000" >
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_column="2"
-                        android:layout_weight="1"
-                        android:text="2" >
-                    </TextView>
-                </TableRow>
-                 <TableRow>
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:text="北京" >
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_column="1"
-                        android:layout_weight="1"
-                        android:text="1000" >
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_column="2"
-                        android:layout_weight="1"
-                        android:text="2" >
-                    </TextView>
-                </TableRow>
-            </TableLayout>
-        </ScrollView>
-    </TableLayout>
+    </ListView>
 
     <RelativeLayout
         android:id="@+id/today_weather_extra_info"
