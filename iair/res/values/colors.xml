@@ -28,7 +28,7 @@
     <color name="title_bar_bg">#33000000</color>
     
     
-    <color name="main_list_functionbar_bg">#ff1a1f24</color>
-    <color name="mystocks_stocklist_words_color">#ff3d75b7</color>
-    <color name="mystocks_stockcode_color">#ff656b6e</color>
+    <color name="main_list_functionbar_bg">#00000000</color>
+    <color name="mystocks_stocklist_words_color">#ffffffff</color>
+    <color name="mystocks_stockcode_color">#ffffffff</color>
 </resources>

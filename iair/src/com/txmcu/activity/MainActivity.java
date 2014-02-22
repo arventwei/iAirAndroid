@@ -121,12 +121,13 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			//imageView.setImageResource(sDrawables[position]);
 			 LayoutInflater localLayoutInflater = LayoutInflater.from(pageContext);
 			 View subView  = localLayoutInflater.inflate(sDrawables[position], null);
-			
+			 
 			 if (position ==0) {
 				 adapter = new MainEntryAdapter(pageContext);//创建一个适配器  
-			        
+			     
 			     listView = (ListView) subView.findViewById(R.id.listView1);//实例化ListView  
-			     listView.setAdapter(adapter);//为ListView控件绑定适配器  
+			     listView.setAdapter(adapter);//为ListView控件绑定适配器
+			     listView.setDividerHeight(0);
 			     adapter.addDevice(1, "小新家");
 			}
 			 else {

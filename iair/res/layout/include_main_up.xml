@@ -12,9 +12,12 @@
 
     <ListView
         android:id="@+id/listView1"
+        
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-    </ListView>
+        android:layout_height="fill_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="#00000000"
+/>
 
     <RelativeLayout
         android:id="@+id/today_weather_extra_info"

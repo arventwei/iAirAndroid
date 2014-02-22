@@ -5,11 +5,7 @@
     android:background="@color/main_list_functionbar_bg"
     android:orientation="vertical" >
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="1.0px"
-        android:background="#ff101419"
-        android:contentDescription="@null" />
+
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -60,5 +56,13 @@
             android:textSize="14.0sp"
             />
     </LinearLayout>
+            <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="8.0dip"
+        android:layout_marginRight="8.0dip"
+        android:background="#66ffffff" />
 
 </LinearLayout>

@@ -25,6 +25,9 @@ public class MainEntryAdapter extends BaseAdapter
 	public MainEntryAdapter(Context contentContext)
 	{
 		deviceManageActivity = contentContext;
+		MainEntry header = new MainEntry();
+		header.setId(-1);
+		entries.add(header);
 	}
 	
 	public  void addDevice(int index,String name) {
@@ -43,17 +46,17 @@ public class MainEntryAdapter extends BaseAdapter
 	@Override
 	public int getCount() {
 		//return 5;
-		return entries.size()+1;
+		return entries.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return entries.get(position-1);
+		return entries.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return entries.get(position-1).getId();
+		return entries.get(position).getId();
 	}
 	
 	@Override
@@ -66,11 +69,11 @@ public class MainEntryAdapter extends BaseAdapter
 		{
 			convertView = View.inflate(deviceManageActivity, R.layout.mystocks_portfolio_listitem_stockinfo, null);
 			
-			MainEntry b = entries.get(position-1);
+			MainEntry b = entries.get(position);
 			
 			//((ImageView) convertView.findViewById(R.id.imageView1)).setImageResource(b.getBitmapId());
 			
-			((TextView)convertView.findViewById(R.id.mystocks_listitem_stockname_label)).setText(b.getName());
+			((TextView)convertView.findViewById(R.id.entry_name_label)).setText(b.getName());
 			
 			
 		}
