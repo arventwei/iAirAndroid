@@ -1,6 +1,7 @@
 package com.txmcu.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,32 +13,33 @@ import cn.classd.dragablegrid.widget.DragableGridview.OnItemClickListener;
 import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
 
 import com.txmcu.adapter.City;
-import com.txmcu.adapter.CityAdapter;
+import com.txmcu.adapter.DeviceAdapter;
 import com.txmcu.iair.R;
 
-public class CityManageActivity extends Activity 
+public class DeviceManageActivity extends Activity 
 implements OnClickListener{
 
-	public static final String TAG = "CityManageActivity";
+	public static final String TAG = "DeviceManageActivity";
 	
-	
+	//private List<City> books;
 	
 	private DragableGridview mGridview;
 	
-	private  CityAdapter adapter;
+	private  DeviceAdapter adapter;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.city_manage_activity);
-		findViewById(R.id.back_img).setOnClickListener(this);
-		mGridview= ((DragableGridview)findViewById(R.id.gridview));
+		setContentView(R.layout.device_manage_activity);
+		findViewById(R.id.device_back_img).setOnClickListener(this);
+		mGridview= ((DragableGridview)findViewById(R.id.device_gridview));
 		
 		
 		
 		// mGridview = (DragableGridview) findViewById(R.id.dragableGridview1);
 	        
-        adapter = new CityAdapter(this);
+        adapter = new DeviceAdapter(this);
+        
         initTestData();
         addGridViewListener();
 		
@@ -45,20 +47,20 @@ implements OnClickListener{
 
 	protected void addGridViewListener() {
 		mGridview.setAdapter(adapter);
-        
-        mGridview.setOnItemClick(new OnItemClickListener() {
+		mGridview.setOnItemClick(new OnItemClickListener() {
 			
 			@Override
 			public void click(int index) {
 				Log.d(TAG, "item : " + index + " -- clicked!");
 			}
 		});
-        
-        mGridview.setOnSwappingListener(new OnSwappingListener() {
+		
+		mGridview.setOnSwappingListener(new OnSwappingListener() {
 			
 			@Override
 			public void waspping(int oldIndex, int newIndex) {
 				adapter.waspping(oldIndex,newIndex);
+				
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -69,7 +71,7 @@ implements OnClickListener{
 	{
 	    switch (paramView.getId())
 	    {
-	    	case R.id.back_img:
+	    	case R.id.device_back_img:
 	    		finish();
 	    		break;
 	    	
@@ -77,15 +79,16 @@ implements OnClickListener{
 	}
 	
 	
-	  
+	 
 	  private void initTestData() {
+		  adapter.addDevice(1, "小新家");
+		  adapter.addDevice(2, "爸爸家");
 	    	//books = new ArrayList<City>();
-	    	adapter.addCity(1, "北京");
-	    	adapter.addCity(2, "南京");
+	    	
 			//for (int i = 0; i < 1; i++) {
 				//setBooks();
 			//}
 	    }
 	    
-	   
+	  
 }

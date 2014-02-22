@@ -66,6 +66,10 @@
             android:name="com.txmcu.activity.CityManageActivity"
             android:configChanges="keyboardHidden|orientation" />
         
+        <activity
+            android:name="com.txmcu.activity.DeviceManageActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        
     </application>
 
 </manifest>

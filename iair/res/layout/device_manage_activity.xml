@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/city_activity_bg_default" >
+
+    <include
+        android:id="@+id/device_top_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_bar_height"
+        layout="@layout/device_manager_view_top_bar" />
+
+
+
+    <TextView
+        android:id="@+id/device_drag_tip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10.0dip"
+        android:gravity="center"
+        android:text="@string/device_drag_tip"
+        android:textColor="@color/white"
+        android:textSize="13.0dip" />
+    
+    
+    
+        <cn.classd.dragablegrid.widget.DragableGridview
+        android:id="@+id/device_gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+ 		android:layout_above="@id/device_drag_tip"
+        android:layout_below="@id/device_top_bar"
+        android:layout_marginLeft="7.5dip"
+        android:layout_marginRight="7.5dip"
+        android:layout_marginTop="@dimen/weather_detail_city_mgr_margin_top"
+        android:numColumns="3" >
+    </cn.classd.dragablegrid.widget.DragableGridview>
+    
+     
+
+</RelativeLayout>

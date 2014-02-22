@@ -1,4 +1,4 @@
-package com.txmcu.activity;
+package com.txmcu.adapter;
 
 import java.io.Serializable;
 

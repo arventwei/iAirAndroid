@@ -42,4 +42,7 @@
     
     <string name="temperature_with_oc">-2~6°C</string>
     
+    <string name="change_device_activity_title">小新管理</string>
+    <string name="device_drag_tip">长按小新，可拖动改变小新顺序及删除小新</string>
+    
 </resources>

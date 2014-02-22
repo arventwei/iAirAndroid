@@ -194,6 +194,9 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			popWin.dismiss();
 			popWin = null;
 		}
+		Intent localIntent = new Intent(this, DeviceManageActivity.class);
+		startActivity(localIntent);
+	    overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
 	}
 	private void main_top_share() {
 		

@@ -3,8 +3,6 @@
  */
 package cn.classd.dragablegrid.widget;
 
-import com.txmcu.iair.R;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -24,6 +22,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.GridView;
 import android.widget.ImageView;
+
+import com.txmcu.iair.R;
 
 /**
  * @author guojie
@@ -64,6 +64,8 @@ public class DragableGridview extends GridView implements OnGestureListener {
 	private SmoothScrollRunnable		smoothScrollRunnable;
 	
 	private int							mSelectedItemBgColor;
+	
+	private int   mLastSelectIndex = -1;
 
 	public DragableGridview(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -251,7 +253,7 @@ public class DragableGridview extends GridView implements OnGestureListener {
 		mYOffset = (int) ev.getRawY();
 
 		View v = getChildAt(pointToPosition((int) ev.getX(), (int) ev.getY() + scroll));
-		showSelectItem(v, true);
+		showSelectItem(v, false);
 
 		startDragging();
 	}
@@ -278,16 +280,32 @@ public class DragableGridview extends GridView implements OnGestureListener {
 	public void onShowPress(MotionEvent e) {
 
 		this.invalidate();
-		View v = getChildAt(pointToPosition((int) e.getX(), (int) e.getY() + scroll));
+		int index = pointToPosition((int) e.getX(), (int) e.getY() + scroll);
+		View v = getChildAt(index);
+		if(mLastSelectIndex!=-1)
+		{
+			View lastView = getChildAt(mLastSelectIndex);
+			if(lastView!=null)
+				showSelectItem(lastView, false);
+		}
+		mLastSelectIndex = index;
 		showSelectItem(v, true);
 	}
 	
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
+		int index = pointToPosition((int) e.getX(), (int) e.getY() + scroll);
+		//View v = getChildAt(index);
+		//if(v!=null)
+			//showSelectItem(v, false);
+		
 		if (!mIsDragging) {
-			int index = pointToPosition((int) e.getX(), (int) e.getY() + scroll);
+			
 			if (index != -1)
+			{
+				
 				onItemClickListener.click(index);
+			}
 		}
 		return false;
 	}
