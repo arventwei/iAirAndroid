@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical" >
+    
+<RelativeLayout  
+        android:id="@+id/today_air_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15.0dip"
+        android:layout_marginTop="10.0dip" >
+
+    <TextView
+        android:id="@+id/air_portrait_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2.0dip"
+        android:text="小新家"
+        android:textSize="@dimen/detail_container_large_text_size" />
+
+        <ImageView
+            android:id="@+id/air_divider"
+            android:layout_width="2.0dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/air_portrait_imageview"
+            android:layout_alignTop="@+id/air_portrait_imageview"
+            android:layout_marginRight="7.0dip"
+            android:layout_toRightOf="@+id/air_portrait_imageview"
+            android:background="@drawable/air_divider" />
+
+        <TextView
+            android:id="@+id/air_number_textview"
+            style="@style/clockWeatherText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+            android:layout_toRightOf="@id/air_divider"
+            android:paddingBottom="3.0dip"
+            android:textColor="@color/white"
+            android:text="36"
+            android:textSize="25.0sp" />
+
+        <TextView
+            android:id="@+id/air_descrption_textview"
+            style="@style/clockWeatherText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/air_portrait_imageview"
+            android:layout_marginBottom="@dimen/weather_detail_activity_air_desc_margin_bottom"
+            android:layout_toRightOf="@id/air_divider"
+            android:textColor="@color/white"
+            android:text="轻度污染"
+            android:textSize="15.0sp" />
+        
+         <View
+             android:layout_width="fill_parent"
+             android:layout_height="1.0dip"
+             android:layout_below="@id/air_divider"
+             android:layout_gravity="bottom"
+             android:layout_marginLeft="8.0dip"
+             android:layout_marginRight="8.0dip"
+             android:layout_marginTop="@dimen/activity_vertical_margin"
+             android:background="#66ffffff" />
+
+    </RelativeLayout>
+</LinearLayout>

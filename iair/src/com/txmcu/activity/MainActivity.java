@@ -112,7 +112,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 
 	static class SamplePagerAdapter extends com.handmark.verticalview.PagerAdapter {
 
-		private static int[] sDrawables = { R.layout.include_up_detail, R.layout.include_down_detail };
+		private static int[] sDrawables = { R.layout.include_up_main, R.layout.include_down_main };
 		private Activity pageContext;
 		
 		
@@ -159,6 +159,9 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			     });
 			     
 			     adapter.addDevice(1, "小新家");
+			     adapter.addDevice(2, "爸爸家");
+			     adapter.addDevice(3, "北京");
+			     adapter.addDevice(4, "南京");
 			}
 			 else {
 				

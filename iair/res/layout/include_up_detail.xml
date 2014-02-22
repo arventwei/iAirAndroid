@@ -10,14 +10,22 @@
         android:layout_width="0.0dip"
         android:layout_height="0.0dip" />
 
-    <ListView
-        android:id="@+id/listView1"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
         
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="#00000000"
-/>
+         <include
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/include_detail_container" />
+          <include
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/include_detail_container" />
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/today_weather_extra_info"

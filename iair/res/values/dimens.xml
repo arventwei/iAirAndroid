@@ -54,4 +54,8 @@
     <dimen name="setting_item_main_text_size">16.0sp</dimen>
     <dimen name="setting_item_sum_text_size">13.0sp</dimen>
     
+        <dimen name="weather_detail_activity_air_number_margin_top">5.0dip</dimen>
+    <dimen name="weather_detail_activity_air_desc_margin_bottom">5.0dip</dimen>
+    <dimen name="detail_container_large_text_size">48dip</dimen>
+    
 </resources>
