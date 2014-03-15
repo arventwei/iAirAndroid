@@ -1,4 +1,4 @@
-package com.txmcu.activity;
+package com.txmcu.iair.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import cn.classd.dragablegrid.widget.DragableGridview;
 import cn.classd.dragablegrid.widget.DragableGridview.OnItemClickListener;
 import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
 
-import com.txmcu.adapter.CityAdapter;
 import com.txmcu.iair.R;
+import com.txmcu.iair.adapter.CityAdapter;
 
 public class CityManageActivity extends Activity 
 implements OnClickListener{

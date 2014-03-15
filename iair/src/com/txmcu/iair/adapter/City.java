@@ -1,10 +1,10 @@
-package com.txmcu.adapter;
+package com.txmcu.iair.adapter;
 
 import java.io.Serializable;
 
-public class MainEntry  implements Serializable {
+public class City  implements Serializable {
 
-	private static final long	serialVersionUID	= 7973994356736519490L;
+	private static final long	serialVersionUID	= 7973994356736512440L;
 
 	private Integer id;
 	

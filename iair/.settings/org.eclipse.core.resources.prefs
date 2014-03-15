@@ -1,7 +1,7 @@
 eclipse.preferences.version=1
-encoding//src/com/txmcu/activity/DeviceManageActivity.java=UTF-8
-encoding//src/com/txmcu/activity/MainActivity.java=UTF-8
-encoding//src/com/txmcu/common/Util.java=UTF-8
+encoding//src/com/txmcu/iair/activity/DeviceManageActivity.java=UTF-8
+encoding//src/com/txmcu/iair/activity/MainActivity.java=UTF-8
+encoding//src/com/txmcu/iair/common/Util.java=UTF-8
 encoding//src/com/txmcu/xiaoxin/config/XinStateManager.java=UTF-8
 encoding//src/com/txmcu/xiaoxin/config/wifi/WifiHotAdmin.java=UTF-8
 encoding//src/com/txmcu/xiaoxin/config/wifi/WifiHotManager.java=UTF-8

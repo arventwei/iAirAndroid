@@ -2,15 +2,11 @@ package com.txmcu.xiaoxin.config;
 
 import java.util.List;
 
-import android.R.integer;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.util.Log;
-import android.view.View.OnClickListener;
 
-import com.txmcu.xiaoxin.config.wifi.WifiHotAdmin;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.OpretionsType;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.WifiBroadCastOperations;

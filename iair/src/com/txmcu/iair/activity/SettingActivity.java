@@ -1,4 +1,4 @@
-package com.txmcu.activity;
+package com.txmcu.iair.activity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,9 +35,8 @@ import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-import com.txmcu.common.QQConstants;
-import com.txmcu.common.Util;
 import com.txmcu.iair.R;
+import com.txmcu.iair.common.Util;
 
 public class SettingActivity extends Activity implements OnClickListener {
 

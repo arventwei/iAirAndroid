@@ -1,4 +1,4 @@
-package com.txmcu.activity;
+package com.txmcu.iair.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,8 +20,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
-import com.txmcu.adapter.MainEntryAdapter;
 import com.txmcu.iair.R;
+import com.txmcu.iair.adapter.MainEntryAdapter;
 
 public class DetailActivity extends  Activity
 implements OnRefreshListener<VerticalViewPager>,OnClickListener
@@ -93,12 +93,12 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			 View subView  = localLayoutInflater.inflate(sDrawables[position], null);
 			 
 			 if (position ==0) {
-				// adapter = new MainEntryAdapter(pageContext);//创建一个适配器  
+				// adapter = new MainEntryAdapter(pageContext);//创建�?��适配�? 
 			     
 			     //listView = (ListView) subView.findViewById(R.id.listView1);//实例化ListView  
-			     //listView.setAdapter(adapter);//为ListView控件绑定适配器
+			     //listView.setAdapter(adapter);//为ListView控件绑定适配�?
 			     //listView.setDividerHeight(0);
-			     //adapter.addDevice(1, "小新家");
+			     //adapter.addDevice(1, "小新�?);
 			}
 			 else {
 				

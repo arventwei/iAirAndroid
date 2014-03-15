@@ -1,4 +1,4 @@
-package com.txmcu.adapter;
+package com.txmcu.iair.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,59 +8,59 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.txmcu.activity.DeviceManageActivity;
 import com.txmcu.iair.R;
+import com.txmcu.iair.activity.CityManageActivity;
 
-public class DeviceAdapter extends BaseAdapter
+public class CityAdapter extends BaseAdapter
 {
 	
-	private List<Device> devices = new ArrayList<Device>();;
+	private List<City> cities = new ArrayList<City>();;
 	
 	
-	DeviceManageActivity deviceManageActivity;
+	CityManageActivity cityManageActivity;
 	
 	
-	public DeviceAdapter(DeviceManageActivity activity)
+	public CityAdapter(CityManageActivity activity)
 	{
-		deviceManageActivity = activity;
+		cityManageActivity = activity;
 	}
 	
-	public  void addDevice(int index,String name) {
-		Device book = new Device();
+	public  void addCity(int index,String name) {
+		City book = new City();
     	book.setId(index);
     	book.setName(name);
     	//book.setBitmapId(R.drawable.b001);
-    	devices.add(book);
+    	cities.add(book);
 	}
 	public void waspping(int oldIndex, int newIndex) {
-		Device book = devices.get(oldIndex);
-		devices.remove(oldIndex);
-		devices.add(newIndex, book);
+		City book = cities.get(oldIndex);
+		cities.remove(oldIndex);
+		cities.add(newIndex, book);
 	}
 	
 	@Override
 	public int getCount() {
 		//return 5;
-		return devices.size();
+		return cities.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return devices.get(position);
+		return cities.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return devices.get(position).getId();
+		return cities.get(position).getId();
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (null == convertView) {
-			convertView = View.inflate(deviceManageActivity, R.layout.gridview_change_city_item, null);
+			convertView = View.inflate(cityManageActivity, R.layout.gridview_change_city_item, null);
 		}
 		
-		Device b = devices.get(position);
+		City b = cities.get(position);
 		
 		//((ImageView) convertView.findViewById(R.id.imageView1)).setImageResource(b.getBitmapId());
 		

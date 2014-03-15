@@ -1,4 +1,4 @@
-package com.txmcu.adapter;
+package com.txmcu.iair.adapter;
 
 import java.io.Serializable;
 

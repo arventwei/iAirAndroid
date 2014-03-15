@@ -1,4 +1,4 @@
-package com.txmcu.activity;
+package com.txmcu.iair.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,9 @@ import cn.classd.dragablegrid.widget.DragableGridview;
 import cn.classd.dragablegrid.widget.DragableGridview.OnItemClickListener;
 import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
 
-import com.txmcu.adapter.City;
-import com.txmcu.adapter.DeviceAdapter;
 import com.txmcu.iair.R;
+import com.txmcu.iair.adapter.City;
+import com.txmcu.iair.adapter.DeviceAdapter;
 
 public class DeviceManageActivity extends Activity 
 implements OnClickListener{
@@ -81,8 +81,8 @@ implements OnClickListener{
 	
 	 
 	  private void initTestData() {
-		  adapter.addDevice(1, "小新家");
-		  adapter.addDevice(2, "爸爸家");
+		  adapter.addDevice(1, "xiaoxin");
+		  adapter.addDevice(2,"father");
 	    	//books = new ArrayList<City>();
 	    	
 			//for (int i = 0; i < 1; i++) {

@@ -78,5 +78,11 @@
        <string name="voice_alarm">定时语音播报</string>
        
            <string name="wallpaper_setting_title">桌面动态壁纸</string>
+       
+           <string name="wait_moment">请稍候</string>
+       
+           <string name="now_loading">正在加载...</string>
+       
+           <string name="i_known">知道了</string>
     
 </resources>

@@ -1,4 +1,4 @@
-package com.txmcu.activity;
+package com.txmcu.iair.activity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,10 +35,9 @@ import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-import com.txmcu.common.QQConstants;
-import com.txmcu.common.Util;
 import com.txmcu.iair.R;
-
+import com.txmcu.iair.common.Util;
+import com.txmcu.iair.common.iAirConstants;
 public class LoginActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "iair";
@@ -64,9 +63,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 		this.loginSina.setOnClickListener(this);
 
 		mWeiboAuth = new WeiboAuth(this,
-				com.txmcu.common.Constants.APP_KEY,
-				com.txmcu.common.Constants.REDIRECT_URL,
-				com.txmcu.common.Constants.SCOPE);
+				com.txmcu.iair.common.iAirConstants.APP_KEY,
+				com.txmcu.iair.common.iAirConstants.REDIRECT_URL,
+				com.txmcu.iair.common.iAirConstants.SCOPE);
 		
 		accessToken = AccessTokenKeeper.readAccessToken(this);
 		//if (accessToken!=null) {
@@ -74,7 +73,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			//Log.w(TAG, accessToken.getToken());
 		//}
 		//mAppid = "101017203";
-		mTencent = Tencent.createInstance(QQConstants.APP_KEY, this.getApplicationContext());
+		mTencent = Tencent.createInstance(iAirConstants.QQ_APP_KEY, this.getApplicationContext());
 
 		updateLoginButton();
 		updateUserInfo();
@@ -124,7 +123,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * 注销按钮的监听器,接收注销处理结果。(API请求结果的监听器)
+	 * 注销按钮的监听器,接收注销处理结果�?API请求结果的监听器)
 	 */
 //	private class LogOutRequestListener implements RequestListener {
 //		@Override
@@ -152,7 +151,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 //  
 //          @Override
 //          public void onIOException(IOException e) {
-//             // LogUtil.e(TAG, "onIOException： " + e.getMessage());
+//             // LogUtil.e(TAG, "onIOException�?" + e.getMessage());
 //              // 注销失败
 //              //setText(R.string.com_sina_weibo_sdk_logout);
 //              
@@ -163,7 +162,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 //  
 //          @Override
 //          public void onError(WeiboException e) {
-//              //LogUtil.e(TAG, "WeiboException： " + e.getMessage());
+//              //LogUtil.e(TAG, "WeiboException�?" + e.getMessage());
 //              // 注销失败
 //             // setText(R.string.com_sina_weibo_sdk_logout);
 //              
@@ -174,7 +173,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 //
 //	}
 	/**
-	 * 当 SSO 授权 Activity 退出时,该函数被调用。 *
+	 * �?SSO 授权 Activity �?���?该函数被调用�?*
 	 * 
 	 * @see {@link Activity#onActivityResult}
 	 */
@@ -182,7 +181,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		// SSO 授权回调
-		// 重要:发起 SSO 登陆的 Activity 必须重写 onActivityResult
+		// 重要:发起 SSO 登陆�?Activity 必须重写 onActivityResult
 		if (mSsoHandler != null) {
 			mSsoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}
@@ -191,7 +190,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	class AuthListener implements WeiboAuthListener {
 		@Override
 		public void onCancel() {
-			// Oauth2.0认证过程中，如果认证窗口被关闭或认证取消时调用
+			// Oauth2.0认证过程中，如果认证窗口被关闭或认证取消时调�?
 			Toast.makeText(getApplicationContext(), "Auth cancel",
 					Toast.LENGTH_LONG).show();
 			updateLoginButton();
@@ -200,7 +199,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		@Override
 		public void onWeiboException(WeiboException e) {
-			// 当认证过程中捕获到WeiboException时调用
+			// 当认证过程中捕获到WeiboException时调�?
 			Toast.makeText(getApplicationContext(),
 					"Auth exception:" + e.getMessage(), Toast.LENGTH_LONG)
 					.show();
@@ -209,19 +208,19 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		@Override
 		public void onComplete(Bundle values) {
-			// 从 Bundle 中解析 Token
+			// �?Bundle 中解�?Token
 			accessToken = Oauth2AccessToken.parseAccessToken(values);
 			if (accessToken.isSessionValid()) {
 				// 显示 Token
 				//mWeiboAuth.getAuthInfo()
 				// updateTokenView(false);
-				// 保存 Token 到 SharedPreferences
+				// 保存 Token �?SharedPreferences
 				AccessTokenKeeper.writeAccessToken(LoginActivity.this,
 						accessToken);
 				updateLoginButton();
 				// .........
 			} else {
-				// 当您注册的应用程序签名不正确时,就会收到 Code,请确保签名正确
+				// 当您注册的应用程序签名不正确�?就会收到 Code,请确保签名正�?
 				// String code = values.getString("code", ""); .........
 				updateLoginButton();
 			}
@@ -232,7 +231,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private void updateLoginButton() {
 		if (mTencent != null && mTencent.isSessionValid()) {
 			//loginQQ.setTextColor(Color.RED);
-			//loginQQ.setText("退出帐号QQ");
+			//loginQQ.setText("�?��帐号QQ");
 			
 		} else {
 			//loginQQ.setTextColor(Color.BLUE);
@@ -242,7 +241,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		if(accessToken!= null && accessToken.isSessionValid()){
 			
 			//loginSina.setTextColor(Color.RED);
-			//loginSina.setText("退出帐号SINA");
+			//loginSina.setText("�?��帐号SINA");
 			MainActivity.TryLoadMainActivity(this);
 		} else {
 			//loginSina.setTextColor(Color.BLUE);
@@ -377,7 +376,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	static public void logout(final Activity paramContext)
 	{
 		final Oauth2AccessToken accessToken = AccessTokenKeeper.readAccessToken(paramContext);
-		Tencent tencent = Tencent.createInstance(QQConstants.APP_KEY, paramContext.getApplicationContext());
+		Tencent tencent = Tencent.createInstance(iAirConstants.QQ_APP_KEY, paramContext.getApplicationContext());
 
 		if (accessToken != null
 				&& accessToken.isSessionValid()) {
@@ -425,7 +424,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 						@Override
 						public void onIOException(IOException e) {
-							// LogUtil.e(TAG, "onIOException： " +
+							// LogUtil.e(TAG, "onIOException�?" +
 							// e.getMessage());
 							// 注销失败
 							// setText(R.string.com_sina_weibo_sdk_logout);
@@ -437,7 +436,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 						@Override
 						public void onError(WeiboException e) {
-							// LogUtil.e(TAG, "WeiboException： " +
+							// LogUtil.e(TAG, "WeiboException�?" +
 							// e.getMessage());
 							// 注销失败
 							// setText(R.string.com_sina_weibo_sdk_logout);
