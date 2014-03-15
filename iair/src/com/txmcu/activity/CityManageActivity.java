@@ -1,7 +1,5 @@
 package com.txmcu.activity;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +9,6 @@ import cn.classd.dragablegrid.widget.DragableGridview;
 import cn.classd.dragablegrid.widget.DragableGridview.OnItemClickListener;
 import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
 
-import com.txmcu.adapter.City;
 import com.txmcu.adapter.CityAdapter;
 import com.txmcu.iair.R;
 
