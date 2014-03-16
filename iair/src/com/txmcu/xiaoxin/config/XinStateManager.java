@@ -7,10 +7,10 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.util.Log;
 
+import com.txmcu.iair.common.Util;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.OpretionsType;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.WifiBroadCastOperations;
-
 
 public class XinStateManager 
 implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
@@ -30,6 +30,12 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	//	Failed_TimeOut,
 		//Failed_XiaoXinConfig
 	}
+	public enum State
+	{
+		Init,
+		Config,
+	}
+	public State mCurState = State.Init;
 	public static int TimeOutSecond = 120;
 	
 	public static interface XinOperations {
@@ -66,14 +72,18 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	
 	public void Init()
 	{
+		mCurState = State.Init;
 		wifiHotM.scanWifiHot();
 		udpclient = new Udpclient();
 		udpclient.operations= this;
 		//backupCurrentWifiState();
 	}
-	public void Config(String SSID,String Pwd)
+	public void Config(String SSID,String Pwd,String _userid,String _sn)
 	{
+		mCurState = State.Config;
 		wifibackupPwd = Pwd;
+		userid=_userid;
+		sn=_sn;
 		wifiHotM.connectToHotpot("xiaoxin_AP", "xiaoxinap");
 	}
 	public void Destroy()
@@ -92,6 +102,9 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	String wifibackupPwd;
 	String wifibackupAuthMode;
 	String wifibackupEncrypType;
+	
+	String userid;
+	String sn;
 	private void backupCurrentWifiState(WifiInfo info,List<ScanResult> scannlist ) {
 		wifibackupNetId=-1;
 		wifibackupSSID="";
@@ -105,7 +118,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 			{
 				if (sr.SSID.equalsIgnoreCase(wifibackupSSID))
 				{
-					int  channel =  getChannel(sr.frequency);
+					int  channel =  Util.getChannel(sr.frequency);
 					wifibackupChannel= String.valueOf(channel);
 					break;
 				}
@@ -121,39 +134,49 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		if(wifibackupNetId!=-1)
 			wifiHotM.enableNetWorkById(wifibackupNetId);
 	}
-	// wifi 热点扫描回调
+	// wifi scan callback
 	@Override
 	public void disPlayWifiScanResult(List<ScanResult> wifiList) {
 
 		wifiHotM.unRegisterWifiScanBroadCast();
-		Log.i(TAG, " 热点扫描结果 �?= " + wifiList);
-		backupCurrentWifiState(wifiHotM.getConnectWifiInfo(),wifiList);
-		if (wifibackupSSID.length()==0) {
-			operations.initResult(false,"");
+		Log.i(TAG, " scan: = " + wifiList);
+		if(mCurState == State.Init)
+		{
+			backupCurrentWifiState(wifiHotM.getConnectWifiInfo(),wifiList);
+			if (wifibackupSSID.length()==0) {
+				operations.initResult(false,"");
+			}
+			else {
+				operations.initResult(true,wifibackupSSID);
+			}
 		}
-		else {
-			operations.initResult(true,wifibackupSSID);
-		}
+		
 		
 		
 		
 		//wifiHotM.enableNetwork(SSID, password)
 	}
 	
-	// wifi 
+	// wifi connect callback
 	@Override
 	public boolean disPlayWifiConResult(boolean result, WifiInfo wifiInfo) {
 
-		Log.i(TAG, "热点连接回调函数");
+		Log.i(TAG, "disPlayWifiConResult");
 		wifiHotM.unRegisterWifiConnectBroadCast();
-		udpclient.setSendWifiInfo(wifibackupSSID, wifibackupPwd,
-				wifibackupAuthMode, wifibackupEncrypType, wifibackupChannel);
-		
-		udpclient.Looper();
+
+
+		if(mCurState == State.Config)
+		{
+			udpclient.setSendWifiInfo(wifibackupSSID, wifibackupPwd,
+					wifibackupAuthMode, wifibackupEncrypType, wifibackupChannel,sn,userid);
+			
+			udpclient.Looper();
+		}
+
 		return false;
 	}
 
-	// wifi 
+	// wifi connect & scan ,when wifi enable
 	@Override
 	public void operationByType(OpretionsType type, String SSID,String pwd) {
 		Log.i(TAG, "operationByType！type = " + type);
@@ -176,54 +199,4 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		}
 	}
 	
-	public static int getChannel(int frequency)
-    {
-            int channel = 0;
-            switch(frequency){
-            case 2412:
-                    channel = 1;
-                    break;
-            case 2417:
-                    channel = 2;
-                    break;
-            case 2422:
-                    channel = 3;
-                    break;
-            case 2427:
-                    channel = 4;
-                    break;
-            case 2432:
-                    channel = 5;
-                    break;
-            case 2437:
-                    channel = 6;
-                    break;
-            case 2442:
-                    channel = 7;
-                    break;
-            case 2447:
-                    channel = 8;
-                    break;
-            case 2452:
-                    channel = 9;
-                    break;
-            case 2457:
-                    channel = 10;
-                    break;
-            case 2462:
-                    channel = 11;
-                    break;
-            case 2467:
-                    channel = 12;
-                    break;
-            case 2472:
-                    channel = 13;
-                    break;
-            case 2484:
-                    channel = 14;
-                    break;
-            }
-            return channel;
-    }
-
 }

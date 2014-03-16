@@ -12,6 +12,10 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 //import android.widget.Toast;
 
 public class Udpclient {
@@ -30,27 +34,42 @@ public class Udpclient {
 	public UdpclientOperations operations;
 	//public Context contentView;
 	private static String TAG = "Udpclient";
-	public byte[] send_msg = new byte[100];
+	public byte[] send_msg ;
 	 private AsyncTask<Void, Void, Void> async_cient;
     
     public String recvingMsg;
     DatagramSocket ds = null;
     InetAddress receiverAddress = null;
     int stateCode = 0;
+    String sn;
+    String userid;
     public void setSendWifiInfo(String ssid,String pwd,String auth_mode,String encryp_type,
-    		String channel)
+    		String channel,String _sn,String _userid)
     {
-    	send_msg =  new byte[100];
+    	sn = _sn;
+    	userid=_userid;
+    	send_msg =  new byte[105];
+    	int len=0;
+
     	byte[] bytes =ssid.getBytes();
-    	System.arraycopy(bytes,0,send_msg,0,bytes.length);
+    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
     	bytes =pwd.getBytes();
-    	System.arraycopy(bytes,0,send_msg,20,bytes.length);
+    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
     	bytes =auth_mode.getBytes();
-    	System.arraycopy(bytes,0,send_msg,40,bytes.length);
+    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=10;
     	bytes =encryp_type.getBytes();
-    	System.arraycopy(bytes,0,send_msg,60,bytes.length);
+    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=10;
     	bytes =channel.getBytes();
-    	System.arraycopy(bytes,0,send_msg,80,bytes.length);
+
+
+    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=5;
+    	
+    	bytes =sn.getBytes();
+    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
+    	
+    	bytes =userid.getBytes();
+    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
+
     	recvingMsg = "";
     	setStopLoop(0,"");
     	
@@ -90,7 +109,6 @@ public class Udpclient {
 	            {
                 	receiverAddress = InetAddress.getByName("192.168.3.1");
                     ds = new DatagramSocket();
-                    ds.setSoTimeout(2000);  
 	            }
             	catch (SocketException e) 
                 {
@@ -106,6 +124,7 @@ public class Udpclient {
             		receMsg();
             		if(recvingMsg.startsWith("receive"))
             		{
+            			//TODO RESTORE WIFI
             			setStopLoop(1,"");
             		}
 
@@ -121,23 +140,30 @@ public class Udpclient {
             	}
             	while(stateCode==1)
             	{
-            		receMsg();
-            		if(recvingMsg.length()!=0)
-            		{
-            			Log.i(TAG, "recvingMsg:"+recvingMsg);
-            		}
-            		if(recvingMsg.startsWith("Ok")
-            		   ||recvingMsg.startsWith("Fail"))
-            		{
-            			setStopLoop(2,recvingMsg);
-            		}
+            		
+            		 RequestParams post_params = new RequestParams();
+            		 post_params.put("userid", userid);
+            		 post_params.put("sn", sn);
+            		
+            		 AsyncHttpClient client = new AsyncHttpClient();
+            		 client.post("http://211.103.161.120:9999/mobile/bind", post_params, 
+            				new AsyncHttpResponseHandler() {
+	            			@Override
+	            			public void onSuccess(String response) {
+	            			 	System.out.println(response);
+	            			 	
+	            			 		setStopLoop(2,response);
+            			  		}
+	            			
+	            	  
+            		 		});
+            		 
             		try {
-						Thread.sleep(1000);
+						Thread.sleep(2000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						return null;
-						//setStopLoop(-5,e.toString());
 					}
             	}
             	
@@ -154,15 +180,11 @@ public class Udpclient {
 	            } 
                 catch (SocketException e) 
                 {
-                	Log.i(TAG, "recvMsg Failed -3");
                     e.printStackTrace();
-                    //setStopLoop(-3,e.toString());
+                    setStopLoop(-3,e.toString());
                 } catch (IOException e) {
-                	Log.i(TAG, "recvMsg Failed -3.1");
-                	e.printStackTrace();
-                	Log.i(TAG, "recvMsg Failed -3.2");
 					// TODO Auto-generated catch block
-                	 //setStopLoop(-3,e.toString());
+                	 setStopLoop(-3,e.toString());
 				}
             }
 
@@ -178,14 +200,11 @@ public class Udpclient {
                 } 
                 catch (SocketException e) 
                 {
-                	Log.i(TAG, "sendMsg FAILED -4");
-                    e.printStackTrace();
-                  //  setStopLoop(-4,e.toString());
+                    //e.printStackTrace();
+                    setStopLoop(-4,e.toString());
                 }
                 catch (IOException e) {
-                	Log.i(TAG, "sendMsg FAILED -4.1");
-                	e.printStackTrace();
-                	//setStopLoop(-4,e.toString());
+                	setStopLoop(-4,e.toString());
 				}
                
                 
