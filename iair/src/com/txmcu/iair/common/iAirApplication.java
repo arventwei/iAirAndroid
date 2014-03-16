@@ -12,12 +12,12 @@ public class iAirApplication extends Application {
 	
 
 	
-	private static final String boundNo="boundNo";
+	private static final String Userid="userid";
 
 	
 	
 
-	private List<String> smsList = new ArrayList<String>();
+	private List<XiaoXinInfoModel> xiaoxinList = new ArrayList<XiaoXinInfoModel>();
 	
 	SharedPreferences mPerferences;
 	
@@ -29,14 +29,14 @@ public class iAirApplication extends Application {
 	}
 	  
 	
-//	public void setSelCarNo(int carid) {
-//		SharedPreferences.Editor mEditor = mPerferences.edit();  
-//	    mEditor.putInt(selCarNo,carid);  
-//	    mEditor.commit(); 
-//	}
-//	public int getSelCarNo() {
-//		return mPerferences.getInt(selCarNo, 0);
-//	}
+	public void setUserid(String userid) {
+		SharedPreferences.Editor mEditor = mPerferences.edit();  
+	    mEditor.putString(Userid,userid);  
+	    mEditor.commit(); 
+	}
+	public String getUserid() {
+		return mPerferences.getString(Userid, "");
+	}
 //	
 //	
 //	

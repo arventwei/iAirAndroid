@@ -56,15 +56,23 @@ public class DeviceAdapter extends BaseAdapter
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if (null == convertView) {
+		//if (null == convertView) {
+		Device b = devices.get(position);
+		if(b.getSn().endsWith(""))
+		{
+			convertView = View.inflate(deviceManageActivity, R.layout.gridview_change_city_add, null);
+		}
+		else
+		{
 			convertView = View.inflate(deviceManageActivity, R.layout.gridview_change_city_item, null);
+			((TextView)convertView.findViewById(R.id.city_name)).setText(b.getName());
 		}
 		
-		Device b = devices.get(position);
+		
 		
 		//((ImageView) convertView.findViewById(R.id.imageView1)).setImageResource(b.getBitmapId());
 		
-		((TextView)convertView.findViewById(R.id.city_name)).setText(b.getName());
+		
 		
 		return convertView;
 	}

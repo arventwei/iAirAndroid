@@ -93,12 +93,12 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			 View subView  = localLayoutInflater.inflate(sDrawables[position], null);
 			 
 			 if (position ==0) {
-				// adapter = new MainEntryAdapter(pageContext);//创建�?��适配�? 
+				// adapter = new MainEntryAdapter(pageContext);
 			     
-			     //listView = (ListView) subView.findViewById(R.id.listView1);//实例化ListView  
-			     //listView.setAdapter(adapter);//为ListView控件绑定适配�?
+			     //listView = (ListView) subView.findViewById(R.id.listView1);
+			     //listView.setAdapter(adapter);//
 			     //listView.setDividerHeight(0);
-			     //adapter.addDevice(1, "小新�?);
+			     //adapter.addDevice(1, "");
 			}
 			 else {
 				

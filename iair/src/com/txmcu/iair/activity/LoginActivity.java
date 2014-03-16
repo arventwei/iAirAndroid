@@ -37,15 +37,18 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.txmcu.iair.R;
 import com.txmcu.iair.common.Util;
+import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
 public class LoginActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "iair";
+	
+	private iAirApplication application;
 	public WeiboAuth mWeiboAuth;
-	public  Oauth2AccessToken accessToken; // 访问token
+	public  Oauth2AccessToken accessToken; // 
 	public SsoHandler mSsoHandler;
 	public  Tencent mTencent;
-	//public static String mAppid;
+	String SCOPE = "get_user_info,get_simple_userinfo,get_user_profile,get_app_friends";
 
 	public Button loginQQ;
 	public Button loginSina;
@@ -56,6 +59,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		this.application = ((iAirApplication)getApplication());
 
 		this.loginQQ = ((Button) findViewById(R.id.loginQQRL));
 		this.loginSina = ((Button) findViewById(R.id.loginSinaRL));
@@ -73,10 +78,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 			//Log.w(TAG, accessToken.getToken());
 		//}
 		//mAppid = "101017203";
-		mTencent = Tencent.createInstance(iAirConstants.QQ_APP_KEY, this.getApplicationContext());
+		mTencent = Tencent.createInstance(iAirConstants.QQ_APP_ID, this.getApplicationContext());
 
-		updateLoginButton();
-		updateUserInfo();
+		checkSessionAdnLogin();
+		//updateUserInfo();
 
 		// this.loginQQ = ((Button)findViewById(R.id.button_login));
 
@@ -86,7 +91,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		// getMenuInflater().inflate(R.menu.main, menu);
-		MainActivity.TryLoadMainActivity(this);
+		TryLoadMainActivity("sina_123");
 		return true;
 	}
 
@@ -96,11 +101,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 				IUiListener listener = new BaseUiListener() {
 					@Override
 					protected void doComplete(JSONObject values) {
-						updateUserInfo();
+						checkSessionAdnLogin();
+						
 						//updateLoginButton();
 					}
 				};
-				mTencent.login(this, "all", listener);
+				mTencent.login(this,SCOPE, listener);
 			} else {
 			//	mTencent.logout(this);
 			//	updateUserInfo();
@@ -122,9 +128,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	}
 
-	/**
-	 * 注销按钮的监听器,接收注销处理结果�?API请求结果的监听器)
-	 */
+	
 //	private class LogOutRequestListener implements RequestListener {
 //		@Override
 //		public void onComplete(String response) {
@@ -151,7 +155,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 //  
 //          @Override
 //          public void onIOException(IOException e) {
-//             // LogUtil.e(TAG, "onIOException�?" + e.getMessage());
+//             // LogUtil.e(TAG, "onIOException�?" + e.getMessage());
 //              // 注销失败
 //              //setText(R.string.com_sina_weibo_sdk_logout);
 //              
@@ -162,7 +166,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 //  
 //          @Override
 //          public void onError(WeiboException e) {
-//              //LogUtil.e(TAG, "WeiboException�?" + e.getMessage());
+//              //LogUtil.e(TAG, "WeiboException�?" + e.getMessage());
 //              // 注销失败
 //             // setText(R.string.com_sina_weibo_sdk_logout);
 //              
@@ -173,7 +177,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 //
 //	}
 	/**
-	 * �?SSO 授权 Activity �?���?该函数被调用�?*
+	 * 
 	 * 
 	 * @see {@link Activity#onActivityResult}
 	 */
@@ -181,7 +185,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		// SSO 授权回调
-		// 重要:发起 SSO 登陆�?Activity 必须重写 onActivityResult
+		// 重要:发起 SSO 登陆�?Activity 必须重写 onActivityResult
 		if (mSsoHandler != null) {
 			mSsoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}
@@ -190,16 +194,16 @@ public class LoginActivity extends Activity implements OnClickListener {
 	class AuthListener implements WeiboAuthListener {
 		@Override
 		public void onCancel() {
-			// Oauth2.0认证过程中，如果认证窗口被关闭或认证取消时调�?
+			// Oauth2.
 			Toast.makeText(getApplicationContext(), "Auth cancel",
 					Toast.LENGTH_LONG).show();
-			updateLoginButton();
+			checkSessionAdnLogin();
 
 		}
 
 		@Override
 		public void onWeiboException(WeiboException e) {
-			// 当认证过程中捕获到WeiboException时调�?
+			// 
 			Toast.makeText(getApplicationContext(),
 					"Auth exception:" + e.getMessage(), Toast.LENGTH_LONG)
 					.show();
@@ -208,30 +212,124 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		@Override
 		public void onComplete(Bundle values) {
-			// �?Bundle 中解�?Token
+			// 
 			accessToken = Oauth2AccessToken.parseAccessToken(values);
 			if (accessToken.isSessionValid()) {
 				// 显示 Token
 				//mWeiboAuth.getAuthInfo()
 				// updateTokenView(false);
-				// 保存 Token �?SharedPreferences
+				// 保存 Token �?SharedPreferences
 				AccessTokenKeeper.writeAccessToken(LoginActivity.this,
 						accessToken);
-				updateLoginButton();
+				checkSessionAdnLogin();
 				// .........
 			} else {
-				// 当您注册的应用程序签名不正确�?就会收到 Code,请确保签名正�?
+				// 
 				// String code = values.getString("code", ""); .........
-				updateLoginButton();
+				checkSessionAdnLogin();
 			}
 		}
 		// .........
 	}
 
-	private void updateLoginButton() {
+	private void checkSessionAdnLogin() {
 		if (mTencent != null && mTencent.isSessionValid()) {
-			//loginQQ.setTextColor(Color.RED);
-			//loginQQ.setText("�?��帐号QQ");
+			
+			TryLoadMainActivity("qq_"+mTencent.getOpenId());
+			
+			// NO NEED MORE INFO,JUSE OPENID IS OK
+			
+//			Util.showProgressDialog(this);
+//			//Util.showProgressDialog(this, "Loading", "Please wait...");
+//			//final ProgressDialog dialog = ProgressDialog.show(this, "", 
+//            //        "Loading. Please wait...", true);
+//			
+//			IRequestListener requestListener = new IRequestListener() {
+//
+//				@Override
+//				public void onUnknowException(Exception e, Object state) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//
+//				@Override
+//				public void onSocketTimeoutException(SocketTimeoutException e,
+//						Object state) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//
+//				@Override
+//				public void onNetworkUnavailableException(
+//						NetworkUnavailableException e, Object state) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//
+//				@Override
+//				public void onMalformedURLException(MalformedURLException e,
+//						Object state) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//
+//				@Override
+//				public void onJSONException(JSONException e, Object state) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//
+//				@Override
+//				public void onIOException(IOException e, Object state) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//
+//				@Override
+//				public void onHttpStatusException(HttpStatusException e,
+//						Object state) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//
+//				@Override
+//				public void onConnectTimeoutException(
+//						ConnectTimeoutException e, Object state) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//
+//				@Override
+//				public void onComplete(final JSONObject response, Object state) {
+//					// TODO Auto-generated method stub
+//					// Message msg = new Message();
+//					// msg.obj = response;
+//					// msg.what = 0;
+//					// mHandler.sendMessage(msg);
+//					JSONObject res = (JSONObject) response;
+//					//if (res.has("nickname")) {
+//						//try {
+//							//String userName = res.getString("nickname");
+//							//Log.i("iair", "nickname" + userName);
+//							//String openId = res.getString("");
+//							Util.showResultDialog(LoginActivity.this, res.toString(), "aa");
+//							// mUserInfo.setVisibility(android.view.View.VISIBLE);
+//							// mUserInfo.setText(response.getString("nickname"));
+//							//dialog.dismiss();
+//							Util.dismissDialog();
+//							//mTencent.()
+//							//MainActivity.TryLoadMainActivity(LoginActivity.this,"qq_");
+//						//} catch (JSONException e) {
+//							// TODO Auto-generated catch block
+//						//	e.printStackTrace();
+//						//}
+//					//}
+//
+//				}
+//			};
+////
+//			mTencent.requestAsync(Constants.GRAPH_SIMPLE_USER_INFO, null,
+//					Constants.HTTP_GET, requestListener, null);
 			
 		} else {
 			//loginQQ.setTextColor(Color.BLUE);
@@ -241,110 +339,25 @@ public class LoginActivity extends Activity implements OnClickListener {
 		if(accessToken!= null && accessToken.isSessionValid()){
 			
 			//loginSina.setTextColor(Color.RED);
-			//loginSina.setText("�?��帐号SINA");
-			MainActivity.TryLoadMainActivity(this);
+			//loginSina.setText("�?��帐号SINA");
+			
+			TryLoadMainActivity("sina_"+accessToken.getUid());
 		} else {
 			//loginSina.setTextColor(Color.BLUE);
 			//loginSina.setText("登录SINA");
 		}
 	}
 
-	private void updateUserInfo() {
-		if (mTencent != null && mTencent.isSessionValid()) {
-			
-			Util.showProgressDialog(this, "Loading", "Please wait...");
-			//final ProgressDialog dialog = ProgressDialog.show(this, "", 
-            //        "Loading. Please wait...", true);
-			
-			IRequestListener requestListener = new IRequestListener() {
-
-				@Override
-				public void onUnknowException(Exception e, Object state) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onSocketTimeoutException(SocketTimeoutException e,
-						Object state) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onNetworkUnavailableException(
-						NetworkUnavailableException e, Object state) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onMalformedURLException(MalformedURLException e,
-						Object state) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onJSONException(JSONException e, Object state) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onIOException(IOException e, Object state) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onHttpStatusException(HttpStatusException e,
-						Object state) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onConnectTimeoutException(
-						ConnectTimeoutException e, Object state) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onComplete(final JSONObject response, Object state) {
-					// TODO Auto-generated method stub
-					// Message msg = new Message();
-					// msg.obj = response;
-					// msg.what = 0;
-					// mHandler.sendMessage(msg);
-					JSONObject res = (JSONObject) response;
-					if (res.has("nickname")) {
-						try {
-							String userName = res.getString("nickname");
-							Log.i("iair", "nickname" + userName);
-							// mUserInfo.setVisibility(android.view.View.VISIBLE);
-							// mUserInfo.setText(response.getString("nickname"));
-							//dialog.dismiss();
-							Util.dismissDialog();
-							MainActivity.TryLoadMainActivity(LoginActivity.this);
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-				}
-			};
-
-			mTencent.requestAsync(Constants.GRAPH_SIMPLE_USER_INFO, null,
-					Constants.HTTP_GET, requestListener, null);
-		} else {
-			// mUserInfo.setText("");
-			// mUserInfo.setVisibility(android.view.View.GONE);
-			// mUserLogo.setVisibility(android.view.View.GONE);
-		}
-	}
+//	private void updateUserInfo() {
+//		if (mTencent != null && mTencent.isSessionValid()) {
+//			
+//
+//		} else {
+//			// mUserInfo.setText("");
+//			// mUserInfo.setVisibility(android.view.View.GONE);
+//			// mUserLogo.setVisibility(android.view.View.GONE);
+//		}
+//	}
 
 	private class BaseUiListener implements IUiListener {
 
@@ -376,7 +389,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	static public void logout(final Activity paramContext)
 	{
 		final Oauth2AccessToken accessToken = AccessTokenKeeper.readAccessToken(paramContext);
-		Tencent tencent = Tencent.createInstance(iAirConstants.QQ_APP_KEY, paramContext.getApplicationContext());
+		Tencent tencent = Tencent.createInstance(iAirConstants.QQ_APP_ID, paramContext.getApplicationContext());
 
 		if (accessToken != null
 				&& accessToken.isSessionValid()) {
@@ -424,7 +437,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 						@Override
 						public void onIOException(IOException e) {
-							// LogUtil.e(TAG, "onIOException�?" +
+							// LogUtil.e(TAG, "onIOException�?" +
 							// e.getMessage());
 							// 注销失败
 							// setText(R.string.com_sina_weibo_sdk_logout);
@@ -436,7 +449,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 						@Override
 						public void onError(WeiboException e) {
-							// LogUtil.e(TAG, "WeiboException�?" +
+							// LogUtil.e(TAG, "WeiboException�?" +
 							// e.getMessage());
 							// 注销失败
 							// setText(R.string.com_sina_weibo_sdk_logout);
@@ -462,4 +475,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 		
 	}
 
+	
+	public void TryLoadMainActivity(String userid) {
+
+		application.setUserid(userid);
+		this.finish();
+	    this.startActivity(new Intent(this, MainActivity.class));
+	    
+	}
 }

@@ -81,8 +81,8 @@ implements OnClickListener{
 	
 	 
 	  private void initTestData() {
-		  adapter.addDevice(1, "xiaoxin");
-		  adapter.addDevice(2,"father");
+		  adapter.addDevice(-1, "");
+		  //adapter.addDevice(2,"father");
 	    	//books = new ArrayList<City>();
 	    	
 			//for (int i = 0; i < 1; i++) {

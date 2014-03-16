@@ -8,11 +8,15 @@ public class Device  implements Serializable {
 
 	private Integer id;
 	
-	private String title;
+	private String sn="";
+	private String title="";
 	
-	private String name;
+	private String name="";
 	
 	private int bitmapId;
+	
+	
+	
 
 	/**
 	 * @return the id
@@ -28,6 +32,17 @@ public class Device  implements Serializable {
 		this.id = id;
 	}
 
+	public String getSn() {
+		return sn;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setSn(String sn) {
+		this.sn = sn;
+	}
+	
 	/**
 	 * @return the title
 	 */

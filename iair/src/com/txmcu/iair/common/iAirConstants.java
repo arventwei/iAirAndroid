@@ -37,5 +37,11 @@ public interface iAirConstants {
             + "follow_app_official_microblog," + "invitation_write";
     
     
-    public static final String QQ_APP_KEY      = "101017203";
+    public static final String QQ_APP_ID      = "101017203";
+    
+    public static final String API_Login = "http://211.103.161.120:9999/mobile/login";
+    public static final String API_Bind  ="http://211.103.161.120:9999/mobile/bind";
+    public static final String API_UnBind = "http://211.103.161.120:9999/mobile/unbind";
+    public static final String API_QueryBindlist = "http://211.103.161.120:9999/mobile/query_bindlist";
+    public static final String API_GetXiaoxin ="http://211.103.161.120:9999/mobile/getxiaoxin";
 }

@@ -23,14 +23,20 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.MainEntry;
 import com.txmcu.iair.adapter.MainEntryAdapter;
+import com.txmcu.iair.common.iAirApplication;
+import com.txmcu.iair.common.iAirConstants;
 
 public class MainActivity extends  Activity
 implements OnRefreshListener<VerticalViewPager>,OnClickListener
 {
 
+	private iAirApplication application;
 	
 	private PullToRefreshViewPager mPullToRefreshViewPager;
 	private PopupWindow popWin;
@@ -42,6 +48,8 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		setTheme(R.style.Common);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		this.application = ((iAirApplication)getApplication());
 
 		mPullToRefreshViewPager = (PullToRefreshViewPager) findViewById(R.id.pull_refresh_viewpager);
 		mPullToRefreshViewPager.setOnRefreshListener(MainActivity.this);
@@ -51,6 +59,23 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		
 		addButtonListener();
 		
+		
+		 RequestParams post_params = new RequestParams();
+		 post_params.put("userid", application.getUserid());
+		 //post_params.put("sn", sn);
+		
+		 AsyncHttpClient client = new AsyncHttpClient();
+		 client.post(iAirConstants.API_Login, post_params, 
+				new AsyncHttpResponseHandler() {
+    			@Override
+    			public void onSuccess(String response) {
+    			 	System.out.println(response);
+    			 	
+    			 		//setStopLoop(2,response);
+			  		}
+    			
+    	  
+		 		});
 		
 		
 	}
@@ -200,11 +225,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		}
 	}
 
-	public static void TryLoadMainActivity(Activity paramContext) {
-
-	    paramContext.startActivity(new Intent(paramContext, MainActivity.class));
-	    paramContext.finish();
-	}
+	
 
 	private void addButtonListener() {
 		findViewById(R.id.add_city).setOnClickListener(this);

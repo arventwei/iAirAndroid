@@ -427,7 +427,10 @@ public class Util {
 		new AlertDialog.Builder(context).setTitle(title).setMessage(rmsg)
 				.setNegativeButton(R.string.i_known, null).create().show();
 	}
-
+	public static final void showProgressDialog(Context context)
+	{
+		showProgressDialog(context,"","");
+	}
 	public static final void showProgressDialog(Context context, String title,
 			String message) {
 		dismissDialog();

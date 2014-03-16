@@ -3,12 +3,10 @@ package com.txmcu.xiaoxin.config.wifi;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R.integer;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
@@ -45,22 +43,10 @@ public class WifiHotManager {
 
 	public static interface WifiBroadCastOperations {
 
-		/**
-		 * @param wifiList 热点扫描结果
-		 */
 		public void disPlayWifiScanResult(List<ScanResult> wifiList);
 
-		/**
-		 * @param result wifi 连接结果
-		 * @param wifiInfo wifi连接信息
-		 * @return wifi连接结果
-		 */
 		public boolean disPlayWifiConResult(boolean result, WifiInfo wifiInfo);
 
-		/**
-		 * @param type conntect wifi or scan wifi
-		 * @param SSID wifi 连接时指定的SSID
-		 */
 		public void operationByType(OpretionsType type, String SSID,String pWd);
 
 	}
@@ -144,7 +130,7 @@ public class WifiHotManager {
 		WifiInfo wifiInfo = mWifimanager.getConnectionInfo();
 		return wifiInfo;
 	}
-	// �?��Wifi是否打开
+	//
 	public boolean wifiIsOpen() {
 		if (mWifimanager == null) {
 			mWifimanager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -152,7 +138,7 @@ public class WifiHotManager {
 		return mWifimanager.isWifiEnabled();
 	}
 
-	// 扫描Wifi热点
+	// 
 	public void scanWifiHot() {
 		Log.i(TAG, "into wifiHotScan()");
 		if (!wifiIsOpen()) {
@@ -167,7 +153,7 @@ public class WifiHotManager {
 		Log.i(TAG, "out wifiHotScan()");
 	}
 
-	// 连接热点
+	// 
 	public void connectToHotpot(final String SSID, final String password) {
 		if (SSID == null || SSID.equals("")) {
 			Log.d(TAG, "WIFI ssid is null or ");
