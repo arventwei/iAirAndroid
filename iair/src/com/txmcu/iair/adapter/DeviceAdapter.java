@@ -27,7 +27,7 @@ public class DeviceAdapter extends BaseAdapter
 	
 	public  void addDevice(int index,String name) {
 		Device book = new Device();
-    	book.setId(index);
+    	//book.setId(index);
     	book.setName(name);
     	//book.setBitmapId(R.drawable.b001);
     	devices.add(book);

@@ -212,6 +212,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		protected Void doInBackground(Void... params) {
 			// Simulates a background job.
 			try {
+				
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 			}

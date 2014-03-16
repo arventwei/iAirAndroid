@@ -7,6 +7,8 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.txmcu.iair.adapter.Device;
+
 public class iAirApplication extends Application {
 	
 	
@@ -17,7 +19,7 @@ public class iAirApplication extends Application {
 	
 	
 
-	private List<XiaoXinInfoModel> xiaoxinList = new ArrayList<XiaoXinInfoModel>();
+	private List<Device> xiaoxinList = new ArrayList<Device>();
 	
 	SharedPreferences mPerferences;
 	

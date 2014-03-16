@@ -46,6 +46,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		
 		addButtonListener();
 		
+		new GetDataTask().execute();
 		
 		
 	}
@@ -126,7 +127,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		protected Void doInBackground(Void... params) {
 			// Simulates a background job.
 			try {
-				Thread.sleep(500);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 			}
 			return null;
