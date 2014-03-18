@@ -30,7 +30,7 @@ public class Udpclient {
 		
 	}
 	
-	
+	XinStateManager xinMgr;
 	public UdpclientOperations operations;
 	//public Context contentView;
 	private static String TAG = "Udpclient";
@@ -43,6 +43,13 @@ public class Udpclient {
     int stateCode = 0;
     String sn;
     String userid;
+    
+    public Udpclient(XinStateManager xinstateMgr,UdpclientOperations opertion)
+    {
+    	xinMgr = xinstateMgr;
+    	operations = opertion;
+    	
+    }
     public void setSendWifiInfo(String ssid,String pwd,String auth_mode,String encryp_type,
     		String channel,String _sn,String _userid)
     {
@@ -125,6 +132,7 @@ public class Udpclient {
             		if(recvingMsg.startsWith("receive"))
             		{
             			//TODO RESTORE WIFI
+            			//xinMgr.
             			setStopLoop(1,"");
             		}
 

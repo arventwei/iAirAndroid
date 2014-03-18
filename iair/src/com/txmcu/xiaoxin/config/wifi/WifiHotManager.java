@@ -3,6 +3,7 @@ package com.txmcu.xiaoxin.config.wifi;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.integer;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
@@ -68,6 +69,8 @@ public class WifiHotManager {
 		this.operations = operations;
 		wifiApadmin = WifiHotAdmin.newInstance(context);
 		mWifimanager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		
+
 	}
 	public List<String> getAuthMode(String SSID)
 	{
@@ -129,6 +132,11 @@ public class WifiHotManager {
 		}
 		WifiInfo wifiInfo = mWifimanager.getConnectionInfo();
 		return wifiInfo;
+	}
+	public void removeWifiInfo(int netid)
+	{
+		mWifimanager.removeNetwork(netid);
+		mWifimanager.saveConfiguration();
 	}
 	//
 	public boolean wifiIsOpen() {

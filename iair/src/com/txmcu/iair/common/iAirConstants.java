@@ -23,7 +23,10 @@ package com.txmcu.iair.common;
  * @since 2013-09-29
  */
 public interface iAirConstants {
-
+	
+	public static final String XIAOXIN_SSID="xiaoxin_AP";
+	public static final String XIAOXIN_PWD ="xiaoxinap";
+	
     /**  */
     public static final String APP_KEY      = "1173965945";
 

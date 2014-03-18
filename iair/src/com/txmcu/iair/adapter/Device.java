@@ -15,9 +15,9 @@ public class Device  implements Serializable {
 	
 	private String name="";
 	
-	public float  temp;
-	public float  humi;
-	public float  pm25;
+	public double  temp;
+	public double  humi;
+	public double  pm25;
 	
 	public int  	switchOn;
 	public int     	speed;
@@ -32,7 +32,13 @@ public class Device  implements Serializable {
 
 	        JSONObject jsonObj = new JSONObject();
 	        jsonObj.put("sn", sn);
+	        jsonObj.put("name",name);
 	        jsonObj.put("temp",temp);
+	        jsonObj.put("humi",humi);
+	        jsonObj.put("pm25",pm25);
+	        jsonObj.put("switchOn",switchOn);
+	        jsonObj.put("speed",speed);
+	        jsonObj.put("lastUpdateStamp",lastUpdateStamp);
         
 	        return jsonObj.toString();
 
@@ -48,6 +54,14 @@ public class Device  implements Serializable {
 		{
 			JSONObject jObj = new JSONObject(data);
 			sn = jObj.getString("sn");
+			name = jObj.getString("name");
+			temp = jObj.getDouble("temp");
+			humi = jObj.getDouble("humi");
+			pm25 = jObj.getDouble("pm25");
+			
+			switchOn = jObj.getInt("switchOn");
+			speed = jObj.getInt("speed");
+			lastUpdateStamp = jObj.getInt("lastUpdateStamp");
 
 		}
 		catch(JSONException ex) {
@@ -80,18 +94,9 @@ public class Device  implements Serializable {
 	public void setSn(String sn) {
 		this.sn = sn;
 	}
-	
-	
-	/**
-	 * @return the name
-	 */
 	public String getName() {
 		return name;
 	}
-
-	/**
-	 * @param name the name to set
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
