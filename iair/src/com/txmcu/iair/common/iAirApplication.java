@@ -36,6 +36,8 @@ public class iAirApplication extends Application {
 		return mPerferences.getString(Userid, "");
 	}
 	
+	
+	
 	///backup wifi info
 	
 	private static final String WifibackupNetId="WifibackupNetId";

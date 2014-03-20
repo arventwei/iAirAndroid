@@ -27,6 +27,9 @@ public interface iAirConstants {
 	public static final String XIAOXIN_SSID="xiaoxin_AP";
 	public static final String XIAOXIN_PWD ="xiaoxinap";
 	
+	public static final String XIAOXIN_IP="192.168.3.1";
+	public static final Integer XIAOXIN_PORT = 8888;
+	
     /**  */
     public static final String APP_KEY      = "1173965945";
 

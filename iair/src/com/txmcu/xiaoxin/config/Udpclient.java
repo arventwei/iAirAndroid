@@ -17,6 +17,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 //import android.widget.Toast;
+import com.txmcu.iair.common.iAirConstants;
 
 public class Udpclient {
 	
@@ -114,7 +115,7 @@ public class Udpclient {
             {  
             	try 
 	            {
-                	receiverAddress = InetAddress.getByName("192.168.3.1");
+                	receiverAddress = InetAddress.getByName(iAirConstants.XIAOXIN_IP);
                     ds = new DatagramSocket();
 	            }
             	catch (SocketException e) 
@@ -133,6 +134,7 @@ public class Udpclient {
             		{
             			//TODO RESTORE WIFI
             			//xinMgr.
+            			xinMgr.restoreCurrentWifiState();
             			setStopLoop(1,"");
             		}
 
@@ -154,7 +156,7 @@ public class Udpclient {
             		 post_params.put("sn", sn);
             		
             		 AsyncHttpClient client = new AsyncHttpClient();
-            		 client.post("http://211.103.161.120:9999/mobile/bind", post_params, 
+            		 client.post(iAirConstants.API_Bind, post_params, 
             				new AsyncHttpResponseHandler() {
 	            			@Override
 	            			public void onSuccess(String response) {
@@ -202,7 +204,7 @@ public class Udpclient {
                 {
                     DatagramPacket dp;                          
                     dp = new DatagramPacket(send_msg, send_msg.length,
-                    		receiverAddress, 8888);
+                    		receiverAddress, iAirConstants.XIAOXIN_PORT);
                     ds.setBroadcast(true);
                     ds.send(dp);
                 } 

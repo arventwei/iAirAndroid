@@ -34,7 +34,11 @@
         android:layout_marginLeft="7.5dip"
         android:layout_marginRight="7.5dip"
         android:layout_marginTop="@dimen/weather_detail_city_mgr_margin_top"
-        android:numColumns="3" >
+        android:numColumns="auto_fit"  
+    android:verticalSpacing="10dp"  
+    android:horizontalSpacing="10dp"  
+    android:columnWidth="90dp"  
+    android:stretchMode="columnWidth"  >
     </cn.classd.dragablegrid.widget.DragableGridview>
     
      
