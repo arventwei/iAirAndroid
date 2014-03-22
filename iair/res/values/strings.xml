@@ -44,6 +44,8 @@
     
     <string name="change_device_activity_title">小新管理</string>
     <string name="device_drag_tip">长按小新，可拖动改变小新顺序及删除小新</string>
+    <string name="add_device_activity_title">绑定小新</string>
+    <string name="modify_device_activity_title">修改小新</string>
     
     <string name="main_list_column_city">城市/家</string>
     <string name="main_list_column_pm25">PM2.5</string>
@@ -52,13 +54,13 @@
     
     <string name="detail_activity_title">小新家</string>
     
-       <string name="broad_dialog_text_title">我要添加公告</string>
+    <string name="broad_dialog_text_title">我要添加公告</string>
     <string name="broad_dialog_text_hint_content">请输入公告内容(限20字以内)</string>
     <string name="broad_dialog_text_hint_grey" />
-       <string name="cancel_str">取消</string>
-           <string name="confirm_send">发表</string>
+    <string name="cancel_str">取消</string>
+    <string name="confirm_send">发表</string>
            
-            <string name="setting_main_title">设置</string>
+    <string name="setting_main_title">设置</string>
     <string name="gps_setting_title">GPS 定位</string>
     <string name="anim_setting_title">天气动画</string>
     <string name="background_setting_title">更换天气壁纸</string>
@@ -86,5 +88,17 @@
            <string name="i_known">知道了</string>
        
            <string name="xiaoxin_login_ok">登陆成功</string>
+       
+           <string name="add_device_ssid">当前网络</string>
+           <string name="add_device_pwd">密码</string>
+           <string name="add_device_sn">序列号</string>
+       
+           <string name="add_device_pwd_hint">请输入您的Wi-Fi密码</string>
+       
+           <string name="add_device_cooldown">开始连接设备 剩余</string>
+       
+           <string name="setting">设置</string>
+       
+           <string name="second">秒</string>
     
 </resources>

@@ -1,9 +1,7 @@
 package com.txmcu.iair.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +11,7 @@ import cn.classd.dragablegrid.widget.DragableGridview.OnItemClickListener;
 import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
 
 import com.txmcu.iair.R;
-import com.txmcu.iair.adapter.City;
+import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.DeviceAdapter;
 
 public class DeviceManageActivity extends Activity 
@@ -30,7 +28,7 @@ implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.device_manage_activity);
+		setContentView(R.layout.activity_device_manage);
 		findViewById(R.id.back_img).setOnClickListener(this);
 		mGridview= ((DragableGridview)findViewById(R.id.device_gridview));
 		
@@ -54,6 +52,18 @@ implements OnClickListener{
 			@Override
 			public void click(int index) {
 				Log.d(TAG, "item : " + index + " -- clicked!");
+				
+				Device device = (Device)adapter.getItem(index);
+				if (device.sn.equals("")) {
+					Intent localIntent = new Intent(DeviceManageActivity.this,DeviceAddActivity.class);
+					startActivity(localIntent);
+				    overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+				}
+				else {
+					Intent localIntent = new Intent(DeviceManageActivity.this,DeviceModifyActivity.class);
+					startActivity(localIntent);
+				    overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+				}
 			}
 		});
 		

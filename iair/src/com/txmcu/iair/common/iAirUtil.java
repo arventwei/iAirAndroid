@@ -33,7 +33,7 @@ public class iAirUtil {
 
 	private static final String TAG = "SDK_Sample.Util";
 
-	private static Dialog mProgressDialog;
+	private static ProgressDialog mProgressDialog;
 	private static Toast mToast;
 
 	/*
@@ -451,6 +451,12 @@ public class iAirUtil {
 		if (mProgressDialog != null) {
 			mProgressDialog.dismiss();
 			mProgressDialog = null;
+		}
+	}
+	public static final void setProgressText(String text) {
+		if (mProgressDialog != null) {
+			mProgressDialog.setMessage(text);
+			
 		}
 	}
 

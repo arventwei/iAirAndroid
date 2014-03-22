@@ -57,5 +57,7 @@
         <dimen name="weather_detail_activity_air_number_margin_top">5.0dip</dimen>
     <dimen name="weather_detail_activity_air_desc_margin_bottom">5.0dip</dimen>
     <dimen name="detail_container_large_text_size">48dip</dimen>
+    <dimen name="add_device_padding">10dip</dimen>
+    <dimen name="add_device_edit_left_padding">10dip</dimen>
     
 </resources>
