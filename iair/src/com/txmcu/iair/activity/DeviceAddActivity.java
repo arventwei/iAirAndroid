@@ -19,6 +19,7 @@ import android.widget.EditText;
 import com.txmcu.iair.R;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
+import com.txmcu.xiaoxin.config.XinServerManager;
 import com.txmcu.xiaoxin.config.XinStateManager;
 import com.txmcu.xiaoxin.config.XinStateManager.ConfigType;
 import com.txmcu.xiaoxin.config.XinStateManager.XinOperations;
@@ -48,7 +49,15 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		xinMgr = XinStateManager.getInstance(this, this);
 		xinMgr.Init();
 
-		iAirUtil.showProgressDialog(this);
+		iAirUtil.showProgressDialog(this,"","", new DialogInterface.OnCancelListener(){
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                //YourTask.this.cancel(true);
+            	//if(task!=null)
+            	//	task.cancel();
+                finish();
+            }
+        });
 	}
 	@Override
 	protected void onDestroy() {
@@ -66,16 +75,18 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			finish();
 		}else if (view.getId() == R.id.nextstep) {
 			cooldown = 120;
-			iAirUtil.showProgressDialog(this, getString(R.string.setting), getString(R.string.add_device_cooldown)+120+getString(R.string.second));
-//			progress = ProgressDialog.show(this, "设置", "开始连接设备 剩余120秒", true,true,new DialogInterface.OnCancelListener(){
-//                @Override
-//                public void onCancel(DialogInterface dialog) {
-//                    //YourTask.this.cancel(true);
-//                	if(task!=null)
-//                		task.cancel();
-//                    finish();
-//                }
-//            });
+			iAirUtil.showProgressDialog(this, getString(R.string.setting)
+					, getString(R.string.add_device_cooldown)+120+getString(R.string.second)
+					, new DialogInterface.OnCancelListener(){
+	            @Override
+	            public void onCancel(DialogInterface dialog) {
+	                //YourTask.this.cancel(true);
+	            	if(task!=null)
+	            		task.cancel();
+	                finish();
+	            }
+	        });
+
 			xinMgr.Config(editSSIDEditText.getText().toString(),
 					editPwdEditText.getText().toString(),application.getUserid(),
 					editSnEditText.getText().toString()
@@ -153,6 +164,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			//! add xiaoxin
 			//XiaoxinInfo info = new XiaoxinInfo();
 			//MainActivity.scannlist.add(info);
+			iAirUtil.toastMessage(this, "添加成功");
 		}
 		finish();
 	}

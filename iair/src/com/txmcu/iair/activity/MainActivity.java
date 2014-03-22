@@ -121,6 +121,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	@Override
 	public void onRefresh(PullToRefreshBase<VerticalViewPager> refreshView)
 	{
+		mPullToRefreshViewPager.onRefreshComplete();
 		AsyncMainEntrys();
 		//new GetDataTask().execute(this);
 	}
@@ -132,7 +133,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		private Activity pageContext;
 		
 		
-		private ListView listView; 
+		public ListView listView; 
 		public MainEntryAdapter mainentryAdapter;
 		iAirApplication application;
 		
@@ -180,6 +181,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 						
 						@Override
 						public void run(String response) {
+							
 							mainentryAdapter.syncDevices();
 							mainentryAdapter.notifyDataSetChanged();
 							// TODO Auto-generated method stub
@@ -212,14 +214,15 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	}
 	
 	private void  AsyncMainEntrys() {
-		mPullToRefreshViewPager.onRefreshComplete();
+		
 		XinServerManager.query_bindlist(this, application.getUserid(), new XinServerManager.onSuccess() {
 			
 			@Override
 			public void run(String response) {
 				SamplePagerAdapter adapter = (SamplePagerAdapter)(mPullToRefreshViewPager.getRefreshableView().getAdapter());
 				adapter.mainentryAdapter.syncDevices();
-				adapter.notifyDataSetChanged();
+				adapter.mainentryAdapter.notifyDataSetChanged();
+				
 				
 				// TODO Auto-generated method stub
 				

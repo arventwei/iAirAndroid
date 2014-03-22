@@ -132,7 +132,7 @@ public class Udpclient {
             		if(recvingMsg.startsWith("receive"))
             		{
             			//TODO RESTORE WIFI
-            			//xinMgr.
+            			
             			xinMgr.restoreCurrentWifiState();
             			setStopLoop(1,"");
             		}
@@ -149,6 +149,7 @@ public class Udpclient {
             	}
             	while(stateCode==1)
             	{
+            		
             		XinServerManager.bind(activity, userid, sn,new XinServerManager.onSuccess() {
 						
 						@Override
@@ -161,7 +162,7 @@ public class Udpclient {
 
             		 
             		try {
-						Thread.sleep(2000);
+						Thread.sleep(4000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -203,9 +204,11 @@ public class Udpclient {
                 catch (SocketException e) 
                 {
                     //e.printStackTrace();
+                	//TODO...
                     setStopLoop(-4,e.toString());
                 }
                 catch (IOException e) {
+                	//TODO...
                 	setStopLoop(-4,e.toString());
 				}
                
