@@ -59,5 +59,6 @@
     <dimen name="detail_container_large_text_size">48dip</dimen>
     <dimen name="add_device_padding">10dip</dimen>
     <dimen name="add_device_edit_left_padding">10dip</dimen>
+    <dimen name="device_detail_up_padding">90dip</dimen>
     
 </resources>

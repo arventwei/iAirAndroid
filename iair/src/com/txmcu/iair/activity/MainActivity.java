@@ -169,6 +169,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 						if(position >0)
 						{
 							Intent localIntent = new Intent(pageContext, DetailActivity.class);
+							localIntent.putExtra("sn", b.sn);
 							pageContext.startActivity(localIntent);
 							pageContext.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
 						

@@ -8,23 +8,21 @@
     <View
         android:id="@+id/topleft"
         android:layout_width="0.0dip"
-        android:layout_height="0.0dip" />
+        android:layout_height="@dimen/device_detail_up_padding" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_below="@id/topleft"
+        android:orientation="horizontal" >
         
          <include
-        
+        android:id="@+id/xiaoxin_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         layout="@layout/include_detail_container" />
-          <include
+         
         
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        layout="@layout/include_detail_container" />
     </LinearLayout>
 
     <RelativeLayout

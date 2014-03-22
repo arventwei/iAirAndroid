@@ -188,4 +188,71 @@ public class XinServerManager {
 					}
 				});
 	}
+	
+	static public void setxiaoxin_switch(final Activity activity, final String sn,final int isOn,
+			final onSuccess r)
+	{
+		final iAirApplication application = ((iAirApplication) activity
+				.getApplication());
+		RequestParams post_params = new RequestParams();
+		post_params.put("sn", sn);
+		post_params.put("switch", String.valueOf(isOn));
+
+		AsyncHttpClient client = getHttpClient();
+		client.post(iAirConstants.API_SetXiaoxinSwitch, post_params,
+				new AsyncHttpResponseHandler() {
+					@Override
+					public void onSuccess(String response) {
+						//System.out.println(response);
+						iAirUtil.toastMessage(activity, response);
+						if (response.equals(iAirConstants.Server_Fail)) {
+							if(r!=null)
+								r.run(response);
+							return;
+						}
+						
+						Device xiaoxin = application.getXiaoxin(sn);
+						xiaoxin.switchOn=isOn;
+
+						application.setXiaoxin(xiaoxin);
+
+						if(r!=null)
+							r.run(response);
+					}
+				});
+	}
+	
+	static public void setxiaoxin_speed(final Activity activity, final String sn,final int speed,
+			final onSuccess r)
+	{
+		final iAirApplication application = ((iAirApplication) activity
+				.getApplication());
+		RequestParams post_params = new RequestParams();
+		post_params.put("sn", sn);
+		post_params.put("speed", String.valueOf(speed));
+
+		AsyncHttpClient client = getHttpClient();
+		client.post(iAirConstants.API_SetXiaoxinSeed, post_params,
+				new AsyncHttpResponseHandler() {
+					@Override
+					public void onSuccess(String response) {
+						//System.out.println(response);
+						iAirUtil.toastMessage(activity, response);
+						if (response.equals(iAirConstants.Server_Fail)) {
+							if(r!=null)
+								r.run(response);
+							return;
+						}
+						
+
+						Device xiaoxin = application.getXiaoxin(sn);
+						
+						xiaoxin.speed = speed;
+						application.setXiaoxin(xiaoxin);
+
+						if(r!=null)
+							r.run(response);
+					}
+				});
+	}
 }

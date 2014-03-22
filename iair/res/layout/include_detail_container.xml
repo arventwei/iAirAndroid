@@ -14,7 +14,7 @@
         android:layout_marginTop="10.0dip" >
 
     <TextView
-        android:id="@+id/air_portrait_imageview"
+        android:id="@+id/xiaoxin_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="2.0dip"
@@ -25,14 +25,14 @@
             android:id="@+id/air_divider"
             android:layout_width="2.0dip"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/air_portrait_imageview"
-            android:layout_alignTop="@+id/air_portrait_imageview"
+            android:layout_alignBottom="@+id/xiaoxin_name"
+            android:layout_alignTop="@+id/xiaoxin_name"
             android:layout_marginRight="7.0dip"
-            android:layout_toRightOf="@+id/air_portrait_imageview"
+            android:layout_toRightOf="@+id/xiaoxin_name"
             android:background="@drawable/air_divider" />
 
         <TextView
-            android:id="@+id/air_number_textview"
+            android:id="@+id/xiaoxin_pm25"
             style="@style/clockWeatherText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,25 +40,75 @@
             android:layout_toRightOf="@id/air_divider"
             android:paddingBottom="3.0dip"
             android:textColor="@color/white"
-            android:text="36"
+            android:text="pm2.5:333 "
             android:textSize="25.0sp" />
 
         <TextView
-            android:id="@+id/air_descrption_textview"
+            android:id="@+id/xiaoxin_temphumi"
             style="@style/clockWeatherText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/air_portrait_imageview"
+            android:layout_alignBottom="@id/xiaoxin_name"
             android:layout_marginBottom="@dimen/weather_detail_activity_air_desc_margin_bottom"
             android:layout_toRightOf="@id/air_divider"
             android:textColor="@color/white"
-            android:text="轻度污染"
+            android:text="温度:10 湿度:20"
             android:textSize="15.0sp" />
+
+        <LinearLayout
+            android:id="@+id/air_switch"
+            style="@style/setting_item_layout"
+   
+            android:layout_below="@id/air_divider" >
+
+            <TextView
+                style="@style/setting_item_main_text"
+                android:layout_width="0.0dip"
+                android:text="开关:"
+                android:layout_weight="1.0" />
+
+            <CheckBox
+                android:id="@+id/xiaoxin_switch"
+                style="@style/setting_item_checkbox"
+                android:layout_width="0dp"
+                android:layout_weight="1.0" />
+        </LinearLayout>
+        
+         <LinearLayout
+             android:id="@+id/air_speed"
+             style="@style/setting_item_layout"
+             android:layout_below="@id/air_switch" >
+
+                <TextView
+                    style="@style/setting_item_main_text"
+                    android:layout_width="0.0dip"
+                    android:layout_weight="1.0"
+                    android:text="速度:" />
+
+                <EditText
+                    android:id="@+id/input_speed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:ems="10"
+                    android:inputType="number" >
+
+                    <requestFocus />
+                </EditText>
+
+                <Button
+                    android:id="@+id/btn_speed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="确定" />
+
+            </LinearLayout>
         
          <View
              android:layout_width="fill_parent"
              android:layout_height="1.0dip"
-             android:layout_below="@id/air_divider"
+             android:layout_below="@id/air_speed"
              android:layout_gravity="bottom"
              android:layout_marginLeft="8.0dip"
              android:layout_marginRight="8.0dip"
