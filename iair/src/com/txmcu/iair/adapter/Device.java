@@ -5,15 +5,18 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
+
 public class Device  implements Serializable {
 
 	private static final long	serialVersionUID	= 7973999356736512441L;
 
+	private static int imaxid = 0;
 	private Integer id;
 	
-	private String sn="";
+	public String sn="";
 	
-	private String name="";
+	public String name="";
 	
 	public double  temp;
 	public double  humi;
@@ -23,6 +26,13 @@ public class Device  implements Serializable {
 	public int     	speed;
 	public int    	lastUpdateStamp;
 	
+	public Device() {
+		this.id = imaxid++;
+	}
+	public Device(String sn) {
+		this.id = imaxid++;
+		this.sn = sn;
+	}
 	
 	
 	public String ToJson()
@@ -77,31 +87,6 @@ public class Device  implements Serializable {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getSn() {
-		return sn;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setSn(String sn) {
-		this.sn = sn;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	
 	
 	
 }

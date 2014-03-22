@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,19 +17,17 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.txmcu.iair.R;
-import com.txmcu.iair.adapter.MainEntry;
+import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.MainEntryAdapter;
 import com.txmcu.iair.common.iAirApplication;
-import com.txmcu.iair.common.iAirConstants;
+import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class MainActivity extends  Activity
 implements OnRefreshListener<VerticalViewPager>,OnClickListener
@@ -60,22 +57,15 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		addButtonListener();
 		
 		
-		 RequestParams post_params = new RequestParams();
-		 post_params.put("userid", application.getUserid());
-		 //post_params.put("sn", sn);
+		XinServerManager.login(this	, application.getUserid(),new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(String response) {
+				// TODO Auto-generated method stub
+				Toast.makeText(MainActivity.this, R.string.xiaoxin_login_ok, Toast.LENGTH_LONG).show();
+			}
+		});
 		
-		 AsyncHttpClient client = new AsyncHttpClient();
-		 client.post(iAirConstants.API_Login, post_params, 
-				new AsyncHttpResponseHandler() {
-    			@Override
-    			public void onSuccess(String response) {
-    			 	System.out.println(response);
-    			 	
-    			 		//setStopLoop(2,response);
-			  		}
-    			
-    	  
-		 		});
 		
 		
 	}
@@ -129,22 +119,26 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	}
 	  
 	@Override
-	public void onRefresh(PullToRefreshBase<VerticalViewPager> refreshView) {
-		new GetDataTask().execute();
+	public void onRefresh(PullToRefreshBase<VerticalViewPager> refreshView)
+	{
+		AsyncMainEntrys();
+		//new GetDataTask().execute(this);
 	}
 
-	static class SamplePagerAdapter extends com.handmark.verticalview.PagerAdapter {
+	static class SamplePagerAdapter extends com.handmark.verticalview.PagerAdapter
+	{
 
 		private static int[] sDrawables = { R.layout.include_up_main, R.layout.include_down_main };
 		private Activity pageContext;
 		
 		
 		private ListView listView; 
-		MainEntryAdapter adapter;
-		
+		public MainEntryAdapter mainentryAdapter;
+		iAirApplication application;
 		
 		public SamplePagerAdapter(Activity paramContext) {
 			pageContext = paramContext;
+			 application = (iAirApplication)pageContext.getApplication();
 		}
 		@Override
 		public int getCount() {
@@ -159,18 +153,18 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			 View subView  = localLayoutInflater.inflate(sDrawables[position], null);
 			 
 			 if (position ==0) {
-				 adapter = new MainEntryAdapter(pageContext);//创建�?��适配�? 
+				 mainentryAdapter = new MainEntryAdapter(pageContext);//
 			     
 			     listView = (ListView) subView.findViewById(R.id.listView1);//实例化ListView  
-			     listView.setAdapter(adapter);//为ListView控件绑定适配�?
+			     listView.setAdapter(mainentryAdapter);//
 			    // listView.setDividerHeight(0);
 			     
 			     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() 
 			     {
 					@Override
 					public void onItemClick(AdapterView parent, View view,int position, long id){
-						Log.i("sfs", "asfasds");
-						MainEntry b = (MainEntry)adapter.getItem(position);
+						//Log.i("sfs", "asfasds");
+						Device b = (Device)mainentryAdapter.getItem(position);
 						if(position >0)
 						{
 							Intent localIntent = new Intent(pageContext, DetailActivity.class);
@@ -180,11 +174,22 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 						}
 					}
 			     });
-			     
-			     adapter.addDevice(1, "xiaoxin");
-			     adapter.addDevice(2, "father");
-			     adapter.addDevice(3, "beijing");
-			     adapter.addDevice(4, "nanjing");
+			    // iAirApplication application = (iAirApplication)pageContext.getApplication();
+			    
+			     XinServerManager.query_bindlist(pageContext, application.getUserid(), new XinServerManager.onSuccess() {
+						
+						@Override
+						public void run(String response) {
+							mainentryAdapter.syncDevices();
+							mainentryAdapter.notifyDataSetChanged();
+							// TODO Auto-generated method stub
+							
+						}
+					});
+			    // adapter.addDevice(1, "小新");
+			   //  adapter.addDevice(2, "爸爸家");
+			   //  adapter.addDevice(3, "北京");
+			   //  adapter.addDevice(4, "南京");
 			}
 			 else {
 				
@@ -205,26 +210,43 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			return view == object;
 		}
 	}
-
-	private class GetDataTask extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			// Simulates a background job.
-			try {
+	
+	private void  AsyncMainEntrys() {
+		mPullToRefreshViewPager.onRefreshComplete();
+		XinServerManager.query_bindlist(this, application.getUserid(), new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(String response) {
+				SamplePagerAdapter adapter = (SamplePagerAdapter)(mPullToRefreshViewPager.getRefreshableView().getAdapter());
+				adapter.mainentryAdapter.syncDevices();
+				adapter.notifyDataSetChanged();
 				
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
+				// TODO Auto-generated method stub
+				
 			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			mPullToRefreshViewPager.onRefreshComplete();
-			super.onPostExecute(result);
-		}
+		});
 	}
+//	private class GetDataTask extends AsyncTask<MainActivity, Void, Void> {
+//
+//		@Override
+//		protected Void doInBackground(MainActivity... params) {
+//			// Simulates a background job.
+//			try {
+//				final MainActivity viewBase = params[0];
+//				
+//				  
+//				//Thread.sleep(500);
+//			} catch (Exception e) {
+//			}
+//			return null;
+//		}
+//
+//		@Override
+//		protected void onPostExecute(Void result) {
+//			mPullToRefreshViewPager.onRefreshComplete();
+//			super.onPostExecute(result);
+//		}
+//	}
 
 	
 

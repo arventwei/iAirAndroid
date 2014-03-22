@@ -24,6 +24,8 @@ package com.txmcu.iair.common;
  */
 public interface iAirConstants {
 	
+	public static final String Server_OK = "Ok";
+	public static final String Server_Fail = "Fail";
 	public static final String XIAOXIN_SSID="xiaoxin_AP";
 	public static final String XIAOXIN_PWD ="xiaoxinap";
 	

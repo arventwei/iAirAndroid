@@ -10,6 +10,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import junit.framework.Assert;
 import android.app.Activity;
@@ -23,9 +26,10 @@ import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.txmcu.iair.R;
 
-public class Util {
+public class iAirUtil {
 
 	private static final String TAG = "SDK_Sample.Util";
 
@@ -572,5 +576,50 @@ public class Util {
                     break;
             }
             return channel;
+    }
+    
+    public static Map<String, String> getQueryMapFromUrl(String query)
+    {
+    	Map<String,String> retMap  = new HashMap<String,String>();
+    	StringTokenizer st = new StringTokenizer(query,"&",false); //query  is from getQuery()
+    	while (st.hasMoreElements()) 
+    	{   // First Pass to retrive the "parametername=value" combo
+
+    	    String paramValueToken = st.nextElement().toString();
+	        String paramName = "";
+	        String paramValue = "";
+	        
+    	    StringTokenizer stParamVal = new StringTokenizer(paramValueToken, "=", false );
+
+
+    	    int i = 0;
+
+    	    while (stParamVal.hasMoreElements()) 
+    	    {
+		        //Second pass to separate the "paramname" and "value".
+		        // 1st token is param name
+		        // 2nd token is param value
+	
+	
+		        String separatedToken = stParamVal.nextElement().toString();
+	
+		        
+		        if( i== 0)
+		        {
+		            //This indicates that it is the param name : ex val4,val5 etc
+		            paramName = separatedToken;
+		        }
+		        else 
+		        {
+		            // This will hold value of the parameter
+		            paramValue = separatedToken;
+		        }
+		        i++;
+		    }
+    	    if(paramName.length()>0)
+    	    	retMap.put(paramName, paramValue);
+    	     
+    	}
+    	return retMap;
     }
 }

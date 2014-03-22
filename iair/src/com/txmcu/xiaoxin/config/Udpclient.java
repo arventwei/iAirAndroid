@@ -9,15 +9,13 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-//import android.widget.Toast;
 import com.txmcu.iair.common.iAirConstants;
+//import android.widget.Toast;
 
 public class Udpclient {
 	
@@ -30,7 +28,7 @@ public class Udpclient {
 
 		
 	}
-	
+	Activity activity;
 	XinStateManager xinMgr;
 	public UdpclientOperations operations;
 	//public Context contentView;
@@ -45,10 +43,11 @@ public class Udpclient {
     String sn;
     String userid;
     
-    public Udpclient(XinStateManager xinstateMgr,UdpclientOperations opertion)
+    public Udpclient(XinStateManager xinstateMgr,UdpclientOperations opertion,Activity activity)
     {
-    	xinMgr = xinstateMgr;
-    	operations = opertion;
+    	this.xinMgr = xinstateMgr;
+    	this.operations = opertion;
+    	this.activity = activity;
     	
     }
     public void setSendWifiInfo(String ssid,String pwd,String auth_mode,String encryp_type,
@@ -150,23 +149,16 @@ public class Udpclient {
             	}
             	while(stateCode==1)
             	{
+            		XinServerManager.bind(activity, userid, sn,new XinServerManager.onSuccess() {
+						
+						@Override
+						public void run(String response) {
+							// TODO Auto-generated method stub
+							setStopLoop(2,response);
+						}
+					});
             		
-            		 RequestParams post_params = new RequestParams();
-            		 post_params.put("userid", userid);
-            		 post_params.put("sn", sn);
-            		
-            		 AsyncHttpClient client = new AsyncHttpClient();
-            		 client.post(iAirConstants.API_Bind, post_params, 
-            				new AsyncHttpResponseHandler() {
-	            			@Override
-	            			public void onSuccess(String response) {
-	            			 	System.out.println(response);
-	            			 	
-	            			 		setStopLoop(2,response);
-            			  		}
-	            			
-	            	  
-            		 		});
+
             		 
             		try {
 						Thread.sleep(2000);

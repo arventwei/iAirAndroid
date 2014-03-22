@@ -40,7 +40,9 @@ implements OnClickListener{
 	        
         adapter = new DeviceAdapter(this);
         
-        initTestData();
+        adapter.syncDevices();
+        adapter.notifyDataSetChanged();
+        //initTestData();
         addGridViewListener();
 		
 	}
@@ -59,6 +61,7 @@ implements OnClickListener{
 			
 			@Override
 			public void waspping(int oldIndex, int newIndex) {
+				
 				adapter.waspping(oldIndex,newIndex);
 				
 				adapter.notifyDataSetChanged();
@@ -80,23 +83,23 @@ implements OnClickListener{
 	
 	
 	 
-	  private void initTestData() {
-		
-		  adapter.addDevice(2,"father");
-		  adapter.addDevice(3,"father");
-		  adapter.addDevice(4,"father");
-		  
-		  adapter.addDevice(25,"father");
-		  adapter.addDevice(266,"father");
-		  adapter.addDevice(45,"father");
-		  
-		  adapter.addDevice(-1, "");
-	    	//books = new ArrayList<City>();
-	    	
-			//for (int i = 0; i < 1; i++) {
-				//setBooks();
-			//}
-	    }
+//	  private void initTestData() {
+//		
+//		  adapter.addDevice(2,"father");
+//		  adapter.addDevice(3,"father");
+//		  adapter.addDevice(4,"father");
+//		  
+//		  adapter.addDevice(25,"father");
+//		  adapter.addDevice(266,"father");
+//		  adapter.addDevice(45,"father");
+//		  
+//		  adapter.addDevice(-1, "");
+//	    	//books = new ArrayList<City>();
+//	    	
+//			//for (int i = 0; i < 1; i++) {
+//				//setBooks();
+//			//}
+//	    }
 	    
 	  
 }

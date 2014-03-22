@@ -36,7 +36,7 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.txmcu.iair.R;
-import com.txmcu.iair.common.Util;
+import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
 public class LoginActivity extends Activity implements OnClickListener {
@@ -375,14 +375,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		@Override
 		public void onError(UiError e) {
-			Util.toastMessage(LoginActivity.this, "onError: " + e.errorDetail);
-			Util.dismissDialog();
+			iAirUtil.toastMessage(LoginActivity.this, "onError: " + e.errorDetail);
+			iAirUtil.dismissDialog();
 		}
 
 		@Override
 		public void onCancel() {
-			Util.toastMessage(LoginActivity.this, "onCancel: ");
-			Util.dismissDialog();
+			iAirUtil.toastMessage(LoginActivity.this, "onCancel: ");
+			iAirUtil.dismissDialog();
 		}
 	}
 	

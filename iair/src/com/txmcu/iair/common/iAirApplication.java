@@ -3,6 +3,7 @@ package com.txmcu.iair.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.integer;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -16,7 +17,10 @@ public class iAirApplication extends Application {
 	
 	private static final String Userid="userid";
 
-	private List<Device> xiaoxinList = new ArrayList<Device>();
+	//private List<String> xiaoxinList = new ArrayList<String>();
+	
+	private static final String xiaoxinlist_size="xiaoxinlist_size";
+	private static final String xiaoxinlist="xiaoxinlist_";
 	
 	SharedPreferences mPerferences;
 	
@@ -36,7 +40,43 @@ public class iAirApplication extends Application {
 		return mPerferences.getString(Userid, "");
 	}
 	
-	
+	public void setXiaoxinSnList(List<String> list) {
+		SharedPreferences.Editor mEditor = mPerferences.edit();  
+		
+		mEditor.putInt(xiaoxinlist_size,list.size());
+		for(int i=0;i<list.size();i++)
+		{
+			mEditor.putString(xiaoxinlist + i, list.get(i));//
+		}
+	    mEditor.commit(); 
+	}
+	public List<String> getXiaoxinSnList() {
+		List<String> xiaoxinList = new ArrayList<String>();
+		int size = mPerferences.getInt(xiaoxinlist_size, 0);
+		for(int i = 0; i < size;i++)
+		{
+			String sn = mPerferences.getString(xiaoxinlist + i, "");
+			xiaoxinList.add(sn);
+		}
+		return xiaoxinList;
+		//return mPerferences.getString(Userid, "");
+	}
+	public void setXiaoxin(Device xiaoxin)
+	{
+		SharedPreferences.Editor mEditor = mPerferences.edit();  
+		
+		mEditor.putString("xiaoxin_"+xiaoxin.sn,xiaoxin.ToJson());
+		
+	    mEditor.commit(); 
+	}
+	public Device getXiaoxin(String sn)
+	{
+		Device ret = new Device();
+		String xiaxinJsonString = mPerferences.getString("xiaoxin_"+sn, "");
+		ret.FromJson(xiaxinJsonString);
+		return ret;
+		
+	}
 	
 	///backup wifi info
 	

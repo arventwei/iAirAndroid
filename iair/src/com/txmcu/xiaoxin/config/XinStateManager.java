@@ -8,7 +8,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.util.Log;
 
-import com.txmcu.iair.common.Util;
+import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
@@ -18,7 +18,7 @@ import com.txmcu.xiaoxin.config.wifi.WifiHotManager.WifiBroadCastOperations;
 public class XinStateManager 
 implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	
-	private Context context;
+	private Activity context;
 	private XinOperations operations;
 	private WifiHotManager wifiHotM;
 	private static XinStateManager instance = null;
@@ -84,7 +84,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	{
 		mCurState = State.Init;
 		wifiHotM.scanWifiHot();
-		udpclient = new Udpclient(this,this);
+		udpclient = new Udpclient(this,this,context);
 		//udpclient.operations= this;
 		//backupCurrentWifiState();
 	}
@@ -132,7 +132,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 			{
 				if (sr.SSID.equalsIgnoreCase(info.getSSID()))
 				{
-					int  channel =  Util.getChannel(sr.frequency);
+					int  channel =  iAirUtil.getChannel(sr.frequency);
 					application.setWifibackupChannel(String.valueOf(channel));
 					break;
 				}

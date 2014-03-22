@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.txmcu.iair.R;
 import com.txmcu.iair.activity.DeviceManageActivity;
+import com.txmcu.iair.common.iAirApplication;
 
 public class DeviceAdapter extends BaseAdapter
 {
@@ -26,16 +27,31 @@ public class DeviceAdapter extends BaseAdapter
 	{
 		deviceManageActivity = activity;
 	}
-	
-	public  void addDevice(int index,String sn) {
-		Device book = new Device();
-    	book.setId(index);
-    	book.setSn(sn);
-    	//book.setBitmapId(R.drawable.b001);
-    	devices.add(book);
+	public void syncDevices(){
+		devices.clear();
+		
+		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();
+		List<String> snList = application.getXiaoxinSnList();
+		for (String sn : snList) {
+			Device xiaoxinDevice = application.getXiaoxin(sn);
+			devices.add(xiaoxinDevice);
+		}
+		devices.add(new Device(""));
 	}
+//	public  void addDevice(String sn) {
+//		Device book = new Device();
+//    	book.setId(index);
+//    	book.setSn(sn);
+//    	//book.setBitmapId(R.drawable.b001);
+//    	devices.add(book);
+//	}
 	public void waspping(int oldIndex, int newIndex) {
 		Device book = devices.get(oldIndex);
+		Device newOneDevice = devices.get(newIndex);
+		if( (book!=null && book.sn.equals("")) 
+				||(newOneDevice!=null && newOneDevice.sn.equals(""))){
+			return;
+		}
 		devices.remove(oldIndex);
 		devices.add(newIndex, book);
 	}
@@ -60,7 +76,7 @@ public class DeviceAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent) {
 		//if (null == convertView) {
 		Device b = devices.get(position);
-		if(b.getSn().equals(""))
+		if(b.sn.equals(""))
 		{
 			convertView = View.inflate(deviceManageActivity, 
 					R.layout.gridview_device_add, null);
@@ -70,7 +86,7 @@ public class DeviceAdapter extends BaseAdapter
 		else
 		{
 			convertView = View.inflate(deviceManageActivity, R.layout.gridview_device_item, null);
-			((TextView)convertView.findViewById(R.id.city_name)).setText(b.getSn());
+			((TextView)convertView.findViewById(R.id.city_name)).setText(b.name);
 		}
 		
 		setitemSize(convertView);

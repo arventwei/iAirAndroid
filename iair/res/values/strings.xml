@@ -48,7 +48,7 @@
     <string name="main_list_column_city">城市/家</string>
     <string name="main_list_column_pm25">PM2.5</string>
     <string name="main_list_column_temp">温度</string>
-    <string name="main_list_column_comment">备注</string>
+    <string name="main_list_column_humi">湿度</string>
     
     <string name="detail_activity_title">小新家</string>
     
@@ -84,5 +84,7 @@
            <string name="now_loading">正在加载...</string>
        
            <string name="i_known">知道了</string>
+       
+           <string name="xiaoxin_login_ok">登陆成功</string>
     
 </resources>
