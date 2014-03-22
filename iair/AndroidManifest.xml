@@ -13,14 +13,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />  
     <application
         android:name="com.txmcu.iair.common.iAirApplication" 
         android:allowBackup="true"
@@ -79,6 +78,13 @@
             android:configChanges="keyboardHidden|orientation" />        
       <meta-data android:name="TD_APP_ID" android:value="F32863BB751EF144974E7936182D9935" />
       <meta-data android:name="TD_CHANNEL_ID" android:value="360"/>
+      
+      
+      <meta-data  
+            android:name="com.amap.api.v2.apikey"  
+            android:value="5c199ccd551995e2f3020a1fedc8b5ae" />  
+  
+         
     </application>
 
 </manifest>
