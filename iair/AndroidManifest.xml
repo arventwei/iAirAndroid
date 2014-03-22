@@ -77,7 +77,8 @@
       <activity
             android:name="com.txmcu.iair.activity.SettingActivity"
             android:configChanges="keyboardHidden|orientation" />        
-        
+      <meta-data android:name="TD_APP_ID" android:value="F32863BB751EF144974E7936182D9935" />
+      <meta-data android:name="TD_CHANNEL_ID" android:value="360"/>
     </application>
 
 </manifest>

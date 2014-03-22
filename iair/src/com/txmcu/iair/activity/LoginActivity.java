@@ -2,10 +2,7 @@ package com.txmcu.iair.activity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 
-import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,7 +10,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,17 +24,14 @@ import com.sina.weibo.sdk.exception.WeiboException;
 import com.sina.weibo.sdk.net.RequestListener;
 import com.sina.weibo.sdk.openapi.AccessTokenKeeper;
 import com.sina.weibo.sdk.openapi.LogoutAPI;
-import com.tencent.open.HttpStatusException;
-import com.tencent.open.NetworkUnavailableException;
-import com.tencent.tauth.Constants;
-import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import com.tendcloud.tenddata.TCAgent;
 import com.txmcu.iair.R;
-import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
+import com.txmcu.iair.common.iAirUtil;
 public class LoginActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "iair";
@@ -59,6 +52,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		TCAgent.init(this);
+		TCAgent.setReportUncaughtExceptions(true);
 		
 		this.application = ((iAirApplication)getApplication());
 
