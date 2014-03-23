@@ -1,7 +1,12 @@
 package com.txmcu.iair.activity;
 
+import java.util.List;
+
 import android.R.integer;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,9 +29,13 @@ import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
+import com.txmcu.xiaoxin.config.XinStateManager;
+import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
+import com.txmcu.xiaoxin.config.wifi.WifiHotManager.OpretionsType;
+import com.txmcu.xiaoxin.config.wifi.WifiHotManager.WifiBroadCastOperations;
 
 public class DetailActivity extends Activity implements
-		OnRefreshListener<VerticalViewPager>, OnClickListener {
+		OnRefreshListener<VerticalViewPager>, OnClickListener, WifiBroadCastOperations {
 
 	private PullToRefreshViewPager mPullToRefreshViewPager;
 	private PopupWindow popWin;
@@ -34,12 +43,17 @@ public class DetailActivity extends Activity implements
 	iAirApplication application;
 	public Device xiaoxinDevice;
 	SamplePagerAdapter adapter;
+	
+	private WifiHotManager wifiHotM;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Common);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_device_main);
+		
+		wifiHotM = WifiHotManager.getInstance(this, this);
+		
 		//getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		application = (iAirApplication) getApplication();
 		mPullToRefreshViewPager = (PullToRefreshViewPager) findViewById(R.id.pull_refresh_viewpager);
@@ -53,6 +67,9 @@ public class DetailActivity extends Activity implements
 		Bundle bundle = getIntent().getExtras();
 		String sn = bundle.getString("sn");
 		xiaoxinDevice = application.getXiaoxin(sn);
+		
+		findViewById(R.id.device_edit_btn).setOnClickListener(this);
+		
 
 		// new GetDataTask().execute();
 
@@ -62,17 +79,34 @@ public class DetailActivity extends Activity implements
 	public void onClick(View paramView) {
 		switch (paramView.getId()) {
 		case R.id.back_img:
+		{
 			finish();
+		
 			break;
+		}
+		case R.id.device_edit_btn:
+		{
+			StartModifyView();
+			break;
+		}
+		
 
 		}
 	}
+
 
 	@Override
 	public void onRefresh(PullToRefreshBase<VerticalViewPager> refreshView) {
 		new GetDataTask().execute();
 	}
 
+	private void StartModifyView() {
+		Intent localIntent = new Intent(this, DeviceModifyActivity.class);
+		localIntent.putExtra("sn", xiaoxinDevice.sn);
+		this.startActivity(localIntent);
+		this.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+	
+	}
 	static class SamplePagerAdapter extends
 			com.handmark.verticalview.PagerAdapter {
 
@@ -163,6 +197,28 @@ public class DetailActivity extends Activity implements
 					}
 
 				});
+				
+				CheckBox networkoff = (CheckBox) xiaoxinView
+						.findViewById(R.id.xiaoxin_network);
+				
+				networkoff.setChecked(pageContext.xiaoxinDevice.switchOn != 0);
+				networkoff.setOnClickListener(new OnClickListener()
+				{
+
+					@Override
+					public void onClick(View v)
+					{
+						String sn = pageContext.xiaoxinDevice.sn;
+						int isOn = 0;
+						if (((CheckBox) v).isChecked()) {
+							isOn = 1;
+						}
+						XinServerManager.setxiaoxin_switch(pageContext, sn, isOn, null);
+						
+
+					}
+
+				});
 
 				// adapter = new MainEntryAdapter(pageContext);
 
@@ -214,6 +270,24 @@ public class DetailActivity extends Activity implements
 		findViewById(R.id.back_img).setOnClickListener(this);
 		// findViewById(R.id.main_share).setOnClickListener(this);
 		// findViewById(R.id.main_setting).setOnClickListener(this);
+	}
+
+	@Override
+	public void disPlayWifiScanResult(List<ScanResult> wifiList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean disPlayWifiConResult(boolean result, WifiInfo wifiInfo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void operationByType(OpretionsType type, String SSID, String pWd) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
     android:orientation="vertical" >
     
 <LinearLayout  
@@ -12,14 +11,12 @@
         android:orientation="vertical" 
         android:layout_gravity="center"
         android:gravity="center" 
-       
-        android:layout_marginTop="10.0dip" >
+       >
 
     <TextView
         android:id="@+id/xiaoxin_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="2.0dip"
         android:text="小新"
         android:textSize="@dimen/detail_container_large_text_size" />
 
@@ -39,12 +36,12 @@
         <TextView
             android:id="@+id/xiaoxin_pm25"
             style="@style/clockWeatherText"
-            android:layout_width="wrap_content"
+            android:layout_width="100dip"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:paddingBottom="3.0dip"
+            android:text="@string/detail_device_pm25"
             android:textColor="@color/white"
-            android:text="xxxx"
             android:textSize="@dimen/detail_text_size" />
 
     </LinearLayout>
@@ -57,11 +54,11 @@
         <TextView
             android:id="@+id/xiaoxin_form"
             style="@style/clockWeatherText"
-            android:layout_width="wrap_content"
+            android:layout_width="100dip"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:paddingBottom="3.0dip"
-            android:text="xxxx"
+            android:text="@string/detail_device_form"
             android:textColor="@color/white"
             android:textSize="@dimen/detail_text_size" />
     </LinearLayout>
@@ -74,11 +71,11 @@
         <TextView
             android:id="@+id/xiaoxin_temp"
             style="@style/clockWeatherText"
-            android:layout_width="wrap_content"
+           android:layout_width="100dip"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:paddingBottom="3.0dip"
-            android:text="xxxx"
+            android:text="@string/detail_device_temp"
             android:textColor="@color/white"
             android:textSize="@dimen/detail_text_size" />
     </LinearLayout>
@@ -91,11 +88,11 @@
         <TextView
             android:id="@+id/xiaoxin_humi"
             style="@style/clockWeatherText"
-            android:layout_width="wrap_content"
+            android:layout_width="100dip"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:paddingBottom="3.0dip"
-            android:text="xxxx"
+            android:text="@string/detail_device_humi"
             android:textColor="@color/white"
             android:textSize="@dimen/detail_text_size" />
     </LinearLayout>
@@ -107,6 +104,26 @@
         android:layout_marginRight="8.0dip"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="#66ffffff" />
+
+    <LinearLayout
+        android:id="@+id/air_connect"
+        style="@style/setting_item_layout"
+        android:layout_width="match_parent" >
+
+        <TextView
+            style="@style/setting_item_main_text"
+            android:layout_width="0.0dip"
+            android:layout_weight="1.0"
+            android:text="@string/device_detail_network"
+            android:textSize="@dimen/detail_text_size" />
+
+        <CheckBox
+            android:id="@+id/xiaoxin_network"
+            style="@style/setting_item_checkbox"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:textSize="@dimen/detail_text_size" />
+    </LinearLayout>
 
         <LinearLayout
             android:id="@+id/air_switch"

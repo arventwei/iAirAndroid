@@ -22,12 +22,7 @@
         android:textColor="@color/title_bar_text"
         android:textSize="@dimen/weather_detail_activity_title_bar_size" />
 
-    <ImageView
-        android:id="@+id/device_choose_refresh_img"
-        android:layout_width="@dimen/title_bar_btn_width"
-        android:layout_height="fill_parent"
-        android:background="@drawable/main_detail_activity_btn_bg"
-        android:src="@drawable/title_bar_shared" />
+
 
     <ImageView
         android:id="@+id/device_button_divider"

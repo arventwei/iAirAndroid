@@ -112,13 +112,16 @@
            <string name="device_detail_speed">风速:</string>
        
            <string name="device_detail_switch">开关:</string>
+           
+           <string name="device_detail_network">离线:</string>
+           
        
-           <string name="detail_device_pm25">PM2.5:</string>
+           <string name="detail_device_pm25">PM2.5\t:</string>
        
-           <string name="detail_device_temp">温度:</string>
+           <string name="detail_device_temp">温度\t:</string>
        
-           <string name="detail_device_humi">湿度:</string>
+           <string name="detail_device_humi">湿度\t:</string>
        
-           <string name="detail_device_form">甲醛:</string>
+           <string name="detail_device_form">甲醛\t:</string>
     
 </resources>

@@ -87,7 +87,7 @@ public class MainEntryAdapter extends BaseAdapter
 			//((ImageView) convertView.findViewById(R.id.imageView1)).setImageResource(b.getBitmapId());
 			
 			((TextView)convertView.findViewById(R.id.entry_name_label)).setText(b.name);
-			((TextView)convertView.findViewById(R.id.entry_pm25_label)).setText(String.valueOf(b.pm25));
+			((TextView)convertView.findViewById(R.id.entry_pm25_label)).setText(String.valueOf((int)b.pm25));
 			((TextView)convertView.findViewById(R.id.entry_temp_label)).setText(String.valueOf(b.temp));
 			((TextView)convertView.findViewById(R.id.entry_comment_label)).setText(String.valueOf(b.humi));
 			((TextView)convertView.findViewById(R.id.entry_form_label)).setText(String.valueOf(b.form));
