@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -181,5 +183,26 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		}
 		//finish();
 	}
+	@Override
+	public void log(String msg) {
+		// TODO Auto-generated method stub
+	      Message tempMsg = msghandler.obtainMessage();
+	       tempMsg.what = 1;
+	       tempMsg.obj = msg;
+	       msghandler.sendMessage(tempMsg);
+	}
+	
+	Handler msghandler = new Handler(){   
+        public void handleMessage(Message msg) {  
+            switch (msg.what) {      
+            case 1:
+            	iAirUtil.toastMessage(DeviceAddActivity.this, msg.obj.toString());
+                //setTitle("hear me?");  
+                break;      
+            }      
+            super.handleMessage(msg);  
+        }  
+          
+    };
 
 }

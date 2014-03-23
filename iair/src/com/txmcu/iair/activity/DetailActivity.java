@@ -70,9 +70,21 @@ public class DetailActivity extends Activity implements
 		
 		findViewById(R.id.device_edit_btn).setOnClickListener(this);
 		
+		
 
 		// new GetDataTask().execute();
 
+	}
+	
+	public void Destroy()
+	{
+	
+		wifiHotM.unRegisterWifiConnectBroadCast();
+		wifiHotM.unRegisterWifiScanBroadCast();
+		wifiHotM.unRegisterWifiStateBroadCast();
+		WifiHotManager.destroy();
+		
+		
 	}
 
 	@Override
@@ -201,7 +213,8 @@ public class DetailActivity extends Activity implements
 				CheckBox networkoff = (CheckBox) xiaoxinView
 						.findViewById(R.id.xiaoxin_network);
 				
-				networkoff.setChecked(pageContext.xiaoxinDevice.switchOn != 0);
+				//pageContext.wifiHotM.
+				//networkoff.setChecked(;
 				networkoff.setOnClickListener(new OnClickListener()
 				{
 

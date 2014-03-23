@@ -54,6 +54,8 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		 * @param invoke callback
 		 */
 		public void configResult(ConfigType type );
+		
+		public void log(String msg);
 	}
 	public static void destroy() {
 		instance = null;
@@ -212,6 +214,11 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		else {
 			operations.configResult(ConfigType.Failed);
 		}
+	}
+	@Override
+	public void logudp(String msg) {
+		// TODO Auto-generated method stub
+		operations.log("udp:"+msg);
 	}
 	
 }

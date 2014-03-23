@@ -25,6 +25,8 @@ public class Udpclient {
 		 * @param init callback ,close wait dialog
 		 */
 		public void setState(boolean result,String exception);
+		
+		public void logudp(String msg);
 
 		
 	}
@@ -86,8 +88,9 @@ public class Udpclient {
     private void setStopLoop(int errorcode,String excpetion)
     {
     	stateCode = errorcode;
-    	String log = "errorcode:"+errorcode+":"+recvingMsg+":"+excpetion;
+    	String log = "setStopLoop errorcode:"+errorcode+":"+recvingMsg+":"+excpetion;
     	Log.d(TAG,log);
+    	operations.logudp(log);
     	if (stateCode == 2) {
     		operations.setState(true,excpetion);
 		}

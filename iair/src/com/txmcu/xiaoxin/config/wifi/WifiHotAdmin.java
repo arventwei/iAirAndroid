@@ -24,6 +24,7 @@ public class WifiHotAdmin {
 	public void closeWifiAp() {
 		closeWifiAp(mWifiManager);
 	}
+	
 
 	public static WifiHotAdmin newInstance(Context context) {
 		if (instance == null) {
@@ -43,6 +44,9 @@ public class WifiHotAdmin {
 		stratWifiAp(wifiName,password);
 	}
 
+	public Boolean isWifiApEnable() {
+		return isWifiApEnabled(mWifiManager);
+	}
 	// 
 	private boolean stratWifiAp(String wifiName,String password) {
 
