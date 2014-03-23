@@ -5,12 +5,14 @@
     android:layout_marginTop="@dimen/activity_vertical_margin"
     android:orientation="vertical" >
     
-<RelativeLayout  
+<LinearLayout  
         android:id="@+id/today_air_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15.0dip"
+        android:orientation="vertical" 
+        android:layout_gravity="center"
+        android:gravity="center" 
+       
         android:layout_marginTop="10.0dip" >
 
     <TextView
@@ -18,18 +20,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="2.0dip"
-        android:text="小新家"
+        android:text="小新"
         android:textSize="@dimen/detail_container_large_text_size" />
 
-        <ImageView
-            android:id="@+id/air_divider"
-            android:layout_width="2.0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/xiaoxin_name"
-            android:layout_alignTop="@+id/xiaoxin_name"
-            android:layout_marginRight="7.0dip"
-            android:layout_toRightOf="@+id/xiaoxin_name"
-            android:background="@drawable/air_divider" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:layout_marginLeft="8.0dip"
+        android:layout_marginRight="8.0dip"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="#66ffffff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/xiaoxin_pm25"
@@ -37,39 +42,87 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:layout_toRightOf="@id/air_divider"
             android:paddingBottom="3.0dip"
             android:textColor="@color/white"
-            android:text="pm2.5:333 "
-            android:textSize="25.0sp" />
+            android:text="xxxx"
+            android:textSize="@dimen/detail_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/xiaoxin_temphumi"
+            android:id="@+id/xiaoxin_form"
             style="@style/clockWeatherText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/xiaoxin_name"
-            android:layout_marginBottom="@dimen/weather_detail_activity_air_desc_margin_bottom"
-            android:layout_toRightOf="@id/air_divider"
+            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+            android:paddingBottom="3.0dip"
+            android:text="xxxx"
             android:textColor="@color/white"
-            android:text="温度:10 湿度:20"
-            android:textSize="15.0sp" />
+            android:textSize="@dimen/detail_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/xiaoxin_temp"
+            style="@style/clockWeatherText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+            android:paddingBottom="3.0dip"
+            android:text="xxxx"
+            android:textColor="@color/white"
+            android:textSize="@dimen/detail_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/xiaoxin_humi"
+            style="@style/clockWeatherText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+            android:paddingBottom="3.0dip"
+            android:text="xxxx"
+            android:textColor="@color/white"
+            android:textSize="@dimen/detail_text_size" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:layout_marginLeft="8.0dip"
+        android:layout_marginRight="8.0dip"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="#66ffffff" />
 
         <LinearLayout
             android:id="@+id/air_switch"
-            style="@style/setting_item_layout"
-   
-            android:layout_below="@id/air_divider" >
+            style="@style/setting_item_layout">
 
             <TextView
                 style="@style/setting_item_main_text"
                 android:layout_width="0.0dip"
-                android:text="开关:"
+                android:text="@string/device_detail_switch"
+                android:textSize="@dimen/detail_text_size"
                 android:layout_weight="1.0" />
 
             <CheckBox
                 android:id="@+id/xiaoxin_switch"
                 style="@style/setting_item_checkbox"
+                android:textSize="@dimen/detail_text_size"
                 android:layout_width="0dp"
                 android:layout_weight="1.0" />
         </LinearLayout>
@@ -83,25 +136,17 @@
                     style="@style/setting_item_main_text"
                     android:layout_width="0.0dip"
                     android:layout_weight="1.0"
-                    android:text="速度:" />
-
-                <EditText
-                    android:id="@+id/input_speed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:ems="10"
-                    android:inputType="number" >
-
-                    <requestFocus />
-                </EditText>
+                    android:textSize="@dimen/detail_text_size"
+                    android:text="@string/device_detail_speed" />
 
                 <Button
                     android:id="@+id/btn_speed"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dip"
                     android:layout_weight="1.0"
-                    android:text="确定" />
+                    android:textSize="@dimen/detail_text_size"
+                    android:background="@drawable/button_bg"
+                    android:text="@string/button_modify" />
 
             </LinearLayout>
         
@@ -115,5 +160,5 @@
              android:layout_marginTop="@dimen/activity_vertical_margin"
              android:background="#66ffffff" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

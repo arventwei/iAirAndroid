@@ -176,6 +176,7 @@ public class XinServerManager {
 						xiaoxin.temp = Double.parseDouble(xiaoxinMap.get("temp"));
 						xiaoxin.humi = Double.parseDouble(xiaoxinMap.get("humi"));
 						xiaoxin.pm25 = Double.parseDouble(xiaoxinMap.get("pm25"));
+						xiaoxin.form = Double.parseDouble(xiaoxinMap.get("form"));
 						xiaoxin.switchOn = Integer.parseInt(xiaoxinMap.get("switch"));
 						xiaoxin.speed = Integer.parseInt(xiaoxinMap.get("speed"));
 						xiaoxin.lastUpdateStamp = Integer.parseInt(xiaoxinMap.get("last_upload_time"));

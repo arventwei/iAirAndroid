@@ -36,6 +36,16 @@
             />
 
         <TextView
+            android:id="@+id/main_list_column_form"
+            android:layout_width="123.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="@string/main_list_column_form"
+            android:textColor="@color/mystocks_stocklist_words_color"
+            android:textSize="14.0sp" />
+
+        <TextView
             android:id="@+id/main_list_column_temp"
             android:layout_width="123.0dip"
             android:layout_height="wrap_content"

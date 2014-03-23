@@ -2,8 +2,6 @@ package com.txmcu.iair.activity;
 
 import android.R.integer;
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -41,7 +40,7 @@ public class DetailActivity extends Activity implements
 		setTheme(R.style.Common);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_device_main);
-
+		//getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		application = (iAirApplication) getApplication();
 		mPullToRefreshViewPager = (PullToRefreshViewPager) findViewById(R.id.pull_refresh_viewpager);
 		mPullToRefreshViewPager.setOnRefreshListener(DetailActivity.this);
@@ -111,15 +110,23 @@ public class DetailActivity extends Activity implements
 				nameview.setText(pageContext.xiaoxinDevice.name);
 				TextView pm25 = (TextView) xiaoxinView
 						.findViewById(R.id.xiaoxin_pm25);
-				pm25.setText("PM2.5:" + pageContext.xiaoxinDevice.pm25);
+				pm25.setText(pageContext.getString(R.string.detail_device_pm25) + (int)pageContext.xiaoxinDevice.pm25);
 				TextView temp = (TextView) xiaoxinView
-						.findViewById(R.id.xiaoxin_temphumi);
-				temp.setText("ÎÂ¶È:" + pageContext.xiaoxinDevice.temp + " Êª¶È:"
-						+ pageContext.xiaoxinDevice.humi);
+						.findViewById(R.id.xiaoxin_temp);
+				temp.setText(pageContext.getString(R.string.detail_device_temp) + pageContext.xiaoxinDevice.temp );
+				TextView humi = (TextView) xiaoxinView
+						.findViewById(R.id.xiaoxin_humi);
+				humi.setText(pageContext.getString(R.string.detail_device_humi) + pageContext.xiaoxinDevice.humi );
+				TextView form = (TextView) xiaoxinView
+						.findViewById(R.id.xiaoxin_form);
+				form.setText(pageContext.getString(R.string.detail_device_form) + pageContext.xiaoxinDevice.form );
+			
+		
 				// nameview.setText()
-				final EditText editspeedEditText = (EditText)xiaoxinView.findViewById(R.id.input_speed);
-				editspeedEditText.setText(String.valueOf(pageContext.xiaoxinDevice.speed));
+				//final EditText editspeedEditText = (EditText)xiaoxinView.findViewById(R.id.input_speed);
+				//editspeedEditText.setText(String.valueOf(pageContext.xiaoxinDevice.speed));
 				Button speedButton = (Button)xiaoxinView.findViewById(R.id.btn_speed);
+				final int newSpeed = pageContext.xiaoxinDevice.speed+1;
 				speedButton.setOnClickListener(new OnClickListener()
 				{
 
@@ -127,10 +134,10 @@ public class DetailActivity extends Activity implements
 					public void onClick(View v)
 					{
 						String sn = pageContext.xiaoxinDevice.sn;
-						int speed = Integer.parseInt(editspeedEditText.getText().toString());
+						//int speed = Integer.parseInt(editspeedEditText.getText().toString());
 						
-						
-						XinServerManager.setxiaoxin_speed(pageContext, sn, speed, null);
+						pageContext.xiaoxinDevice.speed = newSpeed;
+						XinServerManager.setxiaoxin_speed(pageContext, sn, newSpeed, null);
 						
 
 					}

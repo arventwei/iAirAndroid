@@ -49,6 +49,8 @@
     
     <string name="main_list_column_city">城市/家</string>
     <string name="main_list_column_pm25">PM2.5</string>
+    <string name="main_list_column_form">甲醛</string>
+    
     <string name="main_list_column_temp">温度</string>
     <string name="main_list_column_humi">湿度</string>
     
@@ -100,5 +102,23 @@
            <string name="setting">设置</string>
        
            <string name="second">秒</string>
+       
+           <string name="add_device_success">添加成功</string>
+       
+           <string name="add_device_failed">绑定失败</string>
+       
+           <string name="button_modify">修改</string>
+       
+           <string name="device_detail_speed">风速:</string>
+       
+           <string name="device_detail_switch">开关:</string>
+       
+           <string name="detail_device_pm25">PM2.5:</string>
+       
+           <string name="detail_device_temp">温度:</string>
+       
+           <string name="detail_device_humi">湿度:</string>
+       
+           <string name="detail_device_form">甲醛:</string>
     
 </resources>

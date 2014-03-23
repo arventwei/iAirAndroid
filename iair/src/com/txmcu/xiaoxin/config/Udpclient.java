@@ -138,7 +138,7 @@ public class Udpclient {
             		}
 
             		try {
-						Thread.sleep(2000);
+						Thread.sleep(8000);
 						Log.d(TAG,"sleep2000 counter:"+icount);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -155,7 +155,10 @@ public class Udpclient {
 						@Override
 						public void run(String response) {
 							// TODO Auto-generated method stub
-							setStopLoop(2,response);
+							if (response.equals("Ok")) {
+								setStopLoop(2,response);
+							}
+							
 						}
 					});
             		
