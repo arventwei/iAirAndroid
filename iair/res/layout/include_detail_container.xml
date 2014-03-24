@@ -36,7 +36,7 @@
         <TextView
             android:id="@+id/xiaoxin_pm25"
             style="@style/clockWeatherText"
-            android:layout_width="100dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:paddingBottom="3.0dip"
@@ -54,7 +54,7 @@
         <TextView
             android:id="@+id/xiaoxin_form"
             style="@style/clockWeatherText"
-            android:layout_width="100dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:paddingBottom="3.0dip"
@@ -71,7 +71,7 @@
         <TextView
             android:id="@+id/xiaoxin_temp"
             style="@style/clockWeatherText"
-           android:layout_width="100dip"
+           android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:paddingBottom="3.0dip"
@@ -88,7 +88,7 @@
         <TextView
             android:id="@+id/xiaoxin_humi"
             style="@style/clockWeatherText"
-            android:layout_width="100dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:paddingBottom="3.0dip"
@@ -166,16 +166,6 @@
                     android:text="@string/button_modify" />
 
             </LinearLayout>
-        
-         <View
-             android:layout_width="fill_parent"
-             android:layout_height="1.0dip"
-             android:layout_below="@id/air_speed"
-             android:layout_gravity="bottom"
-             android:layout_marginLeft="8.0dip"
-             android:layout_marginRight="8.0dip"
-             android:layout_marginTop="@dimen/activity_vertical_margin"
-             android:background="#66ffffff" />
 
     </LinearLayout>
 </LinearLayout>

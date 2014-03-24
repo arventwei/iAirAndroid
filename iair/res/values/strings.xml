@@ -123,5 +123,9 @@
            <string name="detail_device_humi">湿度\t:</string>
        
            <string name="detail_device_form">甲醛\t:</string>
+       
+           <string name="add_device_no_wifi">请接入无线网络再添加小新</string>
+       
+           <string name="please_wait_xiaoxin">点击下一步之前，请确保小新处于等待配置状态。</string>
     
 </resources>

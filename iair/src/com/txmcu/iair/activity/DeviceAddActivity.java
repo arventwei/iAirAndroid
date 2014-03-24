@@ -104,6 +104,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			     }
 
 			     public void onFinish() {
+			    	 iAirUtil.dismissDialog();
 			    	 iAirUtil.toastMessage(DeviceAddActivity.this, getString(R.string.add_device_failed));
 			         //mTextField.setText("done!");
 			     }
@@ -180,6 +181,9 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			//XiaoxinInfo info = new XiaoxinInfo();
 			//MainActivity.scannlist.add(info);
 			iAirUtil.toastMessage(this, getString(R.string.add_device_success));
+		}
+		else {
+			iAirUtil.toastMessage(this, getString(R.string.add_device_failed));
 		}
 		//finish();
 	}

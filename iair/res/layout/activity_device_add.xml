@@ -22,7 +22,7 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_margin="@dimen/button_text_size"
-             android:text="点击下一步之前，请确保小新处于等待配置状态。"
+             android:text="@string/please_wait_xiaoxin"
              android:textSize="@dimen/title_bar_title_text_size" />
 
          <LinearLayout
@@ -64,7 +64,7 @@
                  android:layout_height="match_parent"
                  android:layout_marginLeft="@dimen/add_device_edit_left_padding"
                  android:layout_weight="1"
-                 android:text="txmcutxmcu"
+                 android:text=""
                  android:ems="10"
                  android:hint="@string/add_device_pwd_hint" />
 
@@ -90,7 +90,7 @@
                  android:layout_height="match_parent"
                  android:layout_marginLeft="@dimen/add_device_edit_left_padding"
                  android:layout_weight="1"
-                 android:text="adddd33"
+                 android:text=""
                  android:ems="10" >
                  
                  

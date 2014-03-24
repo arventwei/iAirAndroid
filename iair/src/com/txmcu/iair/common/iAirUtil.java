@@ -437,7 +437,8 @@ public class iAirUtil {
 		showProgressDialog(context,"","");
 	}
 	public static final void showProgressDialog(Context context, String title,
-			String message) {
+			String message) 
+	{
 		dismissDialog();
 		if (TextUtils.isEmpty(title)) {
 			title = context.getString(R.string.wait_moment);
@@ -448,7 +449,8 @@ public class iAirUtil {
 		mProgressDialog = ProgressDialog.show(context, title, message);
 	}
 	public static final void showProgressDialog(Context context, String title,
-			String message,DialogInterface.OnCancelListener cancell) {
+			String message,DialogInterface.OnCancelListener cancell)
+	{
 		dismissDialog();
 		if (TextUtils.isEmpty(title)) {
 			title = context.getString(R.string.wait_moment);
