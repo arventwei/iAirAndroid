@@ -105,7 +105,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 
 			     public void onFinish() {
 			    	 iAirUtil.dismissDialog();
-			    	 iAirUtil.toastMessage(DeviceAddActivity.this, getString(R.string.add_device_failed));
+			    	// iAirUtil.toastMessage(DeviceAddActivity.this, getString(R.string.add_device_failed));
 			         //mTextField.setText("done!");
 			     }
 			  }.start();

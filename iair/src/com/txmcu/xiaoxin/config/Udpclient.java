@@ -56,6 +56,8 @@ public class Udpclient {
     WifiHotManager wifiHotM;
     
     CountDownTimer connectApTimer;
+    CountDownTimer sendDataTimer;
+    CountDownTimer querySnTimer;
     public Udpclient(XinStateManager xinstateMgr,UdpclientOperations opertion,Activity activity,WifiHotManager wifiM)
     {
     	this.xinMgr = xinstateMgr;
@@ -67,6 +69,20 @@ public class Udpclient {
     public void setSendWifiInfo(String ssid,String pwd,String auth_mode,String encryp_type,
     		String channel,String _sn,String _userid)
     {
+    	//check input paramter
+    	if(_userid.length() > 20 )
+    		_userid = _userid.substring(0, 20);
+    	
+    	if(ssid.length()>20 ||pwd.length()>20)
+    	{
+    		operations.setState(false, "input ssid or pwd is wrong");
+    		return;
+    	}
+    	if(_sn.length()>20)
+    	{
+    		operations.setState(false, "sn is to long");
+    		return;
+    	}
     	sn = _sn;
     	userid=_userid;
     	send_msg =  new byte[105];
@@ -97,7 +113,7 @@ public class Udpclient {
     	wifiHotM.connectToHotpot(iAirConstants.XIAOXIN_SSID, iAirConstants.XIAOXIN_PWD);
     	
     	
-    	
+    	leftTime = totalTime;
     	postMessage(initApState);
     	//setStopLoop(0,"");
     	
@@ -109,9 +125,11 @@ public class Udpclient {
     static final int queryState = 30;
     static final int endState = 10;
     
-    static final int initTime = 18*1000;
-    static final int sendTime = 18*1000;
-    static final int QueryTime = 84*1000;
+    static final long totalTime = 120*1000;
+    long    leftTime = totalTime;
+  //  static final int initTime = 18*1000;
+  //  static final int sendTime = 18*1000;
+  //  static final int QueryTime = 84*1000;
 //    private void setStopLoop(int errorcode,String excpetion)
 //    {
 //    	stateCode = errorcode;
@@ -150,7 +168,7 @@ public class Udpclient {
             case initApState:
             {
             	stateCode=initApState;
-            	connectApTimer = new CountDownTimer(initTime, 3000) {
+            	connectApTimer = new CountDownTimer(leftTime, 3000) {
 
        		     public void onTick(long millisUntilFinished) {
        		    	 //initscanRetryTimes++;
@@ -158,6 +176,7 @@ public class Udpclient {
        		    	 if(stateCode!=initApState)
        		    		 return;
        		    	 
+       		    	leftTime = millisUntilFinished;
        		    	 operations.logudp(iAirConstants.XIAOXIN_SSID+" dis connected");
        		    	 WifiInfo curWifi =wifiHotM.getConnectWifiInfo();
        		    	
@@ -189,13 +208,14 @@ public class Udpclient {
             case sendState:
             {
             	stateCode=sendState;
-            	connectApTimer = new CountDownTimer(sendTime, 3000) {
+            	sendDataTimer = new CountDownTimer(leftTime, 3000) {
 
        		     public void onTick(long millisUntilFinished) {
        		    	 //initscanRetryTimes++;
        		    	 
        		    	 if(stateCode!=sendState)
        		    		 return;
+       		    	leftTime = millisUntilFinished;
        		    	 
        		    	 operations.logudp(iAirConstants.XIAOXIN_SSID+" send data");
        		    	 
@@ -278,13 +298,15 @@ public class Udpclient {
             {
             	
             	stateCode=queryState;
-            	connectApTimer = new CountDownTimer(QueryTime, 4000) {
+            	querySnTimer = new CountDownTimer(leftTime, 4000) {
 
        		     public void onTick(long millisUntilFinished) {
        		    	 //initscanRetryTimes++;
        		    	 
        		    	 if(stateCode!=queryState)
        		    		 return;
+       		    	 
+       		    	leftTime = millisUntilFinished;
        		    	 
        		    	xinMgr.restoreCurrentWifiState();
        		    	
