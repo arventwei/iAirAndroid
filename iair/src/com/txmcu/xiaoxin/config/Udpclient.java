@@ -70,8 +70,8 @@ public class Udpclient {
     		String channel,String _sn,String _userid)
     {
     	//check input paramter
-    	if(_userid.length() > 20 )
-    		_userid = _userid.substring(0, 20);
+    	//if(_userid.length() > 20 )
+    	//	_userid = _userid.substring(0, 20);
     	
     	if(ssid.length()>20 ||pwd.length()>20)
     	{
@@ -104,7 +104,7 @@ public class Udpclient {
     	bytes =sn.getBytes();
     	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
     	
-    	bytes =userid.getBytes();
+    	bytes ="test".getBytes();
     	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
 
     	recvingMsg = "";

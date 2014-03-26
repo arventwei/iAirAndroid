@@ -78,15 +78,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			
 			iAirUtil.showProgressDialog(this, getString(R.string.setting)
 					, getString(R.string.add_device_cooldown)+120+getString(R.string.second)
-					, new DialogInterface.OnCancelListener(){
-	            @Override
-	            public void onCancel(DialogInterface dialog) {
-	                //YourTask.this.cancel(true);
-	            	//if(task!=null)
-	            	//	task.cancel();
-	                finish();
-	            }
-	        });
+					);
 
 
 			

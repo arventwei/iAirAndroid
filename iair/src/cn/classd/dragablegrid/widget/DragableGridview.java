@@ -378,13 +378,13 @@ public class DragableGridview extends GridView implements OnGestureListener {
 	private void showSelectItem(View item, boolean isShow) {
 		if (isShow)
 		{
-			if(item.findViewById(R.id.city_bg)!=null)
+			if(item!=null && item.findViewById(R.id.city_bg)!=null)
 				item.findViewById(R.id.city_bg).getBackground().setState(PRESSED_SELECTED_STATE_SET);
 			//item.setBackgroundColor(Color.GRAY);
 		}
 		else
 		{
-			if(item.findViewById(R.id.city_bg)!=null)
+			if(item!=null && item.findViewById(R.id.city_bg)!=null)
 				item.findViewById(R.id.city_bg).getBackground().setState(EMPTY_STATE_SET);
 		}
 			

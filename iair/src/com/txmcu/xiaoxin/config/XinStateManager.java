@@ -281,7 +281,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	public void setState(boolean result, String exception) {
 		// TODO Auto-generated method stub
 		restoreCurrentWifiState();
-		operations.log(" setState result:"+exception);
+		//operations.log(" setState result:"+exception);
 		if (result && exception.startsWith("Ok")) {
 			operations.configResult(ConfigType.Succeed);
 		}

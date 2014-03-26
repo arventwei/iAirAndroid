@@ -448,18 +448,19 @@ public class iAirUtil {
 		}
 		mProgressDialog = ProgressDialog.show(context, title, message);
 	}
-	public static final void showProgressDialog(Context context, String title,
-			String message,DialogInterface.OnCancelListener cancell)
-	{
-		dismissDialog();
-		if (TextUtils.isEmpty(title)) {
-			title = context.getString(R.string.wait_moment);
-		}
-		if (TextUtils.isEmpty(message)) {
-			message = context.getString(R.string.now_loading);
-		}
-		mProgressDialog = ProgressDialog.show(context, title, message,true,true,cancell);
-	}
+//	public static final void showProgressDialog(Context context, String title,
+//			String message)
+//	{
+//		dismissDialog();
+//		if (TextUtils.isEmpty(title)) {
+//			title = context.getString(R.string.wait_moment);
+//		}
+//		if (TextUtils.isEmpty(message)) {
+//			message = context.getString(R.string.now_loading);
+//		}
+//		mProgressDialog = ProgressDialog.show(context, title, message,true,false);
+//		
+//	}
 	
 	public static final void dismissDialog() {
 		if (mProgressDialog != null) {
