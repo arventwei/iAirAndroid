@@ -241,6 +241,9 @@ public class WifiHotManager {
 		return flag;
 	}
 
+	public Boolean isWifiApEnable() {
+		return wifiApadmin.isWifiApEnable();
+	}
 	// enable wifi hotspot
 	public void startAWifiHot(String wifiName,String password) {
 		Log.i(TAG, "into startAWifiHot(String wifiName) wifiName =" + wifiName);

@@ -33,12 +33,16 @@ public class WifiHotAdmin {
 		return instance;
 	}
 
+	
 	private WifiHotAdmin(Context context) {
 		mContext = context;
 		mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 		closeWifiAp(mWifiManager);
 	}
 
+//	public Boolean WifiApEnabled() {
+//		return isWifiApEnabled(mWifiManager);
+//	}
 	public void startWifiAp(String wifiName,String password) {
 		Log.i(TAG, "startWifiAp");
 		stratWifiAp(wifiName,password);

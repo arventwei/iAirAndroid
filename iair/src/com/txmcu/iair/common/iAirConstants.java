@@ -47,6 +47,8 @@ public interface iAirConstants {
     
     public static final String QQ_APP_ID      = "101017203";
     
+    public static final String Mobile_AP_SSID="xiaoxin";
+    public static final String Mobile_AP_PWD="1234567890";   
     public static final String API_Login = "http://211.103.161.120:9999/mobile/login";
     public static final String API_Bind  ="http://211.103.161.120:9999/mobile/bind";
     public static final String API_UnBind = "http://211.103.161.120:9999/mobile/unbind";

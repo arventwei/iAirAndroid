@@ -256,11 +256,14 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		//application.setWifibackupAuthMode(authInfo.get(0));
 		//application.setWifibackupEncrypType(authInfo.get(1));
 	}
+	
 	String userid;
 	String sn;
 	List<ScanResult> _scannlist = new ArrayList<ScanResult>();
-	private void backupCurrentWifiState(WifiInfo info,List<ScanResult> scannlist ) 
+	private void backupCurrentWifiState(List<ScanResult> scannlist ) 
 	{
+		
+		WifiInfo info = wifiHotM.getConnectWifiInfo();
 		//wifibackupNetId=-1;
 		//_scannlist = scannlist;
 		for (ScanResult scanResult : scannlist) {
@@ -306,7 +309,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		if(mCurState == State.Init)
 		{
 			//mCurState = State.Scaned;
-			backupCurrentWifiState(wifiHotM.getConnectWifiInfo(),wifiList);
+			backupCurrentWifiState(wifiList);
 			//if (application.getWifibackupSSID().length()>0) {
 			
 			//}

@@ -28,6 +28,7 @@ import com.handmark.verticalview.VerticalViewPager;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.common.iAirApplication;
+import com.txmcu.iair.common.iAirConstants;
 import com.txmcu.xiaoxin.config.XinServerManager;
 import com.txmcu.xiaoxin.config.XinStateManager;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
@@ -72,6 +73,16 @@ public class DetailActivity extends Activity implements
 		
 		
 
+		
+		WifiInfo info = wifiHotM.getConnectWifiInfo();
+		//wifibackupNetId=-1;
+		//_scannlist = scannlist;
+		
+		//application.setWifibackupSSID("");
+
+		if (info!=null&&info.getSSID()!=null&&!info.getSSID().equals(iAirConstants.XIAOXIN_SSID)) {
+			application.setWifibackupNetId(info.getNetworkId());
+		}
 		// new GetDataTask().execute();
 
 	}
@@ -213,20 +224,28 @@ public class DetailActivity extends Activity implements
 				CheckBox networkoff = (CheckBox) xiaoxinView
 						.findViewById(R.id.xiaoxin_network);
 				
+
 				//pageContext.wifiHotM.
-				//networkoff.setChecked(;
+				networkoff.setChecked(pageContext.wifiHotM.isWifiApEnable());
 				networkoff.setOnClickListener(new OnClickListener()
 				{
 
 					@Override
 					public void onClick(View v)
 					{
-						String sn = pageContext.xiaoxinDevice.sn;
-						int isOn = 0;
+						//String sn = pageContext.xiaoxinDevice.sn;
+						//int isOn = 0;
 						if (((CheckBox) v).isChecked()) {
-							isOn = 1;
+							pageContext.wifiHotM.startAWifiHot(iAirConstants.Mobile_AP_SSID, iAirConstants.Mobile_AP_PWD);
+							//isOn = 1;
 						}
-						XinServerManager.setxiaoxin_switch(pageContext, sn, isOn, null);
+						else {
+							pageContext.wifiHotM.closeAWifiHot();
+							pageContext.wifiHotM.scanWifiHot();
+						//	if(pageContext.application.getWifibackupNetId()!=-1)
+						//		pageContext.wifiHotM.enableNetWorkById(pageContext.application.getWifibackupNetId());
+						}
+						//XinServerManager.setxiaoxin_switch(pageContext, sn, isOn, null);
 						
 
 					}
