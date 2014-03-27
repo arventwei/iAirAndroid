@@ -189,8 +189,8 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 							
 						}
 					});
-			    // adapter.addDevice(1, "小新");
-			   //  adapter.addDevice(2, "爸爸家");
+			  //   mainentryAdapter.addDevice(1, "小新");
+			  //   mainentryAdapter.addDevice(2, "爸爸家");
 			   //  adapter.addDevice(3, "北京");
 			   //  adapter.addDevice(4, "南京");
 			}

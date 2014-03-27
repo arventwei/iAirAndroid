@@ -91,11 +91,11 @@ public class WifiHotManager {
 				//capabilities
 				//existingConfig.
 			//	existingConfig.allowedAuthAlgorithms.get(index)
-				Log.d(TAG, "allowedAuthAlgorithms"+existingConfig.allowedAuthAlgorithms.toString());
-				Log.d(TAG, "allowedProtocols"+existingConfig.allowedProtocols.toString());
-				Log.d(TAG, "allowedPairwiseCiphers"+existingConfig.allowedPairwiseCiphers.toString());
-				Log.d(TAG, "allowedGroupCiphers"+existingConfig.allowedGroupCiphers.toString());
-				Log.d(TAG, "allowedKeyManagement"+existingConfig.allowedKeyManagement.toString());
+				//Log.d(TAG, "allowedAuthAlgorithms"+existingConfig.allowedAuthAlgorithms.toString());
+				//Log.d(TAG, "allowedProtocols"+existingConfig.allowedProtocols.toString());
+				//Log.d(TAG, "allowedPairwiseCiphers"+existingConfig.allowedPairwiseCiphers.toString());
+				//Log.d(TAG, "allowedGroupCiphers"+existingConfig.allowedGroupCiphers.toString());
+				//Log.d(TAG, "allowedKeyManagement"+existingConfig.allowedKeyManagement.toString());
 				if (existingConfig.allowedProtocols.get(WifiConfiguration.Protocol.RSN)) {
 					ret.set(0, "WPA2PSK");
 				}

@@ -29,6 +29,10 @@ public class Device  implements Serializable {
 	
 	public Device() {
 		this.id = imaxid++;
+		this.pm25 = 20;
+		this.temp = 20;
+		this.form = 8;
+		this.humi = 15;
 	}
 	public Device(String sn) {
 		this.id = imaxid++;

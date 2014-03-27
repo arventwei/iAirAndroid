@@ -43,6 +43,8 @@
                  android:layout_height="match_parent"
                  android:layout_marginLeft="@dimen/add_device_edit_left_padding"
                  android:layout_weight="1"
+                 android:editable="false" 
+                 android:focusable="false"
                  android:ems="10" />
          </LinearLayout>
 

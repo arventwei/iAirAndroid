@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.tencent.stat.event.AdditionEvent;
+import com.tendcloud.tenddata.ad;
 import com.txmcu.iair.R;
 import com.txmcu.iair.common.iAirApplication;
 
@@ -27,13 +29,24 @@ public class MainEntryAdapter extends BaseAdapter
 	{
 		deviceManageActivity = contentContext;
 		//Device header = new Device();
-		entries.add(new Device());
+		
+
 	}
 	
 	public void syncDevices()
 	{
 		entries.clear();
-		entries.add(new Device());
+		entries.add(new Device());//head
+		
+		
+		Device bj = new Device();
+		bj.name="北京";
+		entries.add(bj);
+		Device american = new Device();
+		american.name="美使馆";
+		entries.add(american);
+		//entries.add(new Device());
+		
 		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();
 		List<String> snList = application.getXiaoxinSnList();
 		for (String sn : snList) {

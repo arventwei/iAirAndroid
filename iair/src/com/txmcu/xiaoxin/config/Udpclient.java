@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiInfo;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -87,6 +88,8 @@ public class Udpclient {
     	userid=_userid;
     	send_msg =  new byte[105];
     	int len=0;
+    	operations.logudp("setwifi:"+ssid+"-"+pwd+"-"+auth_mode+"-"+encryp_type+"-"+channel);
+    	
 
     	byte[] bytes =ssid.getBytes();
     	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
@@ -182,7 +185,8 @@ public class Udpclient {
        		    	
        		    	 if( curWifi!=null && curWifi.getSSID()!=null  
        		    	 && curWifi.getSSID().equals(iAirConstants.XIAOXIN_SSID)
-       		    	 && curWifi.getNetworkId()!=-1)
+       		    	 && curWifi.getNetworkId()!=-1
+       		    	 && curWifi.getSupplicantState()== SupplicantState.COMPLETED)
        		    	 {
        		    		 operations.logudp(iAirConstants.XIAOXIN_SSID+"  connected");
        		    		 postMessage(sendState);

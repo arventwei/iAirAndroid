@@ -1,7 +1,12 @@
 package com.txmcu.iair.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -9,10 +14,14 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.txmcu.iair.R;
+import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinStateManager;
@@ -39,6 +48,8 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		
 		((Button) findViewById(R.id.nextstep)).setOnClickListener(this);
 		editSSIDEditText = (EditText) findViewById(R.id.input_ssid);
+		
+		editSSIDEditText.setOnClickListener(this);
 		editPwdEditText = (EditText) findViewById(R.id.input_pwd);
 		editSnEditText = (EditText) findViewById(R.id.input_sn);
 
@@ -69,7 +80,8 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 	
 		if (view.getId()==R.id.back_img) {
 			finish();
-		}else if (view.getId() == R.id.nextstep) 
+		}
+		else if (view.getId() == R.id.nextstep) 
 		{
 			xinMgr.Config(editSSIDEditText.getText().toString(),
 					editPwdEditText.getText().toString(),application.getUserid(),
@@ -102,6 +114,48 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			     }
 			  }.start();
 			Log.i(TAG, "start config");
+		}
+		else if(view.getId() == R.id.input_ssid)
+		{
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Select Color Mode");
+
+			scannedlist.toArray();
+			String [] listStrings= new String[scannedlist.size()];
+			for (int i = 0; i < scannedlist.size(); i++) {
+				listStrings[i]=scannedlist.get(i);
+			}
+			ListView modeList = new ListView(this);String[] stringArray =listStrings;//new String[] { "Bright Mode", "Normal Mode" };
+			final ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
+			modeList.setAdapter(modeAdapter);
+
+
+			builder.setView(modeList);
+			final Dialog dialog = builder.create();
+			modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() 
+		     {
+				@Override
+				public void onItemClick(AdapterView parent, View view,int position, long id){
+					
+					String ssid = modeAdapter.getItem(position);
+					editSSIDEditText.setText(ssid);
+					dialog.dismiss();
+					//Log.i("sfs", "asfasds");
+//					Device b = (Device)mainentryAdapter.getItem(position);
+//					if(position >0)
+//					{
+//						Intent localIntent = new Intent(pageContext, DetailActivity.class);
+//						localIntent.putExtra("sn", b.sn);
+//						pageContext.startActivity(localIntent);
+//						pageContext.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+//					
+//					}
+				}
+		     });
+			dialog.show();
+
+
+			
 		}
 
 	}
@@ -152,13 +206,13 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 //		}
 //	};
 
-
-
+	List<String> scannedlist = new ArrayList<String>();
 	@Override
-	public void initResult(boolean result, String SSID) {
+	public void initResult(boolean result, String SSID,List<String> scanList) {
 		// TODO Auto-generated method stub
 		editSSIDEditText.setText(SSID);
 		iAirUtil.dismissDialog();
+		scannedlist = scanList;
 	}
 
 

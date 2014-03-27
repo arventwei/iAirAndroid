@@ -1,5 +1,6 @@
 package com.txmcu.xiaoxin.config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -50,7 +51,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		/**
 		 * @param init callback ,close wait dialog
 		 */
-		public void initResult(boolean result,String SSID);
+		public void initResult(boolean result,String curSSID,List<String> SSID);
 
 		/**
 		 * @param invoke callback
@@ -108,17 +109,18 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		{
 			wifiHotM.removeWifiInfo(curWifiInfo.getNetworkId());
 		}
+		_scannlist.clear();
 		wifiHotM.scanWifiHot();
 		initscanRetryTimes=0;
 		if (initCoolTimer!=null) {
 			initCoolTimer.cancel();
 		}
-		initCoolTimer = new CountDownTimer(18000, 2000) {
+		initCoolTimer = new CountDownTimer(30000, 2000) {
 
 		     public void onTick(long millisUntilFinished) {
 		    	 initscanRetryTimes++;
 		    	 
-		    	 if(mCurState == State.Init&&application.getWifibackupSSID().length()==0)
+		    	 if(mCurState == State.Init&&_scannlist.size()==0)
 		    	 {
 		    		 operations.log("times"+initscanRetryTimes+" left:"+millisUntilFinished/1000);
 		    		// if()
@@ -141,10 +143,10 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		     public void onFinish() {
 		    	 
 		    	 
-		    	 if(application.getWifibackupSSID().length()==0)
+		    	 if(_scannlist.size()==0)
 		    	 {
 		    		 operations.log("times ok");
-		    		 operations.initResult(false,"");
+		    		 operations.initResult(false,"",null);
 		    	 }
 		    	 
 
@@ -156,16 +158,17 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	public void Config(String SSID,String Pwd,String _userid,String _sn)
 	{
 		mCurState = State.Config;
-		application.setWifibackupPwd(Pwd);
+		//application.setWifibackupPwd(Pwd);
 		//wifibackupPwd = Pwd;
 		userid=_userid;
 		sn=_sn;
 		
 		//if(mCurState == State.Config)
 		//{
-		udpclient.setSendWifiInfo(application.getWifibackupSSID(), application.getWifibackupPwd(),
-					application.getWifibackupAuthMode(), application.getWifibackupEncrypType(),
-					application.getWifibackupChannel(),sn,userid);
+		List<String> detailinfo = getWifiDetailInfo(SSID);
+		udpclient.setSendWifiInfo(SSID, Pwd,
+				detailinfo.get(0), detailinfo.get(1),
+					detailinfo.get(2),sn,userid);
 			
 			//udpclient.Looper();
 		//}
@@ -192,35 +195,101 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 //	String wifibackupAuthMode;
 //	String wifibackupEncrypType;
 	
+	List<String> getWifiDetailInfo(String ssid)
+	{
+		String channel = "6";
+		String AuthMode="OPEN";
+		String EncrypType="None";
+		
+		//application.setWifibackupChannel("6");
+		//wifibackupChannel = "6";
+		for (ScanResult scanRet : _scannlist) 
+		{
+			if (scanRet.SSID.equalsIgnoreCase(ssid))
+			{
+				int  ch =  iAirUtil.getChannel(scanRet.frequency);
+				channel = String.valueOf(ch);
+				 if(scanRet.capabilities.contains("WPA") && !scanRet.capabilities.contains("WPA2"))  
+                 {  
+					 AuthMode ="WPAPSK";
+                    // wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);  
+                   //  wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);  
+                    // wc.status = WifiConfiguration.Status.ENABLED;  
+                 }  
+				 else if(scanRet.capabilities.contains("WPA2"))  
+                 {  
+					 AuthMode ="WPA2PSK";
+                    // wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);  
+                   //  wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);  
+                    // wc.status = WifiConfiguration.Status.ENABLED;  
+                 }  
+				 else if(scanRet.capabilities.contains("WEP"))   {
+					 
+					 AuthMode ="SHARED";
+					 EncrypType="WEP";
+				}
+				 
+                 if(scanRet.capabilities.contains("TKIP"))  
+                 {  
+                	 EncrypType="TKIP";
+                    // wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);  
+                   //  wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);  
+                 }  
+                 if(scanRet.capabilities.contains("CCMP"))  
+                 {  
+                	 EncrypType="AES";
+                    // wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);  
+                    // wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);  
+                 }  
+                
+				break;
+			}
+		}
+		
+		//List<String> authInfo = wifiHotM.getAuthMode(ssid);
+		List<String> ret = new ArrayList<String>();
+		
+		ret.add(AuthMode);
+		ret.add(EncrypType);
+		ret.add(channel);
+		return ret;
+		//application.setWifibackupAuthMode(authInfo.get(0));
+		//application.setWifibackupEncrypType(authInfo.get(1));
+	}
 	String userid;
 	String sn;
+	List<ScanResult> _scannlist = new ArrayList<ScanResult>();
 	private void backupCurrentWifiState(WifiInfo info,List<ScanResult> scannlist ) 
 	{
 		//wifibackupNetId=-1;
-		application.setWifibackupSSID("");
+		//_scannlist = scannlist;
+		for (ScanResult scanResult : scannlist) {
+			if (!scanResult.SSID.equals(iAirConstants.XIAOXIN_SSID)) {
+				_scannlist.add(scanResult);
+			}
+		}
+		//application.setWifibackupSSID("");
+		String curSSIDString = "";
+		application.setWifibackupNetId(-1);
 		if (info!=null&&info.getSSID()!=null&&!info.getSSID().equals(iAirConstants.XIAOXIN_SSID)) {
 			application.setWifibackupNetId(info.getNetworkId());
+			curSSIDString = info.getSSID();
+			
+			
 			//wifibackupNetId = ;
-			application.setWifibackupSSID(info.getSSID());
+			//application.setWifibackupSSID(info.getSSID());
 			//wifibackupSSID = info.getSSID();
 			
-			application.setWifibackupChannel("6");
-			//wifibackupChannel = "6";
-			for (ScanResult sr : scannlist) 
-			{
-				if (sr.SSID.equalsIgnoreCase(info.getSSID()))
-				{
-					int  channel =  iAirUtil.getChannel(sr.frequency);
-					application.setWifibackupChannel(String.valueOf(channel));
-					break;
-				}
-			}
 			
-			List<String> authInfo = wifiHotM.getAuthMode(info.getSSID());
-			application.setWifibackupAuthMode(authInfo.get(0));
-			application.setWifibackupEncrypType(authInfo.get(1));
 			
 		}
+		
+		List<String> ssidlist = new ArrayList<String>();
+		for (ScanResult ret : _scannlist) {
+			ssidlist.add(ret.SSID);
+		}
+		operations.initResult(true,curSSIDString,ssidlist);
+		
 	}
 	public void restoreCurrentWifiState() {
 		//operations.log("restoreCurrentWifiState");
@@ -238,9 +307,9 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		{
 			//mCurState = State.Scaned;
 			backupCurrentWifiState(wifiHotM.getConnectWifiInfo(),wifiList);
-			if (application.getWifibackupSSID().length()>0) {
-				operations.initResult(true,application.getWifibackupSSID());
-			}
+			//if (application.getWifibackupSSID().length()>0) {
+			
+			//}
 		}
 		
 		
@@ -292,7 +361,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	@Override
 	public void logudp(String msg) {
 		// TODO Auto-generated method stub
-		operations.log("udp:"+msg);
+		operations.log("udp:" + msg);
 	}
 	
 }

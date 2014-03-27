@@ -81,11 +81,11 @@ public class iAirApplication extends Application {
 	///backup wifi info
 	
 	private static final String WifibackupNetId="WifibackupNetId";
-	private static final String WifibackupSSID="WifibackupSSID";
-	private static final String WifibackupChannel="WifibackupChannel";
-	private static final String WifibackupPwd="WifibackupPwd";
-	private static final String WifibackupAuthMode="WifibackupAuthMode";
-	private static final String WifibackupEncrypType="WifibackupEncrypType";
+	//private static final String WifibackupSSID="WifibackupSSID";
+	//private static final String WifibackupChannel="WifibackupChannel";
+	//private static final String WifibackupPwd="WifibackupPwd";
+	//private static final String WifibackupAuthMode="WifibackupAuthMode";
+	//private static final String WifibackupEncrypType="WifibackupEncrypType";
 	
 	public void setWifibackupNetId(int netid) {
 		SharedPreferences.Editor mEditor = mPerferences.edit();  
@@ -96,48 +96,48 @@ public class iAirApplication extends Application {
 		return mPerferences.getInt(WifibackupNetId, 0);
 	}
 	
-	public void setWifibackupSSID(String ssid) {
-		SharedPreferences.Editor mEditor = mPerferences.edit();  
-	    mEditor.putString(WifibackupSSID,ssid);  
-	    mEditor.commit(); 
-	}
-	public String getWifibackupSSID() {
-		return mPerferences.getString(WifibackupSSID, "");
-	}
-
-	public void setWifibackupPwd(String content) {
-		SharedPreferences.Editor mEditor = mPerferences.edit();  
-	    mEditor.putString(WifibackupPwd,content);  
-	    mEditor.commit(); 
-	}
-	public String getWifibackupPwd() {
-		return mPerferences.getString(WifibackupPwd, "");
-	}
-	public void setWifibackupChannel(String content) {
-		SharedPreferences.Editor mEditor = mPerferences.edit();  
-	    mEditor.putString(WifibackupChannel,content);  
-	    mEditor.commit(); 
-	}
-	public String getWifibackupChannel() {
-		return mPerferences.getString(WifibackupChannel, "");
-	}
-	
-	public void setWifibackupAuthMode(String content) {
-		SharedPreferences.Editor mEditor = mPerferences.edit();  
-	    mEditor.putString(WifibackupAuthMode,content);  
-	    mEditor.commit(); 
-	}
-	public String getWifibackupAuthMode() {
-		return mPerferences.getString(WifibackupAuthMode, "");
-	}
-	public void setWifibackupEncrypType(String content) {
-		SharedPreferences.Editor mEditor = mPerferences.edit();  
-	    mEditor.putString(WifibackupEncrypType,content);  
-	    mEditor.commit(); 
-	}
-	public String getWifibackupEncrypType() {
-		return mPerferences.getString(WifibackupEncrypType, "");
-	}
+//	public void setWifibackupSSID(String ssid) {
+//		SharedPreferences.Editor mEditor = mPerferences.edit();  
+//	    mEditor.putString(WifibackupSSID,ssid);  
+//	    mEditor.commit(); 
+//	}
+//	public String getWifibackupSSID() {
+//		return mPerferences.getString(WifibackupSSID, "");
+//	}
+//
+//	public void setWifibackupPwd(String content) {
+//		SharedPreferences.Editor mEditor = mPerferences.edit();  
+//	    mEditor.putString(WifibackupPwd,content);  
+//	    mEditor.commit(); 
+//	}
+//	public String getWifibackupPwd() {
+//		return mPerferences.getString(WifibackupPwd, "");
+//	}
+//	public void setWifibackupChannel(String content) {
+//		SharedPreferences.Editor mEditor = mPerferences.edit();  
+//	    mEditor.putString(WifibackupChannel,content);  
+//	    mEditor.commit(); 
+//	}
+//	public String getWifibackupChannel() {
+//		return mPerferences.getString(WifibackupChannel, "");
+//	}
+//	
+//	public void setWifibackupAuthMode(String content) {
+//		SharedPreferences.Editor mEditor = mPerferences.edit();  
+//	    mEditor.putString(WifibackupAuthMode,content);  
+//	    mEditor.commit(); 
+//	}
+//	public String getWifibackupAuthMode() {
+//		return mPerferences.getString(WifibackupAuthMode, "");
+//	}
+//	public void setWifibackupEncrypType(String content) {
+//		SharedPreferences.Editor mEditor = mPerferences.edit();  
+//	    mEditor.putString(WifibackupEncrypType,content);  
+//	    mEditor.commit(); 
+//	}
+//	public String getWifibackupEncrypType() {
+//		return mPerferences.getString(WifibackupEncrypType, "");
+//	}
 	///
 //	
 //	
