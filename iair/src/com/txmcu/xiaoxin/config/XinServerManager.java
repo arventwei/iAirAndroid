@@ -256,4 +256,38 @@ public class XinServerManager {
 					}
 				});
 	}
+	
+	static public void setxiaoxin_name(final Activity activity, final String sn,final String name,
+			final onSuccess r)
+	{
+		final iAirApplication application = ((iAirApplication) activity
+				.getApplication());
+		RequestParams post_params = new RequestParams();
+		post_params.put("sn", sn);
+		post_params.put("name", name);
+
+		AsyncHttpClient client = getHttpClient();
+		client.post(iAirConstants.API_SetXiaoxinName, post_params,
+				new AsyncHttpResponseHandler() {
+					@Override
+					public void onSuccess(String response) {
+						//System.out.println(response);
+						iAirUtil.toastMessage(activity, response);
+						if (response.equals(iAirConstants.Server_Fail)) {
+							if(r!=null)
+								r.run(response);
+							return;
+						}
+						
+
+						Device xiaoxin = application.getXiaoxin(sn);
+						
+						xiaoxin.name = name;
+						application.setXiaoxin(xiaoxin);
+
+						if(r!=null)
+							r.run(response);
+					}
+				});
+	}
 }

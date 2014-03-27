@@ -54,4 +54,6 @@ public interface iAirConstants {
     public static final String API_GetXiaoxin ="http://211.103.161.120:9999/mobile/getxiaoxin";
     public static final String API_SetXiaoxinSwitch ="http://211.103.161.120:9999/mobile/setxiaoxin_switch";
     public static final String API_SetXiaoxinSeed ="http://211.103.161.120:9999/mobile/setxiaoxin_speed";
+    public static final String API_SetXiaoxinName ="http://211.103.161.120:9999/mobile/setxiaoxin_name";
+
 }

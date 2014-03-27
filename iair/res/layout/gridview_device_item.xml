@@ -75,6 +75,6 @@
         android:paddingBottom="0dip"
         android:paddingRight="0dip"
         android:src="@drawable/city_delete_btn"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
 </RelativeLayout>

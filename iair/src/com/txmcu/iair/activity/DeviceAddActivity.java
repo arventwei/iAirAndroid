@@ -231,6 +231,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		else {
 			iAirUtil.toastMessage(this, getString(R.string.add_device_failed));
 		}
+		//iAirUtil.showResultDialog(this, "设置", getString(R.string.add_device_success))
 		finish();
 	}
 	@Override
