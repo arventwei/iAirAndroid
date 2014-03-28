@@ -1,9 +1,10 @@
 package com.txmcu.xiaoxin.config.wifi;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R.integer;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
@@ -266,10 +267,31 @@ public class WifiHotManager {
 	}
 
 	// 
-	private void scanNearWifiHots() {
+	private void scanNearWifiHots()
+ {
 		Log.i(TAG, "into scanNearWifiHots()");
 		registerWifiScanBroadCast();
-		mWifimanager.startScan();
+		
+		Method startScanActiveMethod = null;
+		try {
+			startScanActiveMethod = WifiManager.class.getMethod("startScanActive");
+			startScanActiveMethod.invoke(mWifimanager);
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		//mWifimanager.startScanActive
 		Log.i(TAG, "out scanNearWifiHots()");
 	}
 
