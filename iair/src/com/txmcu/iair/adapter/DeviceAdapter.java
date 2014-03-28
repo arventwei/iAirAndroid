@@ -87,6 +87,12 @@ public class DeviceAdapter extends BaseAdapter
 		{
 			convertView = View.inflate(deviceManageActivity, R.layout.gridview_device_item, null);
 			((TextView)convertView.findViewById(R.id.city_name)).setText(b.name);
+			if (deviceManageActivity.editMode) {
+				convertView.findViewById(R.id.delete_btn).setVisibility(View.VISIBLE);
+			}
+			else {
+				convertView.findViewById(R.id.delete_btn).setVisibility(View.INVISIBLE);
+			}
 		}
 		
 		setitemSize(convertView);

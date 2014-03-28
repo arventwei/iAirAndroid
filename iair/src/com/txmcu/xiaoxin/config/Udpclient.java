@@ -180,8 +180,13 @@ public class Udpclient {
        		    		 return;
        		    	 
        		    	leftTime = millisUntilFinished;
-       		    	 operations.logudp(iAirConstants.XIAOXIN_SSID+" dis connected");
-       		    	 WifiInfo curWifi =wifiHotM.getConnectWifiInfo();
+       		     WifiInfo curWifi =wifiHotM.getConnectWifiInfo();
+       		     String reasonString="null";
+       		     if (curWifi!=null) {
+					reasonString = curWifi.getSupplicantState().toString();
+				}
+       		    	 operations.logudp(iAirConstants.XIAOXIN_SSID+" dis connected " + reasonString);
+       		    	
        		    	
        		    	 if( curWifi!=null && curWifi.getSSID()!=null  
        		    	 && curWifi.getSSID().equals(iAirConstants.XIAOXIN_SSID)

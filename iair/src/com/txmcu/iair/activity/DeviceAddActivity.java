@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -21,9 +20,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.txmcu.iair.R;
-import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
+import com.txmcu.xiaoxin.config.XinServerManager;
 import com.txmcu.xiaoxin.config.XinStateManager;
 import com.txmcu.xiaoxin.config.XinStateManager.ConfigType;
 import com.txmcu.xiaoxin.config.XinStateManager.XinOperations;
@@ -45,6 +44,8 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		setContentView(R.layout.activity_device_add);
 		application = (iAirApplication)this.getApplication(); 
 		findViewById(R.id.back_img).setOnClickListener(this);
+		
+		
 		
 		((Button) findViewById(R.id.nextstep)).setOnClickListener(this);
 		editSSIDEditText = (EditText) findViewById(R.id.input_ssid);
@@ -118,9 +119,13 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		else if(view.getId() == R.id.input_ssid)
 		{
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Select Color Mode");
+			builder.setTitle("请选择需要连接的WIFI");
+			
+			if (scannedlist==null) {
+				return;
+			}
 
-			scannedlist.toArray();
+			
 			String [] listStrings= new String[scannedlist.size()];
 			for (int i = 0; i < scannedlist.size(); i++) {
 				listStrings[i]=scannedlist.get(i);
@@ -213,6 +218,9 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		editSSIDEditText.setText(SSID);
 		iAirUtil.dismissDialog();
 		scannedlist = scanList;
+		if (scannedlist==null) {
+			return;
+		}
 	}
 
 
@@ -227,6 +235,26 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			//XiaoxinInfo info = new XiaoxinInfo();
 			//MainActivity.scannlist.add(info);
 			iAirUtil.toastMessage(this, getString(R.string.add_device_success));
+			if (DeviceManageActivity.instance != null) {
+				XinServerManager.query_bindlist(DeviceManageActivity.instance, application.getUserid(), new XinServerManager.onSuccess() {
+					
+					@Override
+					public void run(String response) {
+						// TODO Auto-generated method stub
+						if(DeviceManageActivity.instance!=null)
+						{
+							DeviceManageActivity.instance.adapter.syncDevices();
+							DeviceManageActivity.instance.adapter.notifyDataSetChanged();
+							
+							if (MainActivity.instance !=null) {
+								MainActivity.instance.refreshlist();
+							}
+						}
+						
+					}
+				});
+			}
+			
 		}
 		else {
 			iAirUtil.toastMessage(this, getString(R.string.add_device_failed));

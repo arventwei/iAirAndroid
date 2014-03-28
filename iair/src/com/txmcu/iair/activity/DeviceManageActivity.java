@@ -1,11 +1,13 @@
 package com.txmcu.iair.activity;
 
+import android.R.bool;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 import cn.classd.dragablegrid.widget.DragableGridview;
 import cn.classd.dragablegrid.widget.DragableGridview.OnItemClickListener;
 import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
@@ -13,23 +15,35 @@ import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.DeviceAdapter;
+import com.txmcu.iair.common.iAirApplication;
+import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class DeviceManageActivity extends Activity 
 implements OnClickListener{
 
 	public static final String TAG = "DeviceManageActivity";
 	
+	public static DeviceManageActivity instance;
 	//private List<City> books;
 	
 	private DragableGridview mGridview;
 	
-	private  DeviceAdapter adapter;
-	 
+	public  DeviceAdapter adapter;
+	
+	public Boolean editMode = false;
+	iAirApplication application ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		instance = this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_device_manage);
+		
+		application = (iAirApplication)getApplication();
 		findViewById(R.id.back_img).setOnClickListener(this);
+		
+		findViewById(R.id.device_choose_refresh_img).setOnClickListener(this);
+		findViewById(R.id.device_edit_btn).setOnClickListener(this);
+		
 		mGridview= ((DragableGridview)findViewById(R.id.device_gridview));
 		
 		
@@ -44,6 +58,11 @@ implements OnClickListener{
         addGridViewListener();
 		
 	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		instance = null;
+	}
 
 	protected void addGridViewListener() {
 		mGridview.setAdapter(adapter);
@@ -53,16 +72,45 @@ implements OnClickListener{
 			public void click(int index) {
 				Log.d(TAG, "item : " + index + " -- clicked!");
 				
-				Device device = (Device)adapter.getItem(index);
-				if (device.sn.equals("")) {
+				 Device device = (Device)adapter.getItem(index);
+				final String snString = device.sn;
+				if (snString.equals("")) {
 					Intent localIntent = new Intent(DeviceManageActivity.this,DeviceAddActivity.class);
+					
 					startActivity(localIntent);
 				    overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
 				}
 				else {
-					Intent localIntent = new Intent(DeviceManageActivity.this,DeviceModifyActivity.class);
-					startActivity(localIntent);
-				    overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+					if (editMode) {
+						
+						XinServerManager.unbind(DeviceManageActivity.this, application.getUserid(), snString,
+								new XinServerManager.onSuccess() {
+							
+							@Override
+							public void run(String response) {
+								if (response.equals("Ok")) {
+									application.removeXiaoxin(snString);
+									adapter.syncDevices();
+									adapter.notifyDataSetChanged();
+									if (MainActivity.instance!=null) {
+										MainActivity.instance.refreshlist();
+									}
+								}
+								
+								// TODO Auto-generated method stub
+								//Toast.makeText(MainActivity.this, R.string.xiaoxin_login_ok, Toast.LENGTH_LONG).show();
+							}
+						});
+						
+					}
+					else {
+						Intent localIntent = new Intent(DeviceManageActivity.this,
+								DeviceModifyActivity.class);
+						localIntent.putExtra("sn", device.sn);
+						startActivity(localIntent);
+					    overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+					}
+					
 				}
 			}
 		});
@@ -87,6 +135,17 @@ implements OnClickListener{
 	    	case R.id.back_img:
 	    		finish();
 	    		break;
+	    	case R.id.device_choose_refresh_img:
+	    	{
+	    		
+	    		break;
+	    	}
+	    	case R.id.device_edit_btn:
+	    	{
+	    		editMode = !editMode;
+	    		adapter.notifyDataSetChanged();
+	    		break;
+	    	}
 	    	
 	    }
 	}

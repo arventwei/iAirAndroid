@@ -82,6 +82,25 @@ public class XinServerManager {
 					}
 				});
 	}
+	
+	static public void unbind(final Activity activity, final String userid,
+			final String sn, final onSuccess r) {
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("sn", sn);
+
+		AsyncHttpClient client = getHttpClient();
+		client.post(iAirConstants.API_UnBind, post_params,
+				new AsyncHttpResponseHandler() {
+					@Override
+					public void onSuccess(String response) {
+						System.out.println(response);
+						iAirUtil.toastMessage(activity, response);
+						if(r!=null)
+							r.run(response);
+					}
+				});
+	}
 
 	static public void query_bindlist(final Activity activity, final String userid,
 			final onSuccess r)
@@ -195,6 +214,11 @@ public class XinServerManager {
 	{
 		final iAirApplication application = ((iAirApplication) activity
 				.getApplication());
+		
+		Device xiaoxinDevice = application.getXiaoxin(sn);
+		xiaoxinDevice.switchOn = isOn;
+		application.setXiaoxin(xiaoxinDevice);
+		
 		RequestParams post_params = new RequestParams();
 		post_params.put("sn", sn);
 		post_params.put("switch", String.valueOf(isOn));
@@ -228,6 +252,12 @@ public class XinServerManager {
 	{
 		final iAirApplication application = ((iAirApplication) activity
 				.getApplication());
+		
+		Device xiaoxinDevice = application.getXiaoxin(sn);
+		xiaoxinDevice.speed = speed;
+		application.setXiaoxin(xiaoxinDevice);
+		
+
 		RequestParams post_params = new RequestParams();
 		post_params.put("sn", sn);
 		post_params.put("speed", String.valueOf(speed));
@@ -260,8 +290,14 @@ public class XinServerManager {
 	static public void setxiaoxin_name(final Activity activity, final String sn,final String name,
 			final onSuccess r)
 	{
+		
 		final iAirApplication application = ((iAirApplication) activity
 				.getApplication());
+		
+		Device xiaoxinDevice = application.getXiaoxin(sn);
+		xiaoxinDevice.name = name;
+		application.setXiaoxin(xiaoxinDevice);
+		
 		RequestParams post_params = new RequestParams();
 		post_params.put("sn", sn);
 		post_params.put("name", name);

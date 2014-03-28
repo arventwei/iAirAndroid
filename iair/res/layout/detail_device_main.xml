@@ -11,7 +11,7 @@
         android:layout_height="fill_parent" />
 
     <include
-        android:id="@+id/weather_detail_view_top_bar_includer"
+        android:id="@+id/main_view_top_bar_includer"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/title_bar_height"
         android:layout_alignParentTop="true"
@@ -21,7 +21,7 @@
         android:id="@+id/screen_indicator_container"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/screen_indicator_height"
-        android:layout_below="@id/weather_detail_view_top_bar_includer"
+        android:layout_below="@id/main_view_top_bar_includer"
         android:background="@color/transparent" >
 
         <View

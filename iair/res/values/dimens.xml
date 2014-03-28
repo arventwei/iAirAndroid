@@ -50,7 +50,7 @@
     <dimen name="item_setting_divider_height">1.5dip</dimen>
     
         <dimen name="setting_item_height">65.0dip</dimen>
-    <dimen name="setting_item_padding">10.0dip</dimen>
+    <dimen name="setting_item_padding">5.0dip</dimen>
     <dimen name="setting_item_main_text_size">16.0sp</dimen>
     <dimen name="setting_item_sum_text_size">13.0sp</dimen>
     

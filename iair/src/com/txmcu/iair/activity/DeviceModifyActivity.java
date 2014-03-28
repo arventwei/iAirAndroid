@@ -53,7 +53,15 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 		else if (view.getId()==R.id.modify_name_btn) {
 			
 			XinServerManager.setxiaoxin_name(this, snString, new_name_EditText.getText().toString(), null);
-			
+			if(DetailActivity.instance!=null)
+			{
+				DetailActivity.instance.adapter.updateView();
+				
+			}
+			if (MainActivity.instance!=null) {
+				MainActivity.instance.refreshlist();
+			}
+			finish();
 		}
 
 	}

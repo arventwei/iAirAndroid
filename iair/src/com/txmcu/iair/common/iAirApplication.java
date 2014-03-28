@@ -61,6 +61,13 @@ public class iAirApplication extends Application {
 		return xiaoxinList;
 		//return mPerferences.getString(Userid, "");
 	}
+	public void removeXiaoxin(String sn) {
+		
+		List<String> snList = getXiaoxinSnList();
+		snList.remove(sn);
+		setXiaoxinSnList(snList);
+	
+	}
 	public void setXiaoxin(Device xiaoxin)
 	{
 		SharedPreferences.Editor mEditor = mPerferences.edit();  

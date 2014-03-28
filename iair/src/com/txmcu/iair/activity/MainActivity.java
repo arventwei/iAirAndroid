@@ -39,12 +39,16 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	private PopupWindow popWin;
 	private PopupWindow popWinSetting;
 	
+
+
+	public static  MainActivity instance;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Common);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		instance = this;
 		
 		this.application = ((iAirApplication)getApplication());
 
@@ -68,6 +72,11 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		
 		
 		
+	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		instance = null;
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -213,17 +222,19 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 			return view == object;
 		}
 	}
-	
+	public void refreshlist() {
+		SamplePagerAdapter adapter = (SamplePagerAdapter)(mPullToRefreshViewPager.getRefreshableView().getAdapter());
+		adapter.mainentryAdapter.syncDevices();
+		adapter.mainentryAdapter.notifyDataSetChanged();
+	}
 	private void  AsyncMainEntrys() {
 		
 		XinServerManager.query_bindlist(this, application.getUserid(), new XinServerManager.onSuccess() {
 			
 			@Override
 			public void run(String response) {
-				SamplePagerAdapter adapter = (SamplePagerAdapter)(mPullToRefreshViewPager.getRefreshableView().getAdapter());
-				adapter.mainentryAdapter.syncDevices();
-				adapter.mainentryAdapter.notifyDataSetChanged();
 				
+				refreshlist();
 				
 				// TODO Auto-generated method stub
 				

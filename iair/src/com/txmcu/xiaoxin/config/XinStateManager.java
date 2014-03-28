@@ -115,7 +115,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		if (initCoolTimer!=null) {
 			initCoolTimer.cancel();
 		}
-		initCoolTimer = new CountDownTimer(30000, 2000) {
+		initCoolTimer = new CountDownTimer(40000, 8000) {
 
 		     public void onTick(long millisUntilFinished) {
 		    	 initscanRetryTimes++;

@@ -43,14 +43,17 @@ public class DetailActivity extends Activity implements
 
 	iAirApplication application;
 	public Device xiaoxinDevice;
-	SamplePagerAdapter adapter;
+	public SamplePagerAdapter adapter;
 	
 	private WifiHotManager wifiHotM;
+	
+	public static DetailActivity instance;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Common);
 		super.onCreate(savedInstanceState);
+		instance = this;
 		setContentView(R.layout.detail_device_main);
 		
 		wifiHotM = WifiHotManager.getInstance(this, this);
@@ -94,7 +97,7 @@ public class DetailActivity extends Activity implements
 		wifiHotM.unRegisterWifiScanBroadCast();
 		wifiHotM.unRegisterWifiStateBroadCast();
 		WifiHotManager.destroy();
-		
+		instance = null;
 		
 	}
 
@@ -139,6 +142,102 @@ public class DetailActivity extends Activity implements
 
 		// private ListView listView;
 		// MainEntryAdapter adapter;
+		View xiaoxinView;
+		
+		public void updateView()
+		{
+			final Device xiaoxinDevice = pageContext.application.getXiaoxin(pageContext.xiaoxinDevice.sn);
+			TextView nameview = (TextView) xiaoxinView
+					.findViewById(R.id.xiaoxin_name);
+			nameview.setText(xiaoxinDevice.name);
+			TextView pm25 = (TextView) xiaoxinView
+					.findViewById(R.id.xiaoxin_pm25);
+			pm25.setText(pageContext.getString(R.string.detail_device_pm25) + (int)xiaoxinDevice.pm25);
+			TextView temp = (TextView) xiaoxinView
+					.findViewById(R.id.xiaoxin_temp);
+			temp.setText(pageContext.getString(R.string.detail_device_temp) + xiaoxinDevice.temp );
+			TextView humi = (TextView) xiaoxinView
+					.findViewById(R.id.xiaoxin_humi);
+			humi.setText(pageContext.getString(R.string.detail_device_humi) + xiaoxinDevice.humi );
+			TextView form = (TextView) xiaoxinView
+					.findViewById(R.id.xiaoxin_form);
+			form.setText(pageContext.getString(R.string.detail_device_form) + xiaoxinDevice.form );
+		
+	
+			// nameview.setText()
+			//final EditText editspeedEditText = (EditText)xiaoxinView.findViewById(R.id.input_speed);
+			//editspeedEditText.setText(String.valueOf(pageContext.xiaoxinDevice.speed));
+			Button speedButton = (Button)xiaoxinView.findViewById(R.id.btn_speed);
+			final int newSpeed = xiaoxinDevice.speed+1;
+			speedButton.setOnClickListener(new OnClickListener()
+			{
+
+				@Override
+				public void onClick(View v)
+				{
+					String sn = xiaoxinDevice.sn;
+					//int speed = Integer.parseInt(editspeedEditText.getText().toString());
+					
+					xiaoxinDevice.speed = newSpeed;
+					XinServerManager.setxiaoxin_speed(pageContext, sn, newSpeed, null);
+					
+
+				}
+
+			});
+			CheckBox switchoff = (CheckBox) xiaoxinView
+					.findViewById(R.id.xiaoxin_switch);
+			switchoff.setChecked(xiaoxinDevice.switchOn != 0);
+			switchoff.setOnClickListener(new OnClickListener()
+			{
+
+				@Override
+				public void onClick(View v)
+				{
+					String sn = xiaoxinDevice.sn;
+					int isOn = 0;
+					if (((CheckBox) v).isChecked()) {
+						isOn = 1;
+					}
+					XinServerManager.setxiaoxin_switch(pageContext, sn, isOn, null);
+					
+
+				}
+
+			});
+			
+			CheckBox networkoff = (CheckBox) xiaoxinView
+					.findViewById(R.id.xiaoxin_network);
+			
+
+			//pageContext.wifiHotM.
+			networkoff.setChecked(pageContext.wifiHotM.isWifiApEnable());
+			networkoff.setOnClickListener(new OnClickListener()
+			{
+
+				@Override
+				public void onClick(View v)
+				{
+					//String sn = pageContext.xiaoxinDevice.sn;
+					//int isOn = 0;
+					if (((CheckBox) v).isChecked()) {
+						pageContext.wifiHotM.startAWifiHot(iAirConstants.Mobile_AP_SSID, iAirConstants.Mobile_AP_PWD);
+						//isOn = 1;
+					}
+					else {
+						pageContext.wifiHotM.closeAWifiHot();
+						pageContext.wifiHotM.scanWifiHot();
+					//	if(pageContext.application.getWifibackupNetId()!=-1)
+					//		pageContext.wifiHotM.enableNetWorkById(pageContext.application.getWifibackupNetId());
+					}
+					//XinServerManager.setxiaoxin_switch(pageContext, sn, isOn, null);
+					
+
+				}
+
+			});
+
+		}
 
 		public SamplePagerAdapter(DetailActivity paramContext) {
 			pageContext = paramContext;
@@ -159,105 +258,11 @@ public class DetailActivity extends Activity implements
 					null);
 
 			if (position == 0) {
-				View xiaoxinView = (View) subView
+				xiaoxinView = (View) subView
 						.findViewById(R.id.xiaoxin_info);
 
-				TextView nameview = (TextView) xiaoxinView
-						.findViewById(R.id.xiaoxin_name);
-				nameview.setText(pageContext.xiaoxinDevice.name);
-				TextView pm25 = (TextView) xiaoxinView
-						.findViewById(R.id.xiaoxin_pm25);
-				pm25.setText(pageContext.getString(R.string.detail_device_pm25) + (int)pageContext.xiaoxinDevice.pm25);
-				TextView temp = (TextView) xiaoxinView
-						.findViewById(R.id.xiaoxin_temp);
-				temp.setText(pageContext.getString(R.string.detail_device_temp) + pageContext.xiaoxinDevice.temp );
-				TextView humi = (TextView) xiaoxinView
-						.findViewById(R.id.xiaoxin_humi);
-				humi.setText(pageContext.getString(R.string.detail_device_humi) + pageContext.xiaoxinDevice.humi );
-				TextView form = (TextView) xiaoxinView
-						.findViewById(R.id.xiaoxin_form);
-				form.setText(pageContext.getString(R.string.detail_device_form) + pageContext.xiaoxinDevice.form );
-			
-		
-				// nameview.setText()
-				//final EditText editspeedEditText = (EditText)xiaoxinView.findViewById(R.id.input_speed);
-				//editspeedEditText.setText(String.valueOf(pageContext.xiaoxinDevice.speed));
-				Button speedButton = (Button)xiaoxinView.findViewById(R.id.btn_speed);
-				final int newSpeed = pageContext.xiaoxinDevice.speed+1;
-				speedButton.setOnClickListener(new OnClickListener()
-				{
+				updateView();
 
-					@Override
-					public void onClick(View v)
-					{
-						String sn = pageContext.xiaoxinDevice.sn;
-						//int speed = Integer.parseInt(editspeedEditText.getText().toString());
-						
-						pageContext.xiaoxinDevice.speed = newSpeed;
-						XinServerManager.setxiaoxin_speed(pageContext, sn, newSpeed, null);
-						
-
-					}
-
-				});
-				CheckBox switchoff = (CheckBox) xiaoxinView
-						.findViewById(R.id.xiaoxin_switch);
-				switchoff.setChecked(pageContext.xiaoxinDevice.switchOn != 0);
-				switchoff.setOnClickListener(new OnClickListener()
-				{
-
-					@Override
-					public void onClick(View v)
-					{
-						String sn = pageContext.xiaoxinDevice.sn;
-						int isOn = 0;
-						if (((CheckBox) v).isChecked()) {
-							isOn = 1;
-						}
-						XinServerManager.setxiaoxin_switch(pageContext, sn, isOn, null);
-						
-
-					}
-
-				});
-				
-				CheckBox networkoff = (CheckBox) xiaoxinView
-						.findViewById(R.id.xiaoxin_network);
-				
-
-				//pageContext.wifiHotM.
-				networkoff.setChecked(pageContext.wifiHotM.isWifiApEnable());
-				networkoff.setOnClickListener(new OnClickListener()
-				{
-
-					@Override
-					public void onClick(View v)
-					{
-						//String sn = pageContext.xiaoxinDevice.sn;
-						//int isOn = 0;
-						if (((CheckBox) v).isChecked()) {
-							pageContext.wifiHotM.startAWifiHot(iAirConstants.Mobile_AP_SSID, iAirConstants.Mobile_AP_PWD);
-							//isOn = 1;
-						}
-						else {
-							pageContext.wifiHotM.closeAWifiHot();
-							pageContext.wifiHotM.scanWifiHot();
-						//	if(pageContext.application.getWifibackupNetId()!=-1)
-						//		pageContext.wifiHotM.enableNetWorkById(pageContext.application.getWifibackupNetId());
-						}
-						//XinServerManager.setxiaoxin_switch(pageContext, sn, isOn, null);
-						
-
-					}
-
-				});
-
-				// adapter = new MainEntryAdapter(pageContext);
-
-				// listView = (ListView) subView.findViewById(R.id.listView1);
-				// listView.setAdapter(adapter);//
-				// listView.setDividerHeight(0);
-				// adapter.addDevice(1, "");
 			} else {
 
 			}
