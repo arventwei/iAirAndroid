@@ -8,7 +8,7 @@
         android:id="@+id/device_top_bar"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/title_bar_height"
-        layout="@layout/include_top_bar_device_modify" />
+        layout="@layout/include_top_bar_device_bind" />
 
      <LinearLayout
          android:layout_width="match_parent"
@@ -26,10 +26,10 @@
                  android:layout_width="120dip"
                  android:layout_height="wrap_content"
                  android:layout_weight="1"
-                 android:text="名字:" />
+                 android:text="SN:" />
 
              <EditText
-                 android:id="@+id/new_name"
+                 android:id="@+id/new_sn"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:layout_weight="1"
@@ -39,7 +39,7 @@
          </LinearLayout>
 
          <Button
-             android:id="@+id/modify_name_btn"
+             android:id="@+id/bind_btn"
              android:layout_width="120dip"
              android:layout_height="wrap_content"
              android:layout_weight="1"

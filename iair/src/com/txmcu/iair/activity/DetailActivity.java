@@ -151,6 +151,9 @@ public class DetailActivity extends Activity implements
 			TextView nameview = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_name);
 			nameview.setText(xiaoxinDevice.name);
+			TextView snview = (TextView) xiaoxinView
+					.findViewById(R.id.xiaoxin_sn);
+			snview.setText("ÐòÁÐºÅ:"+xiaoxinDevice.sn);
 			TextView pm25 = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_pm25);
 			pm25.setText(pageContext.getString(R.string.detail_device_pm25) + (int)xiaoxinDevice.pm25);
@@ -179,6 +182,8 @@ public class DetailActivity extends Activity implements
 					String sn = xiaoxinDevice.sn;
 					//int speed = Integer.parseInt(editspeedEditText.getText().toString());
 					int newSpeed = xiaoxinDevice.speed+1;
+					if(newSpeed>=10)
+						newSpeed=1;
 					xiaoxinDevice.speed = newSpeed;
 					XinServerManager.setxiaoxin_speed(pageContext, sn, newSpeed, null);
 					

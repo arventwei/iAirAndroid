@@ -1,11 +1,14 @@
 package com.txmcu.iair.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -14,12 +17,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.txmcu.iair.R;
+import com.txmcu.iair.adapter.WifiAdapter;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
@@ -54,6 +57,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		editPwdEditText = (EditText) findViewById(R.id.input_pwd);
 		editSnEditText = (EditText) findViewById(R.id.input_sn);
 
+		iAirUtil.showProgressDialog(this);
 		xinMgr = XinStateManager.getInstance(this, this);
 		xinMgr.Init();
 
@@ -61,7 +65,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		{
 			timer.cancel();
 		}
-		//iAirUtil.showProgressDialog(this);
+		//
 	}
 	@Override
 	protected void onDestroy() {
@@ -119,19 +123,31 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		else if(view.getId() == R.id.input_ssid)
 		{
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("请选择需要连接的WIFI");
+			builder.setTitle("请选择您常用的Wi-Fi网络");
 			
 			if (scannedlist==null) {
 				return;
 			}
 
 			
-			String [] listStrings= new String[scannedlist.size()];
-			for (int i = 0; i < scannedlist.size(); i++) {
-				listStrings[i]=scannedlist.get(i);
-			}
-			ListView modeList = new ListView(this);String[] stringArray =listStrings;//new String[] { "Bright Mode", "Normal Mode" };
-			final ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
+//			String [] listStrings= new String[scannedlist.size()];
+//			for (int i = 0; i < scannedlist.size(); i++) {
+//				listStrings[i]=scannedlist.get(i);
+//			}
+//			Map<String,String> item = new HashMap<String, String>();
+//			List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
+//			
+//			for (ScanResult sResult : scannedlist) {
+//				item.put(sResult.SSID, String.valueOf(sResult.level)+"%");
+//			}
+//			dataList.add(item);
+			ListView modeList = new ListView(this);
+//			for (String string : listStrings) {
+//				
+//			}
+		//	String[] stringArray =listStrings;//new String[] { "Bright Mode", "Normal Mode" };
+			final WifiAdapter modeAdapter = new WifiAdapter(this,scannedlist);
+			
 			modeList.setAdapter(modeAdapter);
 
 
@@ -142,19 +158,9 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 				@Override
 				public void onItemClick(AdapterView parent, View view,int position, long id){
 					
-					String ssid = modeAdapter.getItem(position);
-					editSSIDEditText.setText(ssid);
+					ScanResult ssid =(ScanResult) modeAdapter.getItem(position);
+					editSSIDEditText.setText(ssid.SSID);
 					dialog.dismiss();
-					//Log.i("sfs", "asfasds");
-//					Device b = (Device)mainentryAdapter.getItem(position);
-//					if(position >0)
-//					{
-//						Intent localIntent = new Intent(pageContext, DetailActivity.class);
-//						localIntent.putExtra("sn", b.sn);
-//						pageContext.startActivity(localIntent);
-//						pageContext.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
-//					
-//					}
 				}
 		     });
 			dialog.show();
@@ -211,12 +217,12 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 //		}
 //	};
 
-	List<String> scannedlist = new ArrayList<String>();
+	List<ScanResult> scannedlist = new ArrayList<ScanResult>();
 	@Override
-	public void initResult(boolean result, String SSID,List<String> scanList) {
+	public void initResult(boolean result, String SSID,List<ScanResult> scanList) {
 		// TODO Auto-generated method stub
 		editSSIDEditText.setText(SSID);
-		//iAirUtil.dismissDialog();
+		iAirUtil.dismissDialog();
 		scannedlist = scanList;
 		if (scannedlist==null) {
 			return;

@@ -51,7 +51,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		/**
 		 * @param init callback ,close wait dialog
 		 */
-		public void initResult(boolean result,String curSSID,List<String> SSID);
+		public void initResult(boolean result,String curSSID,List<ScanResult> SSID);
 
 		/**
 		 * @param invoke callback
@@ -110,56 +110,57 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 			wifiHotM.removeWifiInfo(curWifiInfo.getNetworkId());
 		}
 		_scannlist.clear();
-		//wifiHotM.scanWifiHot();
+		wifiHotM.scanWifiHot();
 		initscanRetryTimes=0;
 		if (initCoolTimer!=null) {
 			initCoolTimer.cancel();
 		}
 		
-		List<ScanResult> apList = wifiHotM.getRecentScanResults();
-		backupCurrentWifiState(apList);
-		return;
+
 		//operations.initResult(true, curSSID, SSID)
 		
-//		initCoolTimer = new CountDownTimer(20000, 8000) {
-//
-//		     public void onTick(long millisUntilFinished) {
-//		    	 initscanRetryTimes++;
-//		    	 
-//		    	 if(mCurState == State.Init&&_scannlist.size()==0)
-//		    	 {
-//		    		 operations.log("times"+initscanRetryTimes+" left:"+millisUntilFinished/1000);
-//		    		// if()
-//		    		// {
-//		    			// operations.log("try max times:"+initscanRetryTimes);
-//		    			// operations.configResult(ConfigType.Failed);
-//		    			 //initCoolTimer.cancel();
-//		    		// }
-//		    			 
-//		    		 initscanRetryTimes++;
-//		    		 operations.log("scan timeout retry"+initscanRetryTimes);
-//		    		 wifiHotM.unRegisterWifiScanBroadCast();
-//		    		 wifiHotM.scanWifiHot();
-//		    		
-//		    	 }
-//		    	// iAirUtil.setProgressText(getString(R.string.add_device_cooldown)+(millisUntilFinished / 1000)+getString(R.string.second));
-//		         //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
-//		     }
-//
-//		     public void onFinish() {
-//		    	 
-//		    	 
-//		    	 if(_scannlist.size()==0)
-//		    	 {
-//		    		 operations.log("times ok");
-//		    		 operations.initResult(false,"",null);
-//		    	 }
-//		    	 
-//
-//		    	 //iAirUtil.toastMessage(DeviceAddActivity.this, getString(R.string.add_device_failed));
-//		         //mTextField.setText("done!");
-//		     }
-//		  }.start();
+		initCoolTimer = new CountDownTimer(15000, 4000) {
+
+		     public void onTick(long millisUntilFinished) {
+		    	 initscanRetryTimes++;
+		    	 
+		    	 if(mCurState == State.Init&&_scannlist.size()==0)
+		    	 {
+		    		 operations.log("times"+initscanRetryTimes+" left:"+millisUntilFinished/1000);
+		    		// if()
+		    		// {
+		    			// operations.log("try max times:"+initscanRetryTimes);
+		    			// operations.configResult(ConfigType.Failed);
+		    			 //initCoolTimer.cancel();
+		    		// }
+		    			 
+		    		 initscanRetryTimes++;
+		    		 operations.log("scan timeout retry"+initscanRetryTimes);
+		    		 wifiHotM.unRegisterWifiScanBroadCast();
+		    		 wifiHotM.scanWifiHot();
+		    		
+		    	 }
+		    	// iAirUtil.setProgressText(getString(R.string.add_device_cooldown)+(millisUntilFinished / 1000)+getString(R.string.second));
+		         //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+		     }
+
+		     public void onFinish() {
+		    	 
+		    	 
+		    	 if(_scannlist.size()==0)
+		    	 {
+		    			List<ScanResult> apList = wifiHotM.getRecentScanResults();
+		    			backupCurrentWifiState(apList);
+		    			
+		    		 //operations.log("times ok");
+		    		// operations.initResult(false,"",null);
+		    	 }
+		    	 
+
+		    	 //iAirUtil.toastMessage(DeviceAddActivity.this, getString(R.string.add_device_failed));
+		         //mTextField.setText("done!");
+		     }
+		  }.start();
 	}
 	public void Config(String SSID,String Pwd,String _userid,String _sn)
 	{
@@ -303,11 +304,11 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 			
 		}
 		
-		List<String> ssidlist = new ArrayList<String>();
-		for (ScanResult ret : _scannlist) {
-			ssidlist.add(ret.SSID);
-		}
-		operations.initResult(true,curSSIDString,ssidlist);
+		//List<String> ssidlist = new ArrayList<String>();
+		//for (ScanResult ret : _scannlist) {
+		//	ssidlist.add(ret.SSID);
+		//}
+		operations.initResult(true,curSSIDString,_scannlist);
 		
 	}
 	public void restoreCurrentWifiState() {

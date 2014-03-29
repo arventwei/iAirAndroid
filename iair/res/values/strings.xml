@@ -44,9 +44,9 @@
     
     <string name="change_device_activity_title">小新管理</string>
     <string name="device_drag_tip">长按小新，可拖动改变小新顺序及删除小新</string>
-    <string name="add_device_activity_title">绑定小新</string>
+    <string name="add_device_activity_title">添加小新</string>
     <string name="modify_device_activity_title">修改小新</string>
-    
+    <string name="bind_device_activity_title">绑定小新</string>
     <string name="main_list_column_city">城市/家</string>
     <string name="main_list_column_pm25">PM2.5</string>
     <string name="main_list_column_form">甲醛</string>

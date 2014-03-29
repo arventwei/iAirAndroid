@@ -52,20 +52,27 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 		}
 		else if (view.getId()==R.id.modify_name_btn) {
 			
-			XinServerManager.setxiaoxin_name(this, snString, new_name_EditText.getText().toString(), null);
-			if(DetailActivity.instance!=null)
-			{
-				DetailActivity.instance.adapter.updateView();
+			XinServerManager.setxiaoxin_name(this, snString, new_name_EditText.getText().toString(),new XinServerManager.onSuccess() {
 				
-			}
-			if (MainActivity.instance!=null) {
-				MainActivity.instance.refreshlist();
-			}
-			if (DeviceManageActivity.instance!=null) {
-				DeviceManageActivity.instance.adapter.syncDevices();
-				DeviceManageActivity.instance.adapter.notifyDataSetChanged();
-			}
-			finish();
+				@Override
+				public void run(String response) {
+					// TODO Auto-generated method stub
+					if(DetailActivity.instance!=null)
+					{
+						DetailActivity.instance.adapter.updateView();
+						
+					}
+					if (MainActivity.instance!=null) {
+						MainActivity.instance.refreshlist();
+					}
+					if (DeviceManageActivity.instance!=null) {
+						DeviceManageActivity.instance.adapter.syncDevices();
+						DeviceManageActivity.instance.adapter.notifyDataSetChanged();
+					}
+					finish();
+				}
+			});
+			
 		}
 
 	}

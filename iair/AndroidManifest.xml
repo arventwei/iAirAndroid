@@ -81,6 +81,10 @@
             android:name="com.txmcu.iair.activity.DeviceAddActivity"
             android:configChanges="keyboardHidden|orientation" /> 
       <activity
+            android:name="com.txmcu.iair.activity.DeviceBindActivity"
+            android:configChanges="keyboardHidden|orientation" />   
+      
+      <activity
             android:name="com.txmcu.iair.activity.DeviceModifyActivity"
             android:configChanges="keyboardHidden|orientation" /> 
       <meta-data android:name="TD_APP_ID" android:value="F32863BB751EF144974E7936182D9935" />
