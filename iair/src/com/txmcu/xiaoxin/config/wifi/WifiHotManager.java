@@ -73,6 +73,9 @@ public class WifiHotManager {
 		
 
 	}
+	public List<ScanResult> getRecentScanResults() {
+		return mWifimanager.getScanResults();
+	}
 	public List<String> getAuthMode(String SSID)
 	{
 		SSID="\""+SSID+"\"";
@@ -389,7 +392,7 @@ public class WifiHotManager {
 		wifiApadmin.closeWifiAp();
 	}
 
-	public void disconnectWifi(String SSID) {
+	public void disconnectWifi() {
 		 mWifimanager.disconnect();
 	}
 }

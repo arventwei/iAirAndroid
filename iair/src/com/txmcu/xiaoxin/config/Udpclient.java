@@ -163,48 +163,66 @@ public class Udpclient {
     }
     
     @SuppressLint("HandlerLeak")
-	Handler msghandler = new Handler(){   
+	Handler msghandler = new Handler()
+    {   
         @SuppressLint("NewApi")
-		public void handleMessage(Message msg) {  
+		public void handleMessage(Message msg)
+        {  
             switch (msg.what)
             { 
             case initApState:
             {
             	stateCode=initApState;
-            	connectApTimer = new CountDownTimer(leftTime, 3000) {
+            	connectApTimer = new CountDownTimer(leftTime, 3000) 
+            	{
 
-       		     public void onTick(long millisUntilFinished) {
+       		     public void onTick(long millisUntilFinished)
+       		     {
        		    	 //initscanRetryTimes++;
        		    	 
        		    	 if(stateCode!=initApState)
        		    		 return;
        		    	 
-       		    	leftTime = millisUntilFinished;
-       		     WifiInfo curWifi =wifiHotM.getConnectWifiInfo();
-       		     String reasonString="null";
-       		     if (curWifi!=null) {
-					reasonString = curWifi.getSupplicantState().toString();
-				}
-       		    	 operations.logudp(iAirConstants.XIAOXIN_SSID+" dis connected " + reasonString);
-       		    	
-       		    	
-       		    	 if( curWifi!=null && curWifi.getSSID()!=null  
-       		    	 && curWifi.getSSID().equals(iAirConstants.XIAOXIN_SSID)
-       		    	 && curWifi.getNetworkId()!=-1
-       		    	 && curWifi.getSupplicantState()== SupplicantState.COMPLETED)
-       		    	 {
-       		    		 operations.logudp(iAirConstants.XIAOXIN_SSID+"  connected");
-       		    		 postMessage(sendState);
-       		    		
-
-       		    	 }
-       		    	 else {
-       		    		 wifiHotM.connectToHotpot(iAirConstants.XIAOXIN_SSID, iAirConstants.XIAOXIN_PWD);
-       				}
-       		    	
-       		     }
-
-       		     public void onFinish() {
+	       		    	leftTime = millisUntilFinished;
+		       		    WifiInfo curWifi =wifiHotM.getConnectWifiInfo();
+		       		    String reasonString="null";
+		       		    if (curWifi!=null) {
+							reasonString = curWifi.getSupplicantState().toString();
+		       		    }
+	       		    	operations.logudp(iAirConstants.XIAOXIN_SSID+" dis connected " + reasonString);
+	       		    	
+	       		    	Boolean isOkBoolean = false;
+	       		    	String curSSIDString = "";
+	       		        if( curWifi!=null && curWifi.getSSID()!=null)
+	       		        {
+	       		        	curSSIDString = curWifi.getSSID().replace("\"", "");
+	       		        }
+	       		        if (curSSIDString.equals(iAirConstants.XIAOXIN_SSID)
+							&& curWifi!=null
+							&& curWifi.getNetworkId()!=-1
+							&& curWifi.getSupplicantState()== SupplicantState.COMPLETED)
+	       		        {
+	       		        	operations.logudp(iAirConstants.XIAOXIN_SSID+"  connected");
+	      		    		 postMessage(sendState);
+	      		    		 return;
+						}
+	       		        if (curWifi==null ||curWifi.getNetworkId()!=-1) 
+	       		        {
+	       		        	wifiHotM.connectToHotpot(iAirConstants.XIAOXIN_SSID, iAirConstants.XIAOXIN_PWD);
+						}
+	       		        if (!curSSIDString.equals(iAirConstants.XIAOXIN_SSID)
+	       		        		&& curWifi!=null
+	       		        		&&curWifi.getSupplicantState()== SupplicantState.COMPLETED) 
+	       		        {
+	       		        	wifiHotM.disconnectWifi();
+							//wifiHotM.removeWifiInfo(curWifi.getNetworkId());
+						}
+	       		    	 
+	       		 }
+       		     
+            
+       		     public void onFinish()
+       		     {
        		    	 if(stateCode==initApState)
        		    	 {
        		    		operations.setState(false,"connect ap time out");

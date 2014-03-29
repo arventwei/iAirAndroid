@@ -107,7 +107,7 @@
        
            <string name="add_device_failed">绑定失败</string>
        
-           <string name="button_modify">修改</string>
+           <string name="button_modify">调节风速</string>
        
            <string name="device_detail_speed">风速:</string>
        

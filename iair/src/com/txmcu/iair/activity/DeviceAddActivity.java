@@ -61,7 +61,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		{
 			timer.cancel();
 		}
-		iAirUtil.showProgressDialog(this);
+		//iAirUtil.showProgressDialog(this);
 	}
 	@Override
 	protected void onDestroy() {
@@ -216,7 +216,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 	public void initResult(boolean result, String SSID,List<String> scanList) {
 		// TODO Auto-generated method stub
 		editSSIDEditText.setText(SSID);
-		iAirUtil.dismissDialog();
+		//iAirUtil.dismissDialog();
 		scannedlist = scanList;
 		if (scannedlist==null) {
 			return;

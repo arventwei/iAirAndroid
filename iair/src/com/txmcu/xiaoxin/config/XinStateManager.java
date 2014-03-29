@@ -86,7 +86,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 			iAirUtil.toastMessage(context, context.getString(R.string.add_device_no_wifi));
 			
 		}
-		wifiHotM.scanWifiHot();
+		//wifiHotM.scanWifiHot();
 	}
 	CountDownTimer initCoolTimer;
 	int initscanRetryTimes=0;
@@ -110,54 +110,61 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 			wifiHotM.removeWifiInfo(curWifiInfo.getNetworkId());
 		}
 		_scannlist.clear();
-		wifiHotM.scanWifiHot();
+		//wifiHotM.scanWifiHot();
 		initscanRetryTimes=0;
 		if (initCoolTimer!=null) {
 			initCoolTimer.cancel();
 		}
-		initCoolTimer = new CountDownTimer(40000, 8000) {
-
-		     public void onTick(long millisUntilFinished) {
-		    	 initscanRetryTimes++;
-		    	 
-		    	 if(mCurState == State.Init&&_scannlist.size()==0)
-		    	 {
-		    		 operations.log("times"+initscanRetryTimes+" left:"+millisUntilFinished/1000);
-		    		// if()
-		    		// {
-		    			// operations.log("try max times:"+initscanRetryTimes);
-		    			// operations.configResult(ConfigType.Failed);
-		    			 //initCoolTimer.cancel();
-		    		// }
-		    			 
-		    		 initscanRetryTimes++;
-		    		 operations.log("scan timeout retry"+initscanRetryTimes);
-		    		 wifiHotM.unRegisterWifiScanBroadCast();
-		    		 wifiHotM.scanWifiHot();
-		    		
-		    	 }
-		    	// iAirUtil.setProgressText(getString(R.string.add_device_cooldown)+(millisUntilFinished / 1000)+getString(R.string.second));
-		         //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
-		     }
-
-		     public void onFinish() {
-		    	 
-		    	 
-		    	 if(_scannlist.size()==0)
-		    	 {
-		    		 operations.log("times ok");
-		    		 operations.initResult(false,"",null);
-		    	 }
-		    	 
-
-		    	 //iAirUtil.toastMessage(DeviceAddActivity.this, getString(R.string.add_device_failed));
-		         //mTextField.setText("done!");
-		     }
-		  }.start();
+		
+		List<ScanResult> apList = wifiHotM.getRecentScanResults();
+		backupCurrentWifiState(apList);
+		return;
+		//operations.initResult(true, curSSID, SSID)
+		
+//		initCoolTimer = new CountDownTimer(20000, 8000) {
+//
+//		     public void onTick(long millisUntilFinished) {
+//		    	 initscanRetryTimes++;
+//		    	 
+//		    	 if(mCurState == State.Init&&_scannlist.size()==0)
+//		    	 {
+//		    		 operations.log("times"+initscanRetryTimes+" left:"+millisUntilFinished/1000);
+//		    		// if()
+//		    		// {
+//		    			// operations.log("try max times:"+initscanRetryTimes);
+//		    			// operations.configResult(ConfigType.Failed);
+//		    			 //initCoolTimer.cancel();
+//		    		// }
+//		    			 
+//		    		 initscanRetryTimes++;
+//		    		 operations.log("scan timeout retry"+initscanRetryTimes);
+//		    		 wifiHotM.unRegisterWifiScanBroadCast();
+//		    		 wifiHotM.scanWifiHot();
+//		    		
+//		    	 }
+//		    	// iAirUtil.setProgressText(getString(R.string.add_device_cooldown)+(millisUntilFinished / 1000)+getString(R.string.second));
+//		         //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+//		     }
+//
+//		     public void onFinish() {
+//		    	 
+//		    	 
+//		    	 if(_scannlist.size()==0)
+//		    	 {
+//		    		 operations.log("times ok");
+//		    		 operations.initResult(false,"",null);
+//		    	 }
+//		    	 
+//
+//		    	 //iAirUtil.toastMessage(DeviceAddActivity.this, getString(R.string.add_device_failed));
+//		         //mTextField.setText("done!");
+//		     }
+//		  }.start();
 	}
 	public void Config(String SSID,String Pwd,String _userid,String _sn)
 	{
 		mCurState = State.Config;
+		SSID = SSID.replace("\"", "");
 		//application.setWifibackupPwd(Pwd);
 		//wifibackupPwd = Pwd;
 		userid=_userid;
@@ -205,10 +212,13 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		//wifibackupChannel = "6";
 		for (ScanResult scanRet : _scannlist) 
 		{
-			if (scanRet.SSID.equalsIgnoreCase(ssid))
+			String scanSSIDString = scanRet.SSID.replace("\"", "");
+			if (scanSSIDString.equals(ssid))
 			{
 				int  ch =  iAirUtil.getChannel(scanRet.frequency);
 				channel = String.valueOf(ch);
+				logudp(scanRet.capabilities);
+				
 				 if(scanRet.capabilities.contains("WPA") && !scanRet.capabilities.contains("WPA2"))  
                  {  
 					 AuthMode ="WPAPSK";
@@ -225,8 +235,14 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
                  }  
 				 else if(scanRet.capabilities.contains("WEP"))   {
 					 
-					 AuthMode ="SHARED";
+					 
 					 EncrypType="WEP";
+					 if(scanRet.capabilities.contains("ESS"))   {
+						 AuthMode ="OPEN";
+					 }
+					 else {
+						 AuthMode ="SHARED";
+					}
 				}
 				 
                  if(scanRet.capabilities.contains("TKIP"))  
@@ -276,7 +292,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		application.setWifibackupNetId(-1);
 		if (info!=null&&info.getSSID()!=null&&!info.getSSID().equals(iAirConstants.XIAOXIN_SSID)) {
 			application.setWifibackupNetId(info.getNetworkId());
-			curSSIDString = info.getSSID();
+			curSSIDString = info.getSSID().replace("\"", "");
 			
 			
 			//wifibackupNetId = ;

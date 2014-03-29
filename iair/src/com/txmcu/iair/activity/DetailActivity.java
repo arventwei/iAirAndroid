@@ -133,6 +133,7 @@ public class DetailActivity extends Activity implements
 		this.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
 	
 	}
+	int speed = 0;
 	static class SamplePagerAdapter extends
 			com.handmark.verticalview.PagerAdapter {
 
@@ -168,7 +169,7 @@ public class DetailActivity extends Activity implements
 			//final EditText editspeedEditText = (EditText)xiaoxinView.findViewById(R.id.input_speed);
 			//editspeedEditText.setText(String.valueOf(pageContext.xiaoxinDevice.speed));
 			Button speedButton = (Button)xiaoxinView.findViewById(R.id.btn_speed);
-			final int newSpeed = xiaoxinDevice.speed+1;
+			
 			speedButton.setOnClickListener(new OnClickListener()
 			{
 
@@ -177,7 +178,7 @@ public class DetailActivity extends Activity implements
 				{
 					String sn = xiaoxinDevice.sn;
 					//int speed = Integer.parseInt(editspeedEditText.getText().toString());
-					
+					int newSpeed = xiaoxinDevice.speed+1;
 					xiaoxinDevice.speed = newSpeed;
 					XinServerManager.setxiaoxin_speed(pageContext, sn, newSpeed, null);
 					
