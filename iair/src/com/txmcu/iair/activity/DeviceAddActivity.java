@@ -1,13 +1,12 @@
 package com.txmcu.iair.activity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -95,7 +94,14 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			
 			iAirUtil.showProgressDialog(this, getString(R.string.setting)
 					, getString(R.string.add_device_cooldown)+120+getString(R.string.second)
-					);
+					,new DialogInterface.OnCancelListener() {
+						
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							// TODO Auto-generated method stub
+							finish();
+						}
+					});
 
 
 			

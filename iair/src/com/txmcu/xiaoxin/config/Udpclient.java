@@ -8,7 +8,6 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.wifi.SupplicantState;
@@ -18,12 +17,8 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
-import com.txmcu.iair.activity.DeviceAddActivity;
 import com.txmcu.iair.common.iAirConstants;
-import com.txmcu.iair.common.iAirUtil;
-import com.txmcu.xiaoxin.config.XinStateManager.State;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
 //import android.widget.Toast;
 
@@ -67,6 +62,14 @@ public class Udpclient {
     	this.wifiHotM = wifiM;
     	
     }
+    public void destroy() {
+		if(connectApTimer!=null)
+			connectApTimer.cancel();
+		if(sendDataTimer!=null)
+			sendDataTimer.cancel();
+		if(querySnTimer!=null)
+			querySnTimer.cancel();
+	}
     public void setSendWifiInfo(String ssid,String pwd,String auth_mode,String encryp_type,
     		String channel,String _sn,String _userid)
     {

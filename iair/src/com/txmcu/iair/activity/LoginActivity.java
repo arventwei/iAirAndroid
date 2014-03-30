@@ -20,6 +20,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.pushlink.android.PushLink;
+import com.pushlink.android.StatusBarStrategy;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuth;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -30,7 +32,6 @@ import com.sina.weibo.sdk.openapi.AccessTokenKeeper;
 import com.sina.weibo.sdk.openapi.LogoutAPI;
 import com.tencent.open.HttpStatusException;
 import com.tencent.open.NetworkUnavailableException;
-import com.tencent.sdkutil.Util;
 import com.tencent.tauth.Constants;
 import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
@@ -68,6 +69,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 		TCAgent.setReportUncaughtExceptions(true);
 
 		this.application = ((iAirApplication) getApplication());
+		
+		
+		//Changing default notification messages
+		StatusBarStrategy sbs =  (StatusBarStrategy) PushLink.getCurrentStrategy();
+		sbs.setStatusBarTitle("检测到新版本");
+		sbs.setStatusBarDescription("点击安装");
+		
+		PushLink.start(this, R.drawable.ic_launcher, "qk3ne7ortm8emgdf", iAirUtil.guid(this));
 
 		this.loginQQ = ((Button) findViewById(R.id.loginQQRL));
 		this.loginSina = ((Button) findViewById(R.id.loginSinaRL));
@@ -95,6 +104,19 @@ public class LoginActivity extends Activity implements OnClickListener {
 		// this.loginQQ = ((Button)findViewById(R.id.button_login));
 
 	}
+	
+
+	//Only for popups (FRIENDLY_POPUP or ANNOYING_POPUP)
+	//You MUST do this, otherwise popups will not work.
+	//Call it in the Activity you want to show the popup.
+	//You can show the popup in many screens by adding this in more than one Activity.
+	@Override
+	protected void onResume() {
+	    super.onResume();
+	    PushLink.setCurrentActivity(this);
+	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -513,6 +535,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 						localIntent.putExtra("token", token);
 						localIntent.putExtra("openId", openId);
 						localIntent.putExtra("nickName", nickName);
+						application.setNickName(nickName);
 						LoginActivity.this.startActivity(localIntent);
 						LoginActivity.this.finish();
 						// Toast.makeText(MainActivity.this,

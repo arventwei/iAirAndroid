@@ -194,6 +194,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		if (initCoolTimer!=null) {
 			initCoolTimer.cancel();
 		}
+		udpclient.destroy();
 		
 	}
 //	int wifibackupNetId=-1;

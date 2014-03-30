@@ -40,6 +40,24 @@ public class iAirApplication extends Application {
 		return mPerferences.getString(Userid, "");
 	}
 	
+public void setNickName(String nickName) {
+		
+	SharedPreferences.Editor mEditor = mPerferences.edit();  
+	
+	mEditor.putString("nickName",nickName);
+	
+    mEditor.commit(); 
+	
+	}
+	public String getNickName()
+	{
+
+		String nickName = mPerferences.getString("nickName", "");
+	
+		return nickName;
+	}
+	
+	
 	public void setXiaoxinSnList(List<String> list) {
 		SharedPreferences.Editor mEditor = mPerferences.edit();  
 		

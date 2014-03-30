@@ -13,14 +13,16 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.UUID;
 
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -448,19 +450,19 @@ public class iAirUtil {
 		}
 		mProgressDialog = ProgressDialog.show(context, title, message);
 	}
-//	public static final void showProgressDialog(Context context, String title,
-//			String message)
-//	{
-//		dismissDialog();
-//		if (TextUtils.isEmpty(title)) {
-//			title = context.getString(R.string.wait_moment);
-//		}
-//		if (TextUtils.isEmpty(message)) {
-//			message = context.getString(R.string.now_loading);
-//		}
-//		mProgressDialog = ProgressDialog.show(context, title, message,true,false);
-//		
-//	}
+	public static final void showProgressDialog(Context context, String title,
+			String message, DialogInterface.OnCancelListener cancelListener)
+	{
+		dismissDialog();
+		if (TextUtils.isEmpty(title)) {
+			title = context.getString(R.string.wait_moment);
+		}
+		if (TextUtils.isEmpty(message)) {
+			message = context.getString(R.string.now_loading);
+		}
+		mProgressDialog = ProgressDialog.show(context, title, message,false,true,cancelListener);
+		
+	}
 	
 	public static final void dismissDialog() {
 		if (mProgressDialog != null) {
@@ -643,4 +645,20 @@ public class iAirUtil {
     	}
     	return retMap;
     }
+	private static String uniqueID = null;
+	private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
+	public synchronized static String guid(Context context) {
+	    if (uniqueID == null) {
+	        SharedPreferences sharedPrefs = context.getSharedPreferences(
+	                PREF_UNIQUE_ID, Context.MODE_PRIVATE);
+	        uniqueID = sharedPrefs.getString(PREF_UNIQUE_ID, null);
+	        if (uniqueID == null) {
+	            uniqueID = UUID.randomUUID().toString();
+	            Editor editor = sharedPrefs.edit();
+	            editor.putString(PREF_UNIQUE_ID, uniqueID);
+	            editor.commit();
+	        }
+	    }
+	    return uniqueID;
+	}
 }

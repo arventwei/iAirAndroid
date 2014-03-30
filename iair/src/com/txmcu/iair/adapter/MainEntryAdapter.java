@@ -41,7 +41,8 @@ public class MainEntryAdapter extends BaseAdapter
 		entries.add(bj);
 		
 		Device bj_home = new Device("1111112");
-		bj_home.name="北京的家";
+		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();
+		bj_home.name=application.getNickName()+"的家";
 		entries.add(bj_home);
 	}
 	
