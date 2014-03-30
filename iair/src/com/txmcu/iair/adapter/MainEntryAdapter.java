@@ -33,18 +33,28 @@ public class MainEntryAdapter extends BaseAdapter
 
 	}
 	
+	public void syncHomes() {
+		entries.clear();
+		entries.add(new Device());//head
+		Device bj = new Device("1111111");
+		bj.name="北京";
+		entries.add(bj);
+		
+		Device bj_home = new Device("1111112");
+		bj_home.name="北京的家";
+		entries.add(bj_home);
+	}
+	
 	public void syncDevices()
 	{
 		entries.clear();
 		entries.add(new Device());//head
 		
 		
-		Device bj = new Device();
-		bj.name="北京";
-		entries.add(bj);
-		Device american = new Device();
-		american.name="美使馆";
-		entries.add(american);
+
+		//Device american = new Device();
+		//american.name="美使馆";
+		//entries.add(american);
 		//entries.add(new Device());
 		
 		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();

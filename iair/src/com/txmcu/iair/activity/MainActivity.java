@@ -177,11 +177,21 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 						Device b = (Device)mainentryAdapter.getItem(position);
 						if(position >0)
 						{
-							Intent localIntent = new Intent(pageContext, DetailActivity.class);
-							localIntent.putExtra("sn", b.sn);
-							pageContext.startActivity(localIntent);
-							pageContext.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
-						
+							if (b.sn.equals("1111111")) {
+								Intent localIntent = new Intent(pageContext, DetailCityActivity.class);
+								//localIntent.putExtra("sn", b.sn);
+								pageContext.startActivity(localIntent);
+								pageContext.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+							
+							}
+							else if(b.sn.equals("1111112")){
+								Intent localIntent = new Intent(pageContext, HomeManageActivity.class);
+								//localIntent.putExtra("sn", b.sn);
+								pageContext.startActivity(localIntent);
+								pageContext.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+							
+							}
+							
 						}
 					}
 			     });
@@ -192,7 +202,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 						@Override
 						public void run(String response) {
 							
-							mainentryAdapter.syncDevices();
+							mainentryAdapter.syncHomes();
 							mainentryAdapter.notifyDataSetChanged();
 							// TODO Auto-generated method stub
 							
@@ -224,7 +234,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	}
 	public void refreshlist() {
 		SamplePagerAdapter adapter = (SamplePagerAdapter)(mPullToRefreshViewPager.getRefreshableView().getAdapter());
-		adapter.mainentryAdapter.syncDevices();
+		adapter.mainentryAdapter.syncHomes();
 		adapter.mainentryAdapter.notifyDataSetChanged();
 	}
 	private void  AsyncMainEntrys() {

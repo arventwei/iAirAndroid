@@ -203,7 +203,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 //	String wifibackupAuthMode;
 //	String wifibackupEncrypType;
 	
-	List<String> getWifiDetailInfo(String ssid)
+	public List<String> getWifiDetailInfo(String ssid)
 	{
 		String channel = "6";
 		String AuthMode="OPEN";
@@ -220,45 +220,52 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 				channel = String.valueOf(ch);
 				logudp(scanRet.capabilities);
 				
-				 if(scanRet.capabilities.contains("WPA") && !scanRet.capabilities.contains("WPA2"))  
-                 {  
-					 AuthMode ="WPAPSK";
-                    // wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);  
-                   //  wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);  
-                    // wc.status = WifiConfiguration.Status.ENABLED;  
-                 }  
-				 else if(scanRet.capabilities.contains("WPA2"))  
-                 {  
-					 AuthMode ="WPA2PSK";
-                    // wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);  
-                   //  wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);  
-                    // wc.status = WifiConfiguration.Status.ENABLED;  
-                 }  
-				 else if(scanRet.capabilities.contains("WEP"))   {
-					 
-					 
-					 EncrypType="WEP";
-					 if(scanRet.capabilities.contains("ESS"))   {
-						 AuthMode ="OPEN";
-					 }
-					 else {
-						 AuthMode ="SHARED";
-					}
+				if (scanRet.equals("[ESS]"))
+				{//OPEN None pwd
+					 AuthMode="OPEN";
+					 EncrypType="None";
 				}
-				 
-                 if(scanRet.capabilities.contains("TKIP"))  
-                 {  
-                	 EncrypType="TKIP";
-                    // wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);  
-                   //  wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);  
-                 }  
-                 if(scanRet.capabilities.contains("CCMP"))  
-                 {  
-                	 EncrypType="AES";
-                    // wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);  
-                    // wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);  
-                 }  
-                
+				else
+				{
+					if(scanRet.capabilities.contains("WPA") && !scanRet.capabilities.contains("WPA2"))  
+	                 {  
+						 AuthMode ="WPAPSK";
+	                    // wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);  
+	                   //  wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);  
+	                    // wc.status = WifiConfiguration.Status.ENABLED;  
+	                 }  
+					 else if(scanRet.capabilities.contains("WPA2"))  
+	                 {  
+						 AuthMode ="WPA2PSK";
+	                    // wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);  
+	                   //  wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);  
+	                    // wc.status = WifiConfiguration.Status.ENABLED;  
+	                 }  
+					 else if(scanRet.capabilities.contains("WEP"))   {
+						 
+						 
+						 EncrypType="WEP";
+						 if(scanRet.capabilities.contains("ESS"))   {
+							 AuthMode ="OPEN";
+						 }
+						 else {
+							 AuthMode ="SHARED";
+						}
+					}
+					 
+	                 if(scanRet.capabilities.contains("TKIP"))  
+	                 {  
+	                	 EncrypType="TKIP";
+	                    // wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);  
+	                   //  wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);  
+	                 }  
+	                 if(scanRet.capabilities.contains("CCMP"))  
+	                 {  
+	                	 EncrypType="AES";
+	                    // wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);  
+	                    // wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);  
+	                 }  
+				}
 				break;
 			}
 		}

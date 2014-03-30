@@ -57,13 +57,13 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 				@Override
 				public void run(String response) {
 					// TODO Auto-generated method stub
-					if(DetailActivity.instance!=null)
+					if(DetailDeviceActivity.instance!=null)
 					{
-						DetailActivity.instance.adapter.updateView();
+						DetailDeviceActivity.instance.adapter.updateView();
 						
 					}
-					if (MainActivity.instance!=null) {
-						MainActivity.instance.refreshlist();
+					if (HomeManageActivity.instance!=null) {
+						HomeManageActivity.instance.refreshlist();
 					}
 					if (DeviceManageActivity.instance!=null) {
 						DeviceManageActivity.instance.adapter.syncDevices();

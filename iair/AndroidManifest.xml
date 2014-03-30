@@ -71,8 +71,12 @@
             android:configChanges="keyboardHidden|orientation" />
         
       <activity
-            android:name="com.txmcu.iair.activity.DetailActivity"
+            android:name="com.txmcu.iair.activity.DetailDeviceActivity"
             android:configChanges="keyboardHidden|orientation" />
+      <activity
+            android:name="com.txmcu.iair.activity.DetailCityActivity"
+            android:configChanges="keyboardHidden|orientation" />
+      
       <activity
             android:name="com.txmcu.iair.activity.SettingActivity"
             android:configChanges="keyboardHidden|orientation" />    
@@ -82,7 +86,11 @@
             android:configChanges="keyboardHidden|orientation" /> 
       <activity
             android:name="com.txmcu.iair.activity.DeviceBindActivity"
-            android:configChanges="keyboardHidden|orientation" />   
+            android:configChanges="keyboardHidden|orientation" />
+      <activity
+            android:name="com.txmcu.iair.activity.HomeManageActivity"
+            android:configChanges="keyboardHidden|orientation" />
+      
       
       <activity
             android:name="com.txmcu.iair.activity.DeviceModifyActivity"

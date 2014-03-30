@@ -35,7 +35,7 @@ import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.OpretionsType;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.WifiBroadCastOperations;
 
-public class DetailActivity extends Activity implements
+public class DetailDeviceActivity extends Activity implements
 		OnRefreshListener<VerticalViewPager>, OnClickListener, WifiBroadCastOperations {
 
 	private PullToRefreshViewPager mPullToRefreshViewPager;
@@ -47,21 +47,21 @@ public class DetailActivity extends Activity implements
 	
 	private WifiHotManager wifiHotM;
 	
-	public static DetailActivity instance;
+	public static DetailDeviceActivity instance;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Common);
 		super.onCreate(savedInstanceState);
 		instance = this;
-		setContentView(R.layout.detail_device_main);
+		setContentView(R.layout.activity_detail_device);
 		
 		wifiHotM = WifiHotManager.getInstance(this, this);
 		
 		//getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		application = (iAirApplication) getApplication();
 		mPullToRefreshViewPager = (PullToRefreshViewPager) findViewById(R.id.pull_refresh_viewpager);
-		mPullToRefreshViewPager.setOnRefreshListener(DetailActivity.this);
+		mPullToRefreshViewPager.setOnRefreshListener(DetailDeviceActivity.this);
 
 		VerticalViewPager vp = mPullToRefreshViewPager.getRefreshableView();
 		adapter = new SamplePagerAdapter(this);
@@ -139,7 +139,7 @@ public class DetailActivity extends Activity implements
 
 		private static int[] sDrawables = { R.layout.include_up_detail,
 				R.layout.include_down_detail };
-		private DetailActivity pageContext;
+		private DetailDeviceActivity pageContext;
 
 		// private ListView listView;
 		// MainEntryAdapter adapter;
@@ -245,7 +245,7 @@ public class DetailActivity extends Activity implements
 
 		}
 
-		public SamplePagerAdapter(DetailActivity paramContext) {
+		public SamplePagerAdapter(DetailDeviceActivity paramContext) {
 			pageContext = paramContext;
 		}
 

@@ -159,7 +159,10 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 				public void onItemClick(AdapterView parent, View view,int position, long id){
 					
 					ScanResult ssid =(ScanResult) modeAdapter.getItem(position);
-					editSSIDEditText.setText(ssid.SSID);
+					String ssidString = ssid.SSID.replace("\"", "");
+					
+					editSSIDEditText.setText(ssidString);
+					//List<String> detailList = xinMgr.getWifiDetailInfo(ssidString);
 					dialog.dismiss();
 				}
 		     });
