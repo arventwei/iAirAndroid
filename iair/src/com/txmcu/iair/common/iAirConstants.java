@@ -49,13 +49,14 @@ public interface iAirConstants {
     
     public static final String Mobile_AP_SSID="xiaoxin";
     public static final String Mobile_AP_PWD="1234567890";   
-    public static final String API_Login = "http://211.103.161.120:9999/mobile/login";
-    public static final String API_Bind  ="http://211.103.161.120:9999/mobile/bind";
-    public static final String API_UnBind = "http://211.103.161.120:9999/mobile/unbind";
-    public static final String API_QueryBindlist = "http://211.103.161.120:9999/mobile/query_bindlist";
-    public static final String API_GetXiaoxin ="http://211.103.161.120:9999/mobile/getxiaoxin";
-    public static final String API_SetXiaoxinSwitch ="http://211.103.161.120:9999/mobile/setxiaoxin_switch";
-    public static final String API_SetXiaoxinSeed ="http://211.103.161.120:9999/mobile/setxiaoxin_speed";
-    public static final String API_SetXiaoxinName ="http://211.103.161.120:9999/mobile/setxiaoxin_name";
-
+    public static final String API_Login = "http://112.124.58.144/mobile/login";
+    public static final String API_Bind  ="http://112.124.58.144/mobile/bind";
+    public static final String API_UnBind = "http://112.124.58.144/mobile/unbind";
+    public static final String API_QueryBindlist = "http://112.124.58.144/mobile/query_bindlist";
+    public static final String API_GetXiaoxin ="http://112.124.58.144/mobile/getxiaoxin";
+    public static final String API_SetXiaoxinSwitch ="http://112.124.58.144/mobile/setxiaoxin_switch";
+    public static final String API_SetXiaoxinSeed ="http://112.124.58.144/mobile/setxiaoxin_speed";
+    public static final String API_SetXiaoxinName ="http://112.124.58.144/mobile/setxiaoxin_name";
+    public static final String API_SetXiaoxinMode ="http://112.124.58.144/mobile/setxiaoxin_mode";
+    public static final String API_GetAreaData ="http://112.124.58.144/mobile/getareadata";
 }

@@ -34,15 +34,18 @@ public class XinServerManager {
 		client.setTimeout(2000);
 		return client;
 	}
-	static public void login(final Activity activity, final String userid,
-			final onSuccess r) {
+	static public void login(final Activity activity, final String authType,final String token,
+			final String openId,final String nickName,final onSuccess r) {
 		activity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 
 					RequestParams post_params = new RequestParams();
-					post_params.put("userid", userid);
+					post_params.put("oauth_name", authType);
+					post_params.put("oauth_access_token", token);
+					post_params.put("oauth_openid", openId);
+					post_params.put("oauth_nickname", nickName);
 					// post_params.put("sn", sn);
 
 					AsyncHttpClient client = getHttpClient();
@@ -145,7 +148,7 @@ public class XinServerManager {
 							String sn = snlist.get(i);
 							
 							final int xiaoin_idx = i;
-							getxiaoxin(activity,sn,new onSuccess() {
+							getxiaoxin(activity,userid,sn,new onSuccess() {
 								
 								@Override
 								public void run(String response) {
@@ -166,13 +169,14 @@ public class XinServerManager {
 	}
 	
 	
-	static public void getxiaoxin(final Activity activity, final String sn,
+	static public void getxiaoxin(final Activity activity, final String userid,final String sn,
 			final onSuccess r)
 	{
 		final iAirApplication application = ((iAirApplication) activity
 				.getApplication());
 		RequestParams post_params = new RequestParams();
 		post_params.put("sn", sn);
+		post_params.put("userid", userid);
 
 		AsyncHttpClient client = getHttpClient();
 		client.post(iAirConstants.API_GetXiaoxin, post_params,
@@ -195,7 +199,7 @@ public class XinServerManager {
 						xiaoxin.temp = Double.parseDouble(xiaoxinMap.get("temp"));
 						xiaoxin.humi = Double.parseDouble(xiaoxinMap.get("humi"));
 						xiaoxin.pm25 = Double.parseDouble(xiaoxinMap.get("pm25"));
-						xiaoxin.form = Double.parseDouble(xiaoxinMap.get("form"));
+						xiaoxin.pa = Double.parseDouble(xiaoxinMap.get("pa"));
 						xiaoxin.switchOn = Integer.parseInt(xiaoxinMap.get("switch"));
 						xiaoxin.speed = Integer.parseInt(xiaoxinMap.get("speed"));
 						xiaoxin.lastUpdateStamp = Integer.parseInt(xiaoxinMap.get("last_upload_time"));
@@ -209,7 +213,7 @@ public class XinServerManager {
 				});
 	}
 	
-	static public void setxiaoxin_switch(final Activity activity, final String sn,final int isOn,
+	static public void setxiaoxin_switch(final Activity activity, final String userid, final String sn,final int isOn,
 			final onSuccess r)
 	{
 		final iAirApplication application = ((iAirApplication) activity
@@ -220,6 +224,8 @@ public class XinServerManager {
 		application.setXiaoxin(xiaoxinDevice);
 		
 		RequestParams post_params = new RequestParams();
+		
+		post_params.put("userid", userid);
 		post_params.put("sn", sn);
 		post_params.put("switch", String.valueOf(isOn));
 
@@ -247,7 +253,7 @@ public class XinServerManager {
 				});
 	}
 	
-	static public void setxiaoxin_speed(final Activity activity, final String sn,final int speed,
+	static public void setxiaoxin_speed(final Activity activity, final String userid,final String sn,final int speed,
 			final onSuccess r)
 	{
 		final iAirApplication application = ((iAirApplication) activity
@@ -259,6 +265,7 @@ public class XinServerManager {
 		
 
 		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
 		post_params.put("sn", sn);
 		post_params.put("speed", String.valueOf(speed));
 
@@ -287,7 +294,7 @@ public class XinServerManager {
 				});
 	}
 	
-	static public void setxiaoxin_name(final Activity activity, final String sn,final String name,
+	static public void setxiaoxin_name(final Activity activity, final String userid,final String sn,final String name,
 			final onSuccess r)
 	{
 		
@@ -299,6 +306,8 @@ public class XinServerManager {
 		application.setXiaoxin(xiaoxinDevice);
 		
 		RequestParams post_params = new RequestParams();
+		
+		post_params.put("userid", userid);
 		post_params.put("sn", sn);
 		post_params.put("name", name);
 

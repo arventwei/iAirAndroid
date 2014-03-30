@@ -21,7 +21,7 @@ public class Device  implements Serializable {
 	public double  temp;
 	public double  humi;
 	public double  pm25;
-	public double  form;
+	public double  pa;
 	
 	public int  	switchOn;
 	public int     	speed;
@@ -31,7 +31,7 @@ public class Device  implements Serializable {
 		this.id = imaxid++;
 		this.pm25 = 20;
 		this.temp = 20;
-		this.form = 8;
+		this.pa = 8;
 		this.humi = 15;
 	}
 	public Device(String sn) {
@@ -39,7 +39,7 @@ public class Device  implements Serializable {
 		this.sn = sn;
 		this.pm25 = 234;
 		this.temp = 20;
-		this.form = 8;
+		this.pa = 8;
 		this.humi = 15;
 	}
 	
@@ -55,7 +55,7 @@ public class Device  implements Serializable {
 	        jsonObj.put("temp",temp);
 	        jsonObj.put("humi",humi);
 	        jsonObj.put("pm25",pm25);
-	        jsonObj.put("form",form);
+	        jsonObj.put("pa",pa);
 	        jsonObj.put("switchOn",switchOn);
 	        jsonObj.put("speed",speed);
 	        jsonObj.put("lastUpdateStamp",lastUpdateStamp);
@@ -78,7 +78,7 @@ public class Device  implements Serializable {
 			temp = jObj.getDouble("temp");
 			humi = jObj.getDouble("humi");
 			pm25 = jObj.getDouble("pm25");
-			form = jObj.getDouble("form");
+			pa = jObj.getDouble("pa");
 			
 			switchOn = jObj.getInt("switchOn");
 			speed = jObj.getInt("speed");

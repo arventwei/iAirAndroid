@@ -41,7 +41,7 @@ public class DetailDeviceActivity extends Activity implements
 	private PullToRefreshViewPager mPullToRefreshViewPager;
 	private PopupWindow popWin;
 
-	iAirApplication application;
+	public iAirApplication application;
 	public Device xiaoxinDevice;
 	public SamplePagerAdapter adapter;
 	
@@ -165,7 +165,7 @@ public class DetailDeviceActivity extends Activity implements
 			humi.setText(pageContext.getString(R.string.detail_device_humi) + xiaoxinDevice.humi );
 			TextView form = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_form);
-			form.setText(pageContext.getString(R.string.detail_device_form) + xiaoxinDevice.form );
+			form.setText(pageContext.getString(R.string.detail_device_form) + xiaoxinDevice.pa );
 		
 	
 			// nameview.setText()
@@ -185,7 +185,7 @@ public class DetailDeviceActivity extends Activity implements
 					if(newSpeed>=10)
 						newSpeed=1;
 					xiaoxinDevice.speed = newSpeed;
-					XinServerManager.setxiaoxin_speed(pageContext, sn, newSpeed, null);
+					XinServerManager.setxiaoxin_speed(pageContext,pageContext.application.getUserid(), sn, newSpeed, null);
 					
 
 				}
@@ -205,7 +205,7 @@ public class DetailDeviceActivity extends Activity implements
 					if (((CheckBox) v).isChecked()) {
 						isOn = 1;
 					}
-					XinServerManager.setxiaoxin_switch(pageContext, sn, isOn, null);
+					XinServerManager.setxiaoxin_switch(pageContext,pageContext.application.getUserid(), sn, isOn, null);
 					
 
 				}

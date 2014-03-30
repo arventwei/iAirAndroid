@@ -52,7 +52,7 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 		}
 		else if (view.getId()==R.id.modify_name_btn) {
 			
-			XinServerManager.setxiaoxin_name(this, snString, new_name_EditText.getText().toString(),new XinServerManager.onSuccess() {
+			XinServerManager.setxiaoxin_name(this, application.getUserid(),snString, new_name_EditText.getText().toString(),new XinServerManager.onSuccess() {
 				
 				@Override
 				public void run(String response) {

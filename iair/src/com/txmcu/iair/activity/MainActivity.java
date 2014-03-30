@@ -1,5 +1,7 @@
 package com.txmcu.iair.activity;
 
+import java.util.Map;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.MainEntryAdapter;
 import com.txmcu.iair.common.iAirApplication;
+import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class MainActivity extends  Activity
@@ -60,12 +63,20 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		
 		addButtonListener();
 		
+		String authType =this.getIntent().getStringExtra("authType");
+		String token =this.getIntent().getStringExtra("token");
+		String openId =this.getIntent().getStringExtra("openId");
+		String nickName =this.getIntent().getStringExtra("nickName");
 		
-		XinServerManager.login(this	, application.getUserid(),new XinServerManager.onSuccess() {
+		XinServerManager.login(this	, authType,token,openId,nickName,new XinServerManager.onSuccess() {
 			
 			@Override
 			public void run(String response) {
 				// TODO Auto-generated method stub
+				Map<String, String> snMap = iAirUtil
+						.getQueryMapFromUrl(response);
+				
+				application.setUserid(snMap.get("userid"));
 				Toast.makeText(MainActivity.this, R.string.xiaoxin_login_ok, Toast.LENGTH_LONG).show();
 			}
 		});

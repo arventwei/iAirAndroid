@@ -113,7 +113,7 @@ public class MainEntryAdapter extends BaseAdapter
 			((TextView)convertView.findViewById(R.id.entry_pm25_label)).setText(String.valueOf((int)b.pm25));
 			((TextView)convertView.findViewById(R.id.entry_temp_label)).setText(String.valueOf(b.temp));
 			((TextView)convertView.findViewById(R.id.entry_comment_label)).setText(String.valueOf(b.humi));
-			((TextView)convertView.findViewById(R.id.entry_form_label)).setText(String.valueOf(b.form));
+			((TextView)convertView.findViewById(R.id.entry_form_label)).setText(String.valueOf(b.pa));
 			
 			
 		}
