@@ -31,7 +31,7 @@ public class XinServerManager {
 	static private AsyncHttpClient getHttpClient()
 	{
 		AsyncHttpClient client = new AsyncHttpClient();
-		client.setTimeout(2000);
+		client.setTimeout(10000);
 		return client;
 	}
 	static public void login(final Activity activity, final String authType,final String token,

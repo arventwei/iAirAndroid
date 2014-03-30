@@ -250,6 +250,7 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 	}
 	private void  AsyncMainEntrys() {
 		
+		mPullToRefreshViewPager.onRefreshComplete();
 		XinServerManager.query_bindlist(this, application.getUserid(), new XinServerManager.onSuccess() {
 			
 			@Override

@@ -117,6 +117,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				};
 				mTencent.login(this, SCOPE, listener);
 			} else {
+				checkSessionAdnLogin();
 				// mTencent.logout(this);
 				// updateUserInfo();
 				// updateLoginButton();
@@ -129,6 +130,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				mSsoHandler.authorize(new AuthListener());
 			} else {
 
+				checkSessionAdnLogin();
 				// new LogoutAPI(accessToken).logout(new
 				// LogOutRequestListener());
 			}

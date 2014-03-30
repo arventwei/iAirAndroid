@@ -107,7 +107,7 @@ public class Udpclient {
     	bytes =sn.getBytes();
     	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
     	
-    	bytes ="test".getBytes();
+    	bytes =userid.getBytes();
     	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
 
     	recvingMsg = "";

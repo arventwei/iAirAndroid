@@ -255,9 +255,9 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 							DeviceManageActivity.instance.adapter.syncDevices();
 							DeviceManageActivity.instance.adapter.notifyDataSetChanged();
 							
-							if (MainActivity.instance !=null) {
-								MainActivity.instance.refreshlist();
-							}
+							//if (MainActivity.instance !=null) {
+							//	MainActivity.instance.refreshlist();
+							//}
 						}
 						
 					}
