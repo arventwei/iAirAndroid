@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="top" 
     android:orientation="vertical" >
     
 <LinearLayout  
@@ -13,237 +14,181 @@
         android:gravity="center" 
        >
 
-    <TextView
-        android:id="@+id/xiaoxin_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="小新"
-        android:textSize="36dip" />
-
-    <TextView
-        android:id="@+id/xiaoxin_sn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1.0dip"
-        android:layout_marginLeft="8.0dip"
-        android:layout_marginRight="8.0dip"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:background="#66ffffff" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/xiaoxin_pm25"
-            style="@style/clockWeatherText"
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:paddingBottom="3.0dip"
-            android:text="@string/detail_device_pm25"
-            android:textColor="@color/white"
-            android:textSize="@dimen/detail_text_size" />
-
-        <TextView
-            android:id="@+id/xiaoxin_form"
-            style="@style/clockWeatherText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-             android:layout_weight="1"
-            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:paddingBottom="3.0dip"
-            android:text="@string/detail_device_form"
-            android:textColor="@color/white"
-            android:textSize="@dimen/detail_text_size" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/xiaoxin_temp"
-            style="@style/clockWeatherText"
-           android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:paddingBottom="3.0dip"
-            android:text="@string/detail_device_temp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/detail_text_size" />
-
-        <TextView
-            android:id="@+id/xiaoxin_humi"
-            style="@style/clockWeatherText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:paddingBottom="3.0dip"
-            android:text="@string/detail_device_humi"
-            android:textColor="@color/white"
-            android:textSize="@dimen/detail_text_size" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/TextView02"
-            style="@style/clockWeatherText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:layout_weight="1"
-            android:paddingBottom="3.0dip"
-            android:text="耗材更换倒计时: 240 小时"
-            android:textColor="@color/white"
-            android:textSize="@dimen/detail_text_size" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/TextView01"
-            style="@style/clockWeatherText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:layout_weight="1"
-            android:paddingBottom="3.0dip"
-            android:text="累计工作时间: 240 小时"
-            android:textColor="@color/white"
-            android:textSize="@dimen/detail_text_size" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1.0dip"
-        android:layout_marginLeft="8.0dip"
-        android:layout_marginRight="8.0dip"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:background="#66ffffff" />
-
-    <LinearLayout
-        android:id="@+id/air_connect"
-        style="@style/setting_item_layout"
-        android:layout_width="match_parent" >
-
-        <TextView
-            style="@style/setting_item_main_text"
-            android:layout_width="0.0dip"
-            android:layout_weight="1.0"
-            android:text="@string/device_detail_network"
-            android:textSize="@dimen/detail_text_size" />
-
-        <CheckBox
-            android:id="@+id/xiaoxin_network"
-            style="@style/setting_item_checkbox"
-            android:layout_width="0dp"
-            android:layout_weight="1.0"
-            android:textSize="@dimen/detail_text_size" />
-    </LinearLayout>
+        android:orientation="vertical"
+                android:layout_gravity="center"
+        android:gravity="center"  >
 
         <LinearLayout
-            android:id="@+id/air_switch"
-            style="@style/setting_item_layout">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
 
             <TextView
-                style="@style/setting_item_main_text"
-                android:layout_width="0.0dip"
-                android:text="@string/device_detail_switch"
-                android:textSize="@dimen/detail_text_size"
-                android:layout_weight="1.0" />
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="北京"
+                android:textSize="36dip" />
 
-            <CheckBox
-                android:id="@+id/xiaoxin_switch"
-                style="@style/setting_item_checkbox"
-                android:textSize="@dimen/detail_text_size"
-                android:layout_width="0dp"
-                android:layout_weight="1.0" />
-        </LinearLayout>
-        
-         <LinearLayout
-             android:id="@+id/air_speed"
-             style="@style/setting_item_layout"
-             android:layout_below="@id/air_switch" >
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="#66ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
                 <TextView
-                    style="@style/setting_item_main_text"
-                    android:layout_width="0.0dip"
-                    android:layout_weight="1.0"
-                    android:textSize="@dimen/detail_text_size"
-                    android:text="@string/device_detail_speed" />
-
-                <Button
-                    android:id="@+id/btn_speed"
-                    android:layout_width="0dp"
-                    android:layout_height="50dip"
-                    android:layout_weight="1.0"
-                    android:gravity="center"
-                    android:textSize="@dimen/detail_text_size"
-                    android:background="@drawable/button_bg"
-                    android:text="@string/button_modify" />
-
+                    android:id="@+id/TextView03"
+                    style="@style/clockWeatherText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+                    android:layout_weight="1"
+                    android:paddingBottom="3.0dip"
+                    android:text="@string/detail_device_pm25"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/detail_text_size" />
             </LinearLayout>
 
-         <LinearLayout
-             android:id="@+id/LinearLayout01"
-             style="@style/setting_item_layout"
-             android:layout_width="match_parent" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
-             <TextView
-                 style="@style/setting_item_main_text"
-                 android:layout_width="0.0dip"
-                 android:layout_weight="1.0"
-                 android:text="模式:"
-                 android:textSize="@dimen/detail_text_size" />
+                <TextView
+                    android:id="@+id/TextView04"
+                    style="@style/clockWeatherText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+                    android:layout_weight="1"
+                    android:paddingBottom="3.0dip"
+                    android:text="@string/detail_device_temp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/detail_text_size" />
 
-                <RadioGroup  
-        android:id="@+id/radiogroup1"  
-        android:layout_width="wrap_content"  
+                <TextView
+                    android:id="@+id/TextView02"
+                    style="@style/clockWeatherText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+                    android:layout_weight="1"
+                    android:paddingBottom="3.0dip"
+                    android:text="@string/detail_device_humi"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/detail_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/xiaoxin_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="美使馆"
+                android:textSize="36dip" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="#66ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/xiaoxin_pm25"
+                    style="@style/clockWeatherText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+                    android:layout_weight="1"
+                    android:paddingBottom="3.0dip"
+                    android:text="@string/detail_device_pm25"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/detail_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/xiaoxin_temp"
+                    style="@style/clockWeatherText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+                    android:layout_weight="1"
+                    android:paddingBottom="3.0dip"
+                    android:text="@string/detail_device_temp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/detail_text_size" />
+
+                <TextView
+                    android:id="@+id/xiaoxin_humi"
+                    style="@style/clockWeatherText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
+                    android:layout_weight="1"
+                    android:paddingBottom="3.0dip"
+                    android:text="@string/detail_device_humi"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/detail_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:layout_marginLeft="8.0dip"
+        android:layout_marginRight="8.0dip"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="#66ffffff" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >  
-             <RadioButton
-                 android:id="@+id/RadioButton02"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1.0"
-                 android:text="自动" />
-
-             <RadioButton
-                 android:id="@+id/RadioButton01"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1.0"
-                 android:text="手动" />
-
-             <RadioButton
-                 android:id="@+id/radioButton1"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1.0"
-                 android:text="睡眠" />
-              </RadioGroup> 
-         </LinearLayout>
+        android:text="8°           晴车辆限行   1,6"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 </LinearLayout>
