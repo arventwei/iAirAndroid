@@ -2,7 +2,7 @@
 <project>
     <target name="rename-release-with-version-number">
         <xmlproperty file="AndroidManifest.xml" prefix="themanifest" collapseAttributes="true" />
-        <property name="out.final.file" location="${out.absolute.dir}/../${ant.project.name}-${themanifest.manifest.android:versionName}.apk" />
+        <property name="out.final.file" location="${out.absolute.dir}/../${ant.project.name}-${themanifest.manifest.android:versionName}.${themanifest.manifest.android:versionCode}.apk" />
     </target>
 
     <target name="-set-release-mode" depends="rename-release-with-version-number,android_rules.-set-release-mode">

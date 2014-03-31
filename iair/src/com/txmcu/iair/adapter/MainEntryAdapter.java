@@ -37,12 +37,12 @@ public class MainEntryAdapter extends BaseAdapter
 		entries.clear();
 		entries.add(new Device());//head
 		Device bj = new Device("1111111");
-		bj.name="北京";
+		bj.name=deviceManageActivity.getString(R.string.beijing);
 		entries.add(bj);
 		
 		Device bj_home = new Device("1111112");
 		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();
-		bj_home.name=application.getNickName()+"的家";
+		bj_home.name=application.getNickName()+deviceManageActivity.getString(R.string.whos_home);
 		entries.add(bj_home);
 	}
 	
@@ -53,10 +53,7 @@ public class MainEntryAdapter extends BaseAdapter
 		
 		
 
-		//Device american = new Device();
-		//american.name="��ʹ��";
-		//entries.add(american);
-		//entries.add(new Device());
+
 		
 		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();
 		List<String> snList = application.getXiaoxinSnList();

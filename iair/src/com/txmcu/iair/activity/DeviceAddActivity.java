@@ -129,7 +129,7 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		else if(view.getId() == R.id.input_ssid)
 		{
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("请选择您常用的Wi-Fi网络");
+			builder.setTitle(R.string.please_select_your_wifi);
 			
 			if (scannedlist==null) {
 				return;

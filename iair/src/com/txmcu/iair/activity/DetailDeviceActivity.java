@@ -158,14 +158,15 @@ public class DetailDeviceActivity extends Activity implements
 	static class SamplePagerAdapter extends
 			com.handmark.verticalview.PagerAdapter {
 
-		private static int[] sDrawables = { R.layout.include_up_detail,
-				R.layout.include_down_detail };
+		private static int[] sDrawables = { R.layout.include_detail_up,
+				R.layout.include_detail_down };
 		private DetailDeviceActivity pageContext;
 
 		// private ListView listView;
 		// MainEntryAdapter adapter;
 		View xiaoxinView;
 
+		
 		public void updateView() {
 			final Device xiaoxinDevice = pageContext.application
 					.getXiaoxin(pageContext.xiaoxinDevice.sn);
@@ -174,7 +175,7 @@ public class DetailDeviceActivity extends Activity implements
 			nameview.setText(xiaoxinDevice.name);
 			TextView snview = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_sn);
-			snview.setText(R.string.sn_number + xiaoxinDevice.sn);
+			snview.setText(pageContext.getString(R.string.sn_number) + xiaoxinDevice.sn);
 			TextView pm25 = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_pm25);
 			pm25.setText(pageContext.getString(R.string.detail_device_pm25)

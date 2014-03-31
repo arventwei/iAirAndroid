@@ -119,7 +119,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 
 		//operations.initResult(true, curSSID, SSID)
 		
-		initCoolTimer = new CountDownTimer(15000, 4000) {
+		initCoolTimer = new CountDownTimer(8000, 3000) {
 
 		     public void onTick(long millisUntilFinished) {
 		    	 initscanRetryTimes++;

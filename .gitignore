@@ -29,3 +29,4 @@ proguard/
 .idea/
 iair/project.properties
 iair/project.properties
+*.bak

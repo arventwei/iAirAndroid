@@ -137,5 +137,9 @@
            <string name="hasnewversion">检测到新版本</string>
        
            <string name="clickupdate">点击安装</string>
+       
+           <string name="whos_home">的家</string>
+       
+           <string name="please_select_your_wifi">请选择您常用的Wi-Fi网络</string>
     
 </resources>
