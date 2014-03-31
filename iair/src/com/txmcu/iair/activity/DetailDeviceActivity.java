@@ -174,7 +174,7 @@ public class DetailDeviceActivity extends Activity implements
 			nameview.setText(xiaoxinDevice.name);
 			TextView snview = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_sn);
-			snview.setText("–Ú¡–∫≈:" + xiaoxinDevice.sn);
+			snview.setText(R.string.sn_number + xiaoxinDevice.sn);
 			TextView pm25 = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_pm25);
 			pm25.setText(pageContext.getString(R.string.detail_device_pm25)

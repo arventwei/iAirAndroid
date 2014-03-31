@@ -29,7 +29,7 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 		instance = this;
 		 mainentryAdapter = new MainEntryAdapter(this);//
 	     
-	     listView = (ListView) findViewById(R.id.home_xiaoxinlist);//实例化ListView  
+	     listView = (ListView) findViewById(R.id.home_xiaoxinlist);//
 	     listView.setAdapter(mainentryAdapter);//
 	    // listView.setDividerHeight(0);
 	     
@@ -57,10 +57,7 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 	   
 	     refreshlist();
 	    
-	  //   mainentryAdapter.addDevice(1, "小新");
-	  //   mainentryAdapter.addDevice(2, "爸爸家");
-	   //  adapter.addDevice(3, "北京");
-	   //  adapter.addDevice(4, "南京");
+
 	
 
 		findViewById(R.id.back_img).setOnClickListener(this);

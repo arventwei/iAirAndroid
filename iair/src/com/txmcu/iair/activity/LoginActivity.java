@@ -30,6 +30,8 @@ import com.sina.weibo.sdk.exception.WeiboException;
 import com.sina.weibo.sdk.net.RequestListener;
 import com.sina.weibo.sdk.openapi.AccessTokenKeeper;
 import com.sina.weibo.sdk.openapi.LogoutAPI;
+import com.sina.weibo.sdk.openapi.legacy.UsersAPI;
+import com.sina.weibo.sdk.utils.LogUtil;
 import com.tencent.open.HttpStatusException;
 import com.tencent.open.NetworkUnavailableException;
 import com.tencent.tauth.Constants;
@@ -51,6 +53,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private iAirApplication application;
 	public WeiboAuth mWeiboAuth;
 	public Oauth2AccessToken sinaAccessToken; //
+	private UsersAPI mUsersAPI;
 	public SsoHandler mSsoHandler;
 	public Tencent mTencent;
 	String SCOPE = "get_user_info,get_simple_userinfo,get_user_profile,get_app_friends";
@@ -71,10 +74,22 @@ public class LoginActivity extends Activity implements OnClickListener {
 		this.application = ((iAirApplication) getApplication());
 		
 		
+//		//Changing strategy
+//		PushLink.setCurrentStrategy(StrategyEnum.FRIENDLY_POPUP); 
+//		//It's better call it AFTER PushLink.start, 
+//		//otherwise the popup strategies will show "Application" as label instead the real application name.
+//		 
+//		//Modifying new strategy
+//		FriendlyPopUpStrategy fps =  (FriendlyPopUpStrategy) PushLink.getCurrentStrategy();
+//		fps.setPopUpMessage("检测到新版本");
+//		fps.setNotNowButton("不，谢谢");
+//		fps.setUpdateButton("开始安装");
+//		fps.setReminderTimeInSeconds(60 * 60); //one hour
+		
 		//Changing default notification messages
 		StatusBarStrategy sbs =  (StatusBarStrategy) PushLink.getCurrentStrategy();
-		sbs.setStatusBarTitle("检测到新版本");
-		sbs.setStatusBarDescription("点击安装");
+		sbs.setStatusBarTitle(getString(R.string.hasnewversion));
+		sbs.setStatusBarDescription(getString(R.string.clickupdate));
 		
 		PushLink.start(this, R.drawable.ic_launcher, "qk3ne7ortm8emgdf", iAirUtil.guid(this));
 
@@ -89,6 +104,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				com.txmcu.iair.common.iAirConstants.SCOPE);
 
 		sinaAccessToken = AccessTokenKeeper.readAccessToken(this);
+		mUsersAPI = new UsersAPI(sinaAccessToken);
 		// if (accessToken!=null) {
 		// Toast.makeText(this,
 		// accessToken.getToken(),Toast.LENGTH_LONG).show();
@@ -161,53 +177,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	}
 
-	// private class LogOutRequestListener implements RequestListener {
-	// @Override
-	// public void onComplete(String response) {
-	// if (!TextUtils.isEmpty(response)) {
-	// try {
-	// JSONObject obj = new JSONObject(response);
-	// String value = obj.getString("result");
-	// if ("true".equalsIgnoreCase(value)) {
-	// AccessTokenKeeper.clear(LoginActivity.this);
-	// // mTokenView.setText(R.string.weibosdk_demo_logout_success);
-	// accessToken = null;
-	// //updateLoginButton();
-	// }
-	// } catch (JSONException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
-	// @Override
-	// public void onComplete4binary(ByteArrayOutputStream responseOS) {
-	// //LogUtil.e(TAG, "onComplete4binary...");
-	// // Do nothing
-	// }
-	//
-	// @Override
-	// public void onIOException(IOException e) {
-	// // LogUtil.e(TAG, "onIOException�?" + e.getMessage());
-	// // 注销失败
-	// //setText(R.string.com_sina_weibo_sdk_logout);
-	//
-	// // if (mLogoutListener != null) {
-	// // mLogoutListener.onIOException(e);
-	// // }
-	// }
-	//
-	// @Override
-	// public void onError(WeiboException e) {
-	// //LogUtil.e(TAG, "WeiboException�?" + e.getMessage());
-	// // 注销失败
-	// // setText(R.string.com_sina_weibo_sdk_logout);
-	//
-	// // if (mLogoutListener != null) {
-	// // mLogoutListener.onError(e);
-	// // }
-	// }
-	//
-	// }
+
 	/**
 	 * 
 	 * 
@@ -246,6 +216,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		public void onComplete(Bundle values) {
 			//
 			sinaAccessToken = Oauth2AccessToken.parseAccessToken(values);
+			mUsersAPI = new UsersAPI(sinaAccessToken);
 			if (sinaAccessToken.isSessionValid()) {
 				// 显示 Token
 				// mWeiboAuth.getAuthInfo()
@@ -368,19 +339,22 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		} else {
 			// loginQQ.setTextColor(Color.BLUE);
-			// loginQQ.setText("登录QQ");
+
 		}
 
 		if (sinaAccessToken != null && sinaAccessToken.isSessionValid()) {
 
-			// loginSina.setTextColor(Color.RED);
-			// loginSina.setText("�?��帐号SINA");
 
-			TryLoadMainActivity("sina", sinaAccessToken.getToken(),
-					sinaAccessToken.getUid(), "sina_test");
+			
+            long uid = Long.parseLong(sinaAccessToken.getUid());
+            LogUtil.i(TAG, sinaAccessToken.getUid());
+            mUsersAPI.show(uid, mListener);
+
+			//TryLoadMainActivity("sina", sinaAccessToken.getToken(),
+			//		sinaAccessToken.getUid(), "sina_test");
 		} else {
 			// loginSina.setTextColor(Color.BLUE);
-			// loginSina.setText("登录SINA");
+
 		}
 	}
 
@@ -514,6 +488,56 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 
 	}
+	
+	 /**
+     * 微博 OpenAPI 回调接口。
+     */
+    private RequestListener mListener = new RequestListener() {
+        @Override
+        public void onComplete(String response) {
+        	LogUtil.i(TAG, response);
+            if (!TextUtils.isEmpty(response)) {
+                
+                // 调用 User#parse 将JSON串解析成User对象
+                com.sina.weibo.sdk.openapi.models.User user = com.sina.weibo.sdk.openapi.models.User.parse(response);
+                if (user != null) {
+                	
+                	
+                	TryLoadMainActivity("sina",
+                			sinaAccessToken.getToken(),
+                					sinaAccessToken.getUid(), user.screen_name);
+                   // Toast.makeText(WBUserAPIActivity.this, 
+                  //          "获取User信息成功，用户昵称：" + user.screen_name, 
+                   //         Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+      
+		@Override
+		public void onComplete4binary(ByteArrayOutputStream arg0) {
+			// TODO Auto-generated method stub
+			LogUtil.i(TAG, "onComplete4binary");
+			
+		}
+
+		@Override
+		public void onError(WeiboException arg0) {
+			// TODO Auto-generated method stub
+			LogUtil.i(TAG, "onError"+arg0.toString());
+        	TryLoadMainActivity("sina",
+        			sinaAccessToken.getToken(),
+        					sinaAccessToken.getUid(), getString(R.string.test));
+		}
+
+		@Override
+		public void onIOException(IOException arg0) {
+			// TODO Auto-generated method stub
+			LogUtil.i(TAG, "onIOException"+arg0.toString());
+		}
+    };
 
 	public void TryLoadMainActivity(final String authType,final String token,
 			final String openId,final String nickName) {

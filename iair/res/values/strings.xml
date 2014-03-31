@@ -127,5 +127,15 @@
            <string name="add_device_no_wifi">请接入无线网络再添加小新</string>
        
            <string name="please_wait_xiaoxin">点击下一步之前，请确保小新处于等待配置状态。</string>
+       
+           <string name="sn_number">序列号:</string>
+       
+           <string name="beijing">北京</string>
+       
+           <string name="test">测试</string>
+       
+           <string name="hasnewversion">检测到新版本</string>
+       
+           <string name="clickupdate">点击安装</string>
     
 </resources>

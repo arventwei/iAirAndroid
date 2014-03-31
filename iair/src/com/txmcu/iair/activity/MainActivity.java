@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +24,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
+import com.pushlink.android.PushLink;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.MainEntryAdapter;
@@ -89,6 +89,16 @@ implements OnRefreshListener<VerticalViewPager>,OnClickListener
 		super.onDestroy();
 		instance = null;
 	}
+	//Only for popups (FRIENDLY_POPUP or ANNOYING_POPUP)
+		//You MUST do this, otherwise popups will not work.
+		//Call it in the Activity you want to show the popup.
+		//You can show the popup in many screens by adding this in more than one Activity.
+		@Override
+		protected void onResume() {
+		    super.onResume();
+		    PushLink.setCurrentActivity(this);
+		}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
