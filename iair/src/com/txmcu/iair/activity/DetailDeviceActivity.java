@@ -127,8 +127,8 @@ public class DetailDeviceActivity extends Activity implements
 					public void run(String response) {
 
 						refreshlist();
-						if (HomeManageActivity.instance!=null) {
-							HomeManageActivity.instance.refreshlist();
+						if (HomeActivity.instance!=null) {
+							HomeActivity.instance.refreshlist();
 						}
 
 						// TODO Auto-generated method stub

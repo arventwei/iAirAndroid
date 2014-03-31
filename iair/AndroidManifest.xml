@@ -88,7 +88,7 @@
             android:name="com.txmcu.iair.activity.DeviceBindActivity"
             android:configChanges="keyboardHidden|orientation" />
       <activity
-            android:name="com.txmcu.iair.activity.HomeManageActivity"
+            android:name="com.txmcu.iair.activity.HomeActivity"
             android:configChanges="keyboardHidden|orientation" />
       
       

@@ -62,8 +62,8 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 						DetailDeviceActivity.instance.adapter.updateView();
 						
 					}
-					if (HomeManageActivity.instance!=null) {
-						HomeManageActivity.instance.refreshlist();
+					if (HomeActivity.instance!=null) {
+						HomeActivity.instance.refreshlist();
 					}
 					if (DeviceManageActivity.instance!=null) {
 						DeviceManageActivity.instance.adapter.syncDevices();

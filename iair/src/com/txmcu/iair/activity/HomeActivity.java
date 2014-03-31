@@ -22,7 +22,7 @@ import com.txmcu.iair.adapter.MainEntryAdapter;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
-public class HomeManageActivity extends Activity implements OnRefreshListener<VerticalViewPager>,OnClickListener {
+public class HomeActivity extends Activity implements OnRefreshListener<VerticalViewPager>,OnClickListener {
 
 	private static final String TAG = "iair";
 
@@ -31,16 +31,16 @@ public class HomeManageActivity extends Activity implements OnRefreshListener<Ve
 	private PullToRefreshViewPager mPullToRefreshViewPager;
 	iAirApplication application;
 
-	public static  HomeManageActivity instance;
+	public static  HomeActivity instance;
 	ListView listView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home_manage);
+		setContentView(R.layout.activity_home);
 		instance = this;
 		application = (iAirApplication)getApplication();
 		mPullToRefreshViewPager = (PullToRefreshViewPager) findViewById(R.id.pull_refresh_viewpager);
-		mPullToRefreshViewPager.setOnRefreshListener(HomeManageActivity.this);
+		mPullToRefreshViewPager.setOnRefreshListener(HomeActivity.this);
 
 		VerticalViewPager vp = mPullToRefreshViewPager.getRefreshableView();
 		vp.setAdapter(new SamplePagerAdapter(this));

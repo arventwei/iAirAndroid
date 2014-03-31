@@ -209,7 +209,7 @@ public class MainActivity extends Activity implements
 
 							} else if (b.sn.equals("1111112")) {
 								Intent localIntent = new Intent(pageContext,
-										HomeManageActivity.class);
+										HomeActivity.class);
 								// localIntent.putExtra("sn", b.sn);
 								pageContext.startActivity(localIntent);
 								pageContext.overridePendingTransition(
