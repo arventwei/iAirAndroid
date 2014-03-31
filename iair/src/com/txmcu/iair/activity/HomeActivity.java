@@ -1,5 +1,10 @@
 package com.txmcu.iair.activity;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +24,8 @@ import com.pushlink.android.PushLink;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.MainEntryAdapter;
+import com.txmcu.iair.chat.MessageAdapter;
+import com.txmcu.iair.chat.MessageVo;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
@@ -92,9 +99,16 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 		public ListView listView;
 		public MainEntryAdapter mainentryAdapter;
 		iAirApplication application;
+		
+		//down chat
+		public ListView chatlistView;
+	    private List<MessageVo> meList = new ArrayList<MessageVo>();
+	    private MessageAdapter messageAdapter;
+		//
 
 		public SamplePagerAdapter(Activity paramContext) {
 			pageContext = paramContext;
+			messageAdapter = new MessageAdapter(pageContext, meList);;
 			application = (iAirApplication) pageContext.getApplication();
 		}
 
@@ -160,6 +174,19 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 				mainentryAdapter.notifyDataSetChanged();
 
 			} else {
+				
+				chatlistView = (ListView) subView.findViewById(R.id.chat_listView);// 实例化ListView
+				chatlistView.setAdapter(messageAdapter);//
+				
+				//test data
+				SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+                String time = df.format(new Date()).toString();
+                String sendContenta= "阿~阿~… -宝宝";
+                String sendContentb= "刚带宝宝晒完太阳.-爷爷";
+                meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContenta, time));
+                meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContentb, time));
+                meList.add(new MessageVo(MessageVo.MESSAGE_TO, sendContenta, time));
+                meList.add(new MessageVo(MessageVo.MESSAGE_TO, sendContentb, time));
 
 			}
 			// Now just add ImageView to ViewPager and return it

@@ -5,8 +5,6 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.integer;
-
 public class Device  implements Serializable {
 
 	private static final long	serialVersionUID	= 7973999356736512441L;

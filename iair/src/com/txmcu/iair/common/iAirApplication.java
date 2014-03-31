@@ -3,12 +3,12 @@ package com.txmcu.iair.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R.integer;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.txmcu.iair.adapter.Device;
+import com.txmcu.iair.adapter.Home;
 
 public class iAirApplication extends Application {
 	
@@ -21,6 +21,9 @@ public class iAirApplication extends Application {
 	
 	private static final String xiaoxinlist_size="xiaoxinlist_size";
 	private static final String xiaoxinlist="xiaoxinlist_";
+	
+	private static final String homelist_size="homelist_size";
+	private static final String homelist="homelist_";
 	
 	SharedPreferences mPerferences;
 	
@@ -102,6 +105,53 @@ public void setNickName(String nickName) {
 		return ret;
 		
 	}
+	
+	///>home
+	public void setHomeSnList(List<String> list) {
+		SharedPreferences.Editor mEditor = mPerferences.edit();  
+		
+		mEditor.putInt(homelist_size,list.size());
+		for(int i=0;i<list.size();i++)
+		{
+			mEditor.putString(homelist + i, list.get(i));//
+		}
+	    mEditor.commit(); 
+	}
+	public List<String> getHomeSnList() {
+		List<String> homeList = new ArrayList<String>();
+		int size = mPerferences.getInt(homelist_size, 0);
+		for(int i = 0; i < size;i++)
+		{
+			String sn = mPerferences.getString(homelist + i, "");
+			homeList.add(sn);
+		}
+		return homeList;
+		//return mPerferences.getString(Userid, "");
+	}
+	public void removeHome(String sn) {
+		
+		List<String> snList = getHomeSnList();
+		snList.remove(sn);
+		setHomeSnList(snList);
+	
+	}
+	public void setHome(Home home)
+	{
+		SharedPreferences.Editor mEditor = mPerferences.edit();  
+		
+		mEditor.putString("home_"+home.sn,home.ToJson());
+		
+	    mEditor.commit(); 
+	}
+	public Home getHome(String sn)
+	{
+		Home ret = new Home();
+		String xiaxinJsonString = mPerferences.getString("home_"+sn, "");
+		ret.FromJson(xiaxinJsonString);
+		return ret;
+		
+	}
+	///<
 	
 	///backup wifi info
 	

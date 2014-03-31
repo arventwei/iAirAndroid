@@ -141,5 +141,11 @@
            <string name="whos_home">的家</string>
        
            <string name="please_select_your_wifi">请选择您常用的Wi-Fi网络</string>
+       
+           <string name="addnewxiaoxin">添加新小新</string>
+       
+           <string name="bindexistxiaoxin">绑定已有小新</string>
+       
+           <string name="xiaoxincreatemode">请选择小新创建模式</string>
     
 </resources>

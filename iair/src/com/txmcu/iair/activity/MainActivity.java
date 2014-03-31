@@ -139,6 +139,9 @@ public class MainActivity extends Activity implements
 		case R.id.add_device_layout:
 			popwin_add_device();
 			break;
+		case R.id.add_home_layout:
+			popwin_add_home();
+			break;
 		case R.id.set_broad_layout:
 			popwin_set_broad();
 			break;
@@ -330,6 +333,8 @@ public class MainActivity extends Activity implements
 					this);
 			localView.findViewById(R.id.add_device_layout).setOnClickListener(
 					this);
+			localView.findViewById(R.id.add_home_layout).setOnClickListener(
+					this);
 		}
 
 		popWin.showAsDropDown(findViewById(R.id.add_city), 0, 0);
@@ -364,6 +369,9 @@ public class MainActivity extends Activity implements
 
 	private void popwin_add_device() {
 		CloseAddPopWindowAndOpenSubView(DeviceManageActivity.class);
+	}
+	private void popwin_add_home() {
+		CloseAddPopWindowAndOpenSubView(HomeManageActivity.class);
 	}
 
 	private void main_top_share() {

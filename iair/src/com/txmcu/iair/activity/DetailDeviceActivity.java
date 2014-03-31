@@ -2,7 +2,6 @@ package com.txmcu.iair.activity;
 
 import java.util.List;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
@@ -14,10 +13,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -26,12 +23,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
 import com.txmcu.iair.R;
-import com.txmcu.iair.activity.MainActivity.SamplePagerAdapter;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
 import com.txmcu.xiaoxin.config.XinServerManager;
-import com.txmcu.xiaoxin.config.XinStateManager;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.OpretionsType;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.WifiBroadCastOperations;

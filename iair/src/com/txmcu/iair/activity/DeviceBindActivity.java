@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.txmcu.iair.R;
-import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
 

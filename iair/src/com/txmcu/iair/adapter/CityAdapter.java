@@ -57,7 +57,7 @@ public class CityAdapter extends BaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (null == convertView) {
-			convertView = View.inflate(cityManageActivity, R.layout.gridview_change_city_item, null);
+			convertView = View.inflate(cityManageActivity, R.layout.gridview_city_item, null);
 		}
 		
 		City b = cities.get(position);

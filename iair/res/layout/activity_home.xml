@@ -15,7 +15,7 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/title_bar_height"
         android:layout_alignParentTop="true"
-        layout="@layout/include_top_bar_home_manager" />
+        layout="@layout/include_top_bar_home" />
 
     <RelativeLayout
         android:id="@+id/screen_indicator_container"

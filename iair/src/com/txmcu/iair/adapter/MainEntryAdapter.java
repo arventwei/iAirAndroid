@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.tencent.stat.event.AdditionEvent;
-import com.tendcloud.tenddata.ad;
 import com.txmcu.iair.R;
 import com.txmcu.iair.common.iAirApplication;
 

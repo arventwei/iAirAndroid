@@ -1,12 +1,9 @@
 package com.txmcu.xiaoxin.config;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import android.R.integer;
 import android.app.Activity;
 import android.util.Log;
 

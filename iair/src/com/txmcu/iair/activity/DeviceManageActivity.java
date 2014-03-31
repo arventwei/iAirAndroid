@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -81,10 +80,11 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 
 					AlertDialog.Builder builder = new AlertDialog.Builder(
 							DeviceManageActivity.this);
-					builder.setTitle("请选择小新创建模式");
+					builder.setTitle(R.string.xiaoxincreatemode);
 
 					ListView modeList = new ListView(DeviceManageActivity.this);
-					String[] stringArray = new String[] { "添加新小新", "绑定已有小新" };
+					String[] stringArray = new String[] { DeviceManageActivity.this.getString(R.string.addnewxiaoxin), 
+							DeviceManageActivity.this.getString(R.string.bindexistxiaoxin) };
 					ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(
 							DeviceManageActivity.this,
 							android.R.layout.simple_list_item_1,
