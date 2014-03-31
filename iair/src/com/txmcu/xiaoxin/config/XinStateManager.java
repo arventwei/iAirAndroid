@@ -281,7 +281,15 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		//application.setWifibackupAuthMode(authInfo.get(0));
 		//application.setWifibackupEncrypType(authInfo.get(1));
 	}
-	
+	Boolean isWifiContain(List<ScanResult> list,String ssid)
+	{
+		for (ScanResult scanResult : list) {
+			if (scanResult.SSID.equals(ssid)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	String userid;
 	String sn;
 	List<ScanResult> _scannlist = new ArrayList<ScanResult>();
@@ -292,8 +300,10 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		//wifibackupNetId=-1;
 		//_scannlist = scannlist;
 		for (ScanResult scanResult : scannlist) {
-			if (!scanResult.SSID.equals(iAirConstants.XIAOXIN_SSID)) {
-				_scannlist.add(scanResult);
+			if (!scanResult.SSID.equals(iAirConstants.XIAOXIN_SSID))
+			{
+				if(!isWifiContain(_scannlist,scanResult.SSID))
+					_scannlist.add(scanResult);
 			}
 		}
 		//application.setWifibackupSSID("");
