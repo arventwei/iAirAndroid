@@ -2,8 +2,9 @@ package com.txmcu.iair.activity;
 
 import java.util.Map;
 
-import android.app.Activity;
+import android.app.ActivityGroup;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,6 +19,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -32,7 +36,7 @@ import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
-public class MainActivity extends Activity implements
+public class MainActivity extends ActivityGroup  implements
 		OnRefreshListener<VerticalViewPager>, OnClickListener {
 
 	private iAirApplication application;
@@ -163,13 +167,14 @@ public class MainActivity extends Activity implements
 
 		private static int[] sDrawables = { R.layout.include_main_up,
 				R.layout.include_main_down };
-		private Activity pageContext;
+		private ActivityGroup  pageContext;
 
 		public ListView listView;
 		public MainEntryAdapter mainentryAdapter;
 		iAirApplication application;
+		public TabHost mTabHost;
 
-		public SamplePagerAdapter(Activity paramContext) {
+		public SamplePagerAdapter(ActivityGroup  paramContext) {
 			pageContext = paramContext;
 			application = (iAirApplication) pageContext.getApplication();
 		}
@@ -239,11 +244,16 @@ public class MainActivity extends Activity implements
 
 							}
 						});
-				// mainentryAdapter.addDevice(1, "小新");
-				// mainentryAdapter.addDevice(2, "爸爸家");
-				// adapter.addDevice(3, "北京");
-				// adapter.addDevice(4, "南京");
+
 			} else {
+
+				
+				mTabHost = (TabHost) subView.findViewById(android.R.id.tabhost);
+				mTabHost.setup(pageContext.getLocalActivityManager());
+				setupTab(new Intent(pageContext, MainDownChatActivity.class),  "我的家");
+				setupTab(new Intent(pageContext, MainDownChatActivity.class), "我的办公室");
+				setupTab(new Intent(pageContext, MainDownChatActivity.class),  "朋友的家");
+				
 
 			}
 			// Now just add ImageView to ViewPager and return it
@@ -253,6 +263,18 @@ public class MainActivity extends Activity implements
 			return subView;
 		}
 
+		private void setupTab(final Intent view, final String tag) 
+		{
+			View tabview = createTabView(mTabHost.getContext(), tag);
+		    TabSpec setContent = mTabHost.newTabSpec(tag).setIndicator(tabview).setContent(view);
+			mTabHost.addTab(setContent);
+		}
+		private static View createTabView(final Context context, final String text) {
+			View view = LayoutInflater.from(context).inflate(R.layout.tabs_bg, null);
+			TextView tv = (TextView) view.findViewById(R.id.tabsText);
+			tv.setText(text);
+			return view;
+		}
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
 			container.removeView((View) object);
