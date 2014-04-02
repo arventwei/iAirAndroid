@@ -28,7 +28,7 @@
         android:screenOrientation="portrait"
         android:theme="@android:style/Theme.NoTitleBar" >
         <activity
-            android:name="com.txmcu.iair.activity.LoginActivity"
+            android:name="com.txmcu.iair.activity.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,9 +55,14 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name="com.tencent.plus.ImageActivity" />
-        
-        <activity
+         <activity
             android:name="com.txmcu.iair.activity.MainActivity"
+            android:configChanges="keyboardHidden|orientation" />
+          <activity
+            android:name="com.txmcu.iair.activity.LoginActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="com.txmcu.iair.activity.GuideActivity"
             android:configChanges="keyboardHidden|orientation" />
         <activity
             android:name="com.txmcu.iair.activity.LoadingActivity"

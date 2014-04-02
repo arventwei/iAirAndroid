@@ -74,18 +74,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		this.application = ((iAirApplication) getApplication());
 		
 		
-//		//Changing strategy
-//		PushLink.setCurrentStrategy(StrategyEnum.FRIENDLY_POPUP); 
-//		//It's better call it AFTER PushLink.start, 
-//		//otherwise the popup strategies will show "Application" as label instead the real application name.
-//		 
-//		//Modifying new strategy
-//		FriendlyPopUpStrategy fps =  (FriendlyPopUpStrategy) PushLink.getCurrentStrategy();
-//		fps.setPopUpMessage("检测到新版本");
-//		fps.setNotNowButton("不，谢谢");
-//		fps.setUpdateButton("开始安装");
-//		fps.setReminderTimeInSeconds(60 * 60); //one hour
-		
 		//Changing default notification messages
 		StatusBarStrategy sbs =  (StatusBarStrategy) PushLink.getCurrentStrategy();
 		sbs.setStatusBarTitle(getString(R.string.hasnewversion));

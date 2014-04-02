@@ -289,6 +289,8 @@ public class DetailDeviceActivity extends Activity implements
 				updateView();
 
 			} else {
+				
+				
 
 			}
 			// Now just add ImageView to ViewPager and return it
