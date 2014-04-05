@@ -6,20 +6,29 @@
  * @date 2013-2-27 上午11:23:17 
  * @version V1.0
  */
-package com.txmcu.iair.chat;
+package com.txmcu.iair.adapter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MessageVo {
     public static final int MESSAGE_FROM = 0;
     public static final int MESSAGE_TO = 1;
     
-    private int direction;    //该变量为消息是收到(MESSAGE_FROM)的还是发送(MESSAGE_TO)的
-    private String content;   //内容
-    private String time;       //时间
-    public MessageVo(int direction, String content, String time) {
+    public int direction;    //该变量为消息是收到(MESSAGE_FROM)的还是发送(MESSAGE_TO)的
+    
+    public String noticeid;
+    public String content;   //内容
+    public String time;       //时间
+    public String userName;
+    public MessageVo(String noticeid,int direction, String content, int	 timestamp,String userName) {
         super();
         this.direction = direction;
         this.content = content;
-        this.time = time;
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+		this.time = df.format(new  java.util.Date(timestamp)).toString();
+		this.userName = userName;
+       // this.time = time;
     }
     public int getDirection() {
         return direction;

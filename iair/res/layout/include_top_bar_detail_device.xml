@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5.0dip"
         android:layout_weight="1.0"
-        android:text="城市"
+        android:text="返回家"
         android:textColor="@color/title_bar_text"
         android:textSize="@dimen/weather_detail_activity_title_bar_size" />
 

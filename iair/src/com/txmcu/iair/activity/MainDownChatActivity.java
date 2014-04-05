@@ -6,14 +6,16 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
 
 import com.txmcu.iair.R;
-import com.txmcu.iair.chat.MessageAdapter;
-import com.txmcu.iair.chat.MessageVo;
+import com.txmcu.iair.adapter.Home;
+import com.txmcu.iair.adapter.MessageAdapter;
+import com.txmcu.iair.adapter.MessageVo;
 import com.txmcu.iair.common.iAirApplication;
 
 public class MainDownChatActivity extends Activity implements OnClickListener {
@@ -29,26 +31,30 @@ public class MainDownChatActivity extends Activity implements OnClickListener {
     private MessageAdapter messageAdapter;
 	//
 
+    Home home;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_down_chat);
-
 		application = (iAirApplication)getApplication();
-		messageAdapter = new MessageAdapter(this, meList);;
+		Intent intent = getIntent();
+		String homeidString = intent.getStringExtra("homeid");
+		home = application.getHome(homeidString);
+		
+		messageAdapter = new MessageAdapter(this, home);;
 		chatlistView = (ListView) this.findViewById(R.id.chat_listView);// 实例化ListView
 		chatlistView.setAdapter(messageAdapter);//
 		
 		//test data
-		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-        String time = df.format(new Date()).toString();
-        String sendContenta= "阿~阿~… -宝宝";
-        String sendContentb= "刚带宝宝晒完太阳.-爷爷";
-        meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContenta, time));
-        meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContentb, time));
-        meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContenta, time));
-        meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContentb, time));
-        meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContenta, time));
+		//SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+       // String time = df.format(new Date()).toString();
+       //// String sendContenta= "阿~阿~… -宝宝";
+      //  String sendContentb= "刚带宝宝晒完太阳.-爷爷";
+       // meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContenta, time));
+      //  meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContentb, time));
+      //  meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContenta, time));
+      //  meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContentb, time));
+       // meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContenta, time));
 
 		//findViewById(R.id.return_btn).setOnClickListener(this);
 

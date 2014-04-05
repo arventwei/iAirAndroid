@@ -55,7 +55,7 @@
                     android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
                     android:layout_weight="1"
                     android:paddingBottom="3.0dip"
-                    android:text="@string/detail_device_pm25"
+                    android:text="PM25:120"
                     android:textColor="@color/white"
                     android:textSize="@dimen/detail_text_size" />
             </LinearLayout>
@@ -73,7 +73,7 @@
                     android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
                     android:layout_weight="1"
                     android:paddingBottom="3.0dip"
-                    android:text="@string/detail_device_temp"
+                    android:text="温度:10 "
                     android:textColor="@color/white"
                     android:textSize="@dimen/detail_text_size" />
 
@@ -85,7 +85,7 @@
                     android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
                     android:layout_weight="1"
                     android:paddingBottom="3.0dip"
-                    android:text="@string/detail_device_humi"
+                    android:text="湿度 20"
                     android:textColor="@color/white"
                     android:textSize="@dimen/detail_text_size" />
             </LinearLayout>
@@ -131,7 +131,7 @@
                     android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
                     android:layout_weight="1"
                     android:paddingBottom="3.0dip"
-                    android:text="@string/detail_device_pm25"
+                    android:text="PM25:180"
                     android:textColor="@color/white"
                     android:textSize="@dimen/detail_text_size" />
             </LinearLayout>
@@ -149,7 +149,7 @@
                     android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
                     android:layout_weight="1"
                     android:paddingBottom="3.0dip"
-                    android:text="@string/detail_device_temp"
+                    android:text="温度:20"
                     android:textColor="@color/white"
                     android:textSize="@dimen/detail_text_size" />
 
@@ -161,7 +161,7 @@
                     android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
                     android:layout_weight="1"
                     android:paddingBottom="3.0dip"
-                    android:text="@string/detail_device_humi"
+                    android:text="湿度 :20"
                     android:textColor="@color/white"
                     android:textSize="@dimen/detail_text_size" />
             </LinearLayout>
@@ -187,7 +187,8 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="8°           晴车辆限行   1,6"
+        android:paddingTop="40.0dip"
+        android:text="8°         晴   车辆限行   1,6"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>

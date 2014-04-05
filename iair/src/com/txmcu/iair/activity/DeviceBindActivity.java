@@ -53,32 +53,33 @@ public class DeviceBindActivity extends Activity implements OnClickListener {
 			
 			String snString = new_sn_EditText.getText().toString();
 			String userid = application.getUserid();
-			XinServerManager.bind(this, userid, snString,new XinServerManager.onSuccess() {
-				
-				@Override
-				public void run(String response) {
-					// TODO Auto-generated method stub
-						XinServerManager.query_bindlist(DeviceManageActivity.instance, application.getUserid(), new XinServerManager.onSuccess() {
-						
-						@Override
-						public void run(String response) {
-							// TODO Auto-generated method stub
-							if(DeviceManageActivity.instance!=null)
-							{
-								DeviceManageActivity.instance.adapter.syncDevices();
-								DeviceManageActivity.instance.adapter.notifyDataSetChanged();
-								
-								if (MainActivity.instance !=null) {
-									MainActivity.instance.refreshlist();
-								}
-							}
-							
-						}
-					});
-					finish();
-				}
-			});
-			
+			//TODO
+//			XinServerManager.bind(this, userid, snString,new XinServerManager.onSuccess() {
+//				
+//				@Override
+//				public void run(String response) {
+//					
+//						XinServerManager.query_bindlist(DeviceManageActivity.instance, application.getUserid(), new XinServerManager.onSuccess() {
+//						
+//						@Override
+//						public void run(String response) {
+//						
+//							if(DeviceManageActivity.instance!=null)
+//							{
+//								DeviceManageActivity.instance.adapter.syncDevices();
+//								DeviceManageActivity.instance.adapter.notifyDataSetChanged();
+//								
+//								if (MainActivity.instance !=null) {
+//									MainActivity.instance.refreshlist();
+//								}
+//							}
+//							
+//						}
+//					});
+//					finish();
+//				}
+//			});
+//			
 			
 			
 			

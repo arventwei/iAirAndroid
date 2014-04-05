@@ -49,7 +49,25 @@ public interface iAirConstants {
     
     public static final String Mobile_AP_SSID="xiaoxin";
     public static final String Mobile_AP_PWD="1234567890";   
-    public static final String API_Login = "http://112.124.58.144/mobile/login";
+    public static final String login  = "http://112.124.58.144/android/login";
+    public static final String gethome_structdata  = "http://112.124.58.144/android/gethome_structdata";
+    public static final String setuser_nickname  = "http://112.124.58.144/android/setuser_nickname";
+    public static final String getarea_structlist  = "http://112.124.58.144/android/getarea_structlist";
+    public static final String binduser_area  = "http://112.124.58.144/android/binduser_area";
+    public static final String sethome_baseinfo  = "http://112.124.58.144/android/sethome_baseinfo";
+    public static final String setxiaoxin_baseinfo  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
+    
+    public static final String getfirstpage_briefinfo  = "http://112.124.58.144/android/getfirstpage_briefinfo";
+    public static final String gethome_detailweather  = "http://112.124.58.144/android/gethome_detailweather";
+    public static final String getxiaoxin_detailweather  = "http://112.124.58.144/android/getxiaoxin_detailweather";
+    public static final String setxiaoxin_baseinfo3  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
+    public static final String setxiaoxin_baseinfo4  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
+    public static final String setxiaoxin_baseinfo5  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
+    public static final String setxiaoxin_baseinfo6  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
+    
+    
+    
+    
     public static final String API_Bind  ="http://112.124.58.144/mobile/bind";
     public static final String API_UnBind = "http://112.124.58.144/mobile/unbind";
     public static final String API_QueryBindlist = "http://112.124.58.144/mobile/query_bindlist";

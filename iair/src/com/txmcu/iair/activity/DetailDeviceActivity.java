@@ -2,6 +2,9 @@ package com.txmcu.iair.activity;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
@@ -23,6 +26,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
 import com.txmcu.iair.R;
+import com.txmcu.iair.activity.HomeActivity.SamplePagerAdapter;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
@@ -81,6 +85,7 @@ public class DetailDeviceActivity extends Activity implements
 				&& !info.getSSID().equals(iAirConstants.XIAOXIN_SSID)) {
 			application.setWifibackupNetId(info.getNetworkId());
 		}
+		requestlist();
 		// new GetDataTask().execute();
 
 	}
@@ -115,21 +120,9 @@ public class DetailDeviceActivity extends Activity implements
 	public void onRefresh(PullToRefreshBase<VerticalViewPager> refreshView) {
 
 		mPullToRefreshViewPager.onRefreshComplete();
-		XinServerManager.getxiaoxin(this, application.getUserid(),
-				xiaoxinDevice.sn, new XinServerManager.onSuccess() {
+		//TODO
+		requestlist();
 
-					@Override
-					public void run(String response) {
-
-						refreshlist();
-						if (HomeActivity.instance!=null) {
-							HomeActivity.instance.refreshlist();
-						}
-
-						// TODO Auto-generated method stub
-
-					}
-				});
 
 	}
 
@@ -138,6 +131,19 @@ public class DetailDeviceActivity extends Activity implements
 				.getRefreshableView().getAdapter());
 
 		adapter.updateView();
+	}
+	public void  requestlist() {
+		XinServerManager.getxiaoxin_detailweather(this, application.getUserid(),
+				xiaoxinDevice.sn, new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(JSONObject response) throws JSONException {
+				
+			XinServerManager.getSingleDeviceFromJson(xiaoxinDevice, response);
+			refreshlist();
+				
+			}
+		});
 	}
 
 	private void StartModifyView() {
@@ -163,8 +169,7 @@ public class DetailDeviceActivity extends Activity implements
 
 		
 		public void updateView() {
-			final Device xiaoxinDevice = pageContext.application
-					.getXiaoxin(pageContext.xiaoxinDevice.sn);
+			final Device xiaoxinDevice = pageContext.application.getXiaoxin(pageContext.xiaoxinDevice.sn);
 			TextView nameview = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_name);
 			nameview.setText(xiaoxinDevice.name);
@@ -174,7 +179,7 @@ public class DetailDeviceActivity extends Activity implements
 			TextView pm25 = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_pm25);
 			pm25.setText(pageContext.getString(R.string.detail_device_pm25)
-					+ (int) xiaoxinDevice.pm25);
+					+  xiaoxinDevice.pm25);
 			TextView temp = (TextView) xiaoxinView
 					.findViewById(R.id.xiaoxin_temp);
 			temp.setText(pageContext.getString(R.string.detail_device_temp)
@@ -206,9 +211,10 @@ public class DetailDeviceActivity extends Activity implements
 					if (newSpeed >= 10)
 						newSpeed = 1;
 					xiaoxinDevice.speed = newSpeed;
-					XinServerManager.setxiaoxin_speed(pageContext,
-							pageContext.application.getUserid(), sn, newSpeed,
-							null);
+					//TODO
+//					XinServerManager.setxiaoxin_speed(pageContext,
+//							pageContext.application.getUserid(), sn, newSpeed,
+//							null);
 
 				}
 
@@ -225,17 +231,17 @@ public class DetailDeviceActivity extends Activity implements
 					if (((CheckBox) v).isChecked()) {
 						isOn = 1;
 					}
-					XinServerManager
-							.setxiaoxin_switch(pageContext,
-									pageContext.application.getUserid(), sn,
-									isOn, null);
+					//TODO
+//					XinServerManager.setxiaoxin_switch(pageContext,
+//									pageContext.application.getUserid(), sn,
+//									isOn, null);
 
 				}
 
 			});
 
 			CheckBox networkoff = (CheckBox) xiaoxinView
-					.findViewById(R.id.xiaoxin_network);
+					.findViewById(R.id.deviceShare);
 
 			// pageContext.wifiHotM.
 			networkoff.setChecked(pageContext.wifiHotM.isWifiApEnable());
@@ -311,24 +317,24 @@ public class DetailDeviceActivity extends Activity implements
 		}
 	}
 
-	private class GetDataTask extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			// Simulates a background job.
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			mPullToRefreshViewPager.onRefreshComplete();
-			super.onPostExecute(result);
-		}
-	}
+//	private class GetDataTask extends AsyncTask<Void, Void, Void> {
+//
+//		@Override
+//		protected Void doInBackground(Void... params) {
+//			// Simulates a background job.
+//			try {
+//				Thread.sleep(100);
+//			} catch (InterruptedException e) {
+//			}
+//			return null;
+//		}
+//
+//		@Override
+//		protected void onPostExecute(Void result) {
+//			mPullToRefreshViewPager.onRefreshComplete();
+//			super.onPostExecute(result);
+//		}
+//	}
 
 	private void addButtonListener() {
 		findViewById(R.id.back_img).setOnClickListener(this);

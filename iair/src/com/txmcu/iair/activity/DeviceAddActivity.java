@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -24,14 +25,13 @@ import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.WifiAdapter;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
-import com.txmcu.xiaoxin.config.XinServerManager;
 import com.txmcu.xiaoxin.config.XinStateManager;
 import com.txmcu.xiaoxin.config.XinStateManager.ConfigType;
 import com.txmcu.xiaoxin.config.XinStateManager.XinOperations;
 
 public class DeviceAddActivity extends Activity  implements XinOperations,OnClickListener {
 
-	private static final String TAG = "iair";
+	private static final String TAG = "DeviceAddActivity";
 
 	XinStateManager xinMgr;
 	EditText editSSIDEditText;
@@ -40,6 +40,8 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 	int cooldown;
 	iAirApplication application;
 	CountDownTimer timer;
+	String homeIdString;
+	String vsnString;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,7 +49,9 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		application = (iAirApplication)this.getApplication(); 
 		findViewById(R.id.back_img).setOnClickListener(this);
 		
-		
+		Intent intent =getIntent();
+		homeIdString = intent.getStringExtra("homeId");
+		vsnString = intent.getStringExtra("vsn");
 		
 		((Button) findViewById(R.id.nextstep)).setOnClickListener(this);
 		editSSIDEditText = (EditText) findViewById(R.id.input_ssid);
@@ -87,10 +91,11 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 		}
 		else if (view.getId() == R.id.nextstep) 
 		{
+			//TODO...
 			xinMgr.Config(editSSIDEditText.getText().toString(),
 					editPwdEditText.getText().toString(),application.getUserid(),
-					editSnEditText.getText().toString()
-					);
+					editSnEditText.getText().toString(),
+					vsnString,homeIdString);
 			
 			iAirUtil.showProgressDialog(this, getString(R.string.setting)
 					, getString(R.string.add_device_cooldown)+120+getString(R.string.second)
@@ -251,23 +256,24 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			//MainActivity.scannlist.add(info);
 			iAirUtil.toastMessage(this, getString(R.string.add_device_success));
 			if (DeviceManageActivity.instance != null) {
-				XinServerManager.query_bindlist(DeviceManageActivity.instance, application.getUserid(), new XinServerManager.onSuccess() {
-					
-					@Override
-					public void run(String response) {
-						// TODO Auto-generated method stub
-						if(DeviceManageActivity.instance!=null)
-						{
-							DeviceManageActivity.instance.adapter.syncDevices();
-							DeviceManageActivity.instance.adapter.notifyDataSetChanged();
-							
-							//if (MainActivity.instance !=null) {
-							//	MainActivity.instance.refreshlist();
-							//}
-						}
-						
-					}
-				});
+				//TODO
+//				XinServerManager.query_bindlist(DeviceManageActivity.instance, application.getUserid(), new XinServerManager.onSuccess() {
+//					
+//					@Override
+//					public void run(String response) {
+//						
+//						if(DeviceManageActivity.instance!=null)
+//						{
+//							DeviceManageActivity.instance.adapter.syncDevices();
+//							DeviceManageActivity.instance.adapter.notifyDataSetChanged();
+//							
+//							//if (MainActivity.instance !=null) {
+//							//	MainActivity.instance.refreshlist();
+//							//}
+//						}
+//						
+//					}
+//				});
 			}
 			
 		}

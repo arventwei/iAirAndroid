@@ -31,11 +31,11 @@ public class DeviceAdapter extends BaseAdapter
 		devices.clear();
 		
 		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();
-		List<String> snList = application.getXiaoxinSnList();
-		for (String sn : snList) {
-			Device xiaoxinDevice = application.getXiaoxin(sn);
-			devices.add(xiaoxinDevice);
-		}
+//		List<String> snList = application.getXiaoxinSnList();
+//		for (String sn : snList) {
+//			Device xiaoxinDevice = application.getXiaoxin(sn);
+//			devices.add(xiaoxinDevice);
+//		}
 		devices.add(new Device(""));
 	}
 //	public  void addDevice(String sn) {
@@ -69,7 +69,7 @@ public class DeviceAdapter extends BaseAdapter
 
 	@Override
 	public long getItemId(int position) {
-		return devices.get(position).getId();
+		return 0;
 	}
 	
 	@Override
@@ -80,8 +80,6 @@ public class DeviceAdapter extends BaseAdapter
 		{
 			convertView = View.inflate(deviceManageActivity, 
 					R.layout.gridview_device_add, null);
-			//ImageView addbtn =(ImageView)convertView.findViewById(R.id.grid_device_add_btn);
-			//addbtn.setOnClickListener(new DeviceAddClickListener(this));
 		}
 		else
 		{
@@ -97,15 +95,7 @@ public class DeviceAdapter extends BaseAdapter
 		
 		setitemSize(convertView);
 		
-//		int height = parent.getHeight();
-//        if (height > 0) {
-//            LayoutParams layoutParams = convertView.getLayoutParams();
-//            layoutParams.height = (int) (height / rowsCount);
-//        } 
-		
-		//((ImageView) convertView.findViewById(R.id.imageView1)).setImageResource(b.getBitmapId());
-		
-		
+	
 		
 		return convertView;
 	}

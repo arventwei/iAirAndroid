@@ -25,10 +25,10 @@ public class CityAdapter extends BaseAdapter
 		cityManageActivity = activity;
 	}
 	
-	public  void addCity(int index,String name) {
+	public  void addCity(String name) {
 		City book = new City();
-    	book.setId(index);
-    	book.setName(name);
+    	//book.(index);
+    	book.name = (name);
     	//book.setBitmapId(R.drawable.b001);
     	cities.add(book);
 	}
@@ -51,7 +51,7 @@ public class CityAdapter extends BaseAdapter
 
 	@Override
 	public long getItemId(int position) {
-		return cities.get(position).getId();
+		return 0;
 	}
 	
 	@Override
@@ -64,7 +64,7 @@ public class CityAdapter extends BaseAdapter
 		
 		//((ImageView) convertView.findViewById(R.id.imageView1)).setImageResource(b.getBitmapId());
 		
-		((TextView)convertView.findViewById(R.id.city_name)).setText(b.getName());
+		((TextView)convertView.findViewById(R.id.city_name)).setText(b.name);
 		
 		return convertView;
 	}

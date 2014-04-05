@@ -1,9 +1,9 @@
 package com.txmcu.iair.activity;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,15 +23,15 @@ import com.handmark.verticalview.VerticalViewPager;
 import com.pushlink.android.PushLink;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Device;
-import com.txmcu.iair.adapter.MainEntryAdapter;
-import com.txmcu.iair.chat.MessageAdapter;
-import com.txmcu.iair.chat.MessageVo;
+import com.txmcu.iair.adapter.Home;
+import com.txmcu.iair.adapter.HomeEntryAdapter;
+import com.txmcu.iair.adapter.MessageAdapter;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class HomeActivity extends Activity implements OnRefreshListener<VerticalViewPager>,OnClickListener {
 
-	private static final String TAG = "iair";
+	private static final String TAG = "HomeActivity";
 
 	//MainEntryAdapter mainentryAdapter;
 	
@@ -39,6 +39,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 	iAirApplication application;
 
 	public static  HomeActivity instance;
+	public Home home;
 	ListView listView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +47,29 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 		setContentView(R.layout.activity_home);
 		instance = this;
 		application = (iAirApplication)getApplication();
-		mPullToRefreshViewPager = (PullToRefreshViewPager) findViewById(R.id.pull_refresh_viewpager);
-		mPullToRefreshViewPager.setOnRefreshListener(HomeActivity.this);
+		Intent intent = getIntent();
+		final String homeidString = intent.getStringExtra("homeid");
 
-		VerticalViewPager vp = mPullToRefreshViewPager.getRefreshableView();
-		vp.setAdapter(new SamplePagerAdapter(this));
+		XinServerManager.gethome_detailweather(this, application.getUserid(),
+				homeidString, new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(JSONObject response) throws JSONException {
+				home = application.getHome(homeidString);
+				home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
+				//application.homeList =(homes);
+				mPullToRefreshViewPager = (PullToRefreshViewPager) findViewById(R.id.pull_refresh_viewpager);
+				mPullToRefreshViewPager.setOnRefreshListener(HomeActivity.this);
+
+				VerticalViewPager vp = mPullToRefreshViewPager.getRefreshableView();
+				vp.setAdapter(new SamplePagerAdapter(HomeActivity.this));
+				
+			}
+		});
+		//home = application.getHome(homeidString);
+		//TODO...
+		
+
 
 		findViewById(R.id.back_img).setOnClickListener(this);
 	}
@@ -94,21 +113,21 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 
 		private static int[] sDrawables = { R.layout.include_home_up,
 				R.layout.include_home_down };
-		private Activity pageContext;
+		private HomeActivity pageContext;
 
 		public ListView listView;
-		public MainEntryAdapter mainentryAdapter;
+		public HomeEntryAdapter mainentryAdapter;
 		iAirApplication application;
 		
 		//down chat
 		public ListView chatlistView;
-	    private List<MessageVo> meList = new ArrayList<MessageVo>();
+	  //  private List<MessageVo> meList = new ArrayList<MessageVo>();
 	    private MessageAdapter messageAdapter;
 		//
 
-		public SamplePagerAdapter(Activity paramContext) {
+		public SamplePagerAdapter(HomeActivity paramContext) {
 			pageContext = paramContext;
-			messageAdapter = new MessageAdapter(pageContext, meList);;
+			messageAdapter = new MessageAdapter(pageContext, pageContext.home);;
 			application = (iAirApplication) pageContext.getApplication();
 		}
 
@@ -127,9 +146,9 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 					null);
 
 			if (position == 0) {
-				mainentryAdapter = new MainEntryAdapter(pageContext);//
+				mainentryAdapter = new HomeEntryAdapter(pageContext,pageContext.home);//
 
-				listView = (ListView) subView.findViewById(R.id.listView1);// 实例化ListView
+				listView = (ListView) subView.findViewById(R.id.homelist);// 实例化ListView
 				listView.setAdapter(mainentryAdapter);//
 				// listView.setDividerHeight(0);
 
@@ -170,7 +189,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 //							}
 //						});
 				
-				mainentryAdapter.syncDevices();
+				mainentryAdapter.sync();
 				mainentryAdapter.notifyDataSetChanged();
 
 			} else {
@@ -179,14 +198,14 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 				chatlistView.setAdapter(messageAdapter);//
 				
 				//test data
-				SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-                String time = df.format(new Date()).toString();
-                String sendContenta= "阿~阿~… -宝宝";
-                String sendContentb= "刚带宝宝晒完太阳.-爷爷";
-                meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContenta, time));
-                meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContentb, time));
-                meList.add(new MessageVo(MessageVo.MESSAGE_TO, sendContenta, time));
-                meList.add(new MessageVo(MessageVo.MESSAGE_TO, sendContentb, time));
+				//SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+             //   String time = df.format(new Date()).toString();
+             //   String sendContenta= "阿~阿~… -宝宝";
+             //   String sendContentb= "刚带宝宝晒完太阳.-爷爷";
+                //meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContenta, time));
+                //meList.add(new MessageVo(MessageVo.MESSAGE_FROM, sendContentb, time));
+                //meList.add(new MessageVo(MessageVo.MESSAGE_TO, sendContenta, time));
+                //meList.add(new MessageVo(MessageVo.MESSAGE_TO, sendContentb, time));
 
 			}
 			// Now just add ImageView to ViewPager and return it
@@ -210,25 +229,25 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 	public void refreshlist() {
 		SamplePagerAdapter adapter = (SamplePagerAdapter) (mPullToRefreshViewPager
 				.getRefreshableView().getAdapter());
-		adapter.mainentryAdapter.syncDevices();
+		adapter.mainentryAdapter.sync();
 		adapter.mainentryAdapter.notifyDataSetChanged();
 	}
 
 	private void AsyncMainEntrys() {
 
 		mPullToRefreshViewPager.onRefreshComplete();
-		XinServerManager.query_bindlist(this, application.getUserid(),
-				new XinServerManager.onSuccess() {
-
-					@Override
-					public void run(String response) {
-
-						refreshlist();
-
-						// TODO Auto-generated method stub
-
-					}
-				});
+//		XinServerManager.query_bindlist(this, application.getUserid(),
+//				new XinServerManager.onSuccess() {
+//
+//					@Override
+//					public void run(String response) {
+//
+//						refreshlist();
+//
+//						
+//
+//					}
+//				});
 	}
 
 }

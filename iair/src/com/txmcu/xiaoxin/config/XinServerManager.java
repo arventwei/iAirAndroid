@@ -2,7 +2,10 @@ package com.txmcu.xiaoxin.config;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.util.Log;
@@ -10,7 +13,11 @@ import android.util.Log;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.tencent.record.debug.i;
+import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.adapter.Device;
+import com.txmcu.iair.adapter.Home;
+import com.txmcu.iair.adapter.MessageVo;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
 import com.txmcu.iair.common.iAirUtil;
@@ -22,40 +29,251 @@ public class XinServerManager {
 	public abstract interface onSuccess {
 
 		// Method descriptor #4 ()V
-		public abstract void run(String response);
+		public abstract void run(JSONObject response) throws JSONException;
 	}
 
-	static private AsyncHttpClient getHttpClient()
-	{
+	static private AsyncHttpClient getHttpClient() {
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.setTimeout(10000);
 		return client;
 	}
-	static public void login(final Activity activity, final String authType,final String token,
-			final String openId,final String nickName,final onSuccess r) {
+
+	static public List<Device> getXiaoxinFromJson(JSONArray jArr) {
+		List<Device> ret = new ArrayList<Device>();
+
+		for (int i = 0; i < jArr.length(); i++) {
+
+			Device device = new Device();
+			JSONObject obj = null;
+			try {
+				obj = jArr.getJSONObject(i);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			getSingleDeviceFromJson(device, obj);
+			ret.add(device);
+		}
+		return ret;
+	}
+
+	public static void getSingleDeviceFromJson(Device device, JSONObject obj) {
+		device.id = getJsonString(obj, "xiaoxinid");
+		device.sn = getJsonString(obj, "sn");
+		device.name = getJsonString(obj, "xiaoxinname");
+		device.isVirtual = getJsonBoolean(obj, "virtual");
+		if (device.isVirtual) {
+			device.vsn = device.sn;
+		}
+		device.share = getJsonBoolean(obj, "share");
+		device.refresh_interval = getJsonInt(obj, "refresh_interval");
+		device.status = getJsonInt(obj, "status");
+		device.temp = getJsonString(obj, "temp");
+		device.humi = getJsonString(obj, "humi");
+		device.pm25 = getJsonString(obj, "pm25");
+		device.pa = getJsonString(obj, "pa");
+		device.speed = getJsonInt(obj, "switch");
+		device.switchOn = getJsonInt(obj, "switch");
+		device.mode = getJsonString(obj, "mode");
+		device.ontime = getJsonString(obj, "ontime");
+		device.offtime = getJsonString(obj, "offtime");
+	}
+
+	static public List<Home> getHomeFromJson(Activity activity,JSONArray jArr) {
+		List<Home> ret = new ArrayList<Home>();
+
+		for (int i = 0; i < jArr.length(); i++) {
+
+			Home home = new Home();
+			JSONObject obj = null;
+			try {
+				obj = jArr.getJSONObject(i);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			home.homeid = getJsonString(obj, "homeid");
+			home.homename = getJsonString(obj, "homename");
+			home.share = getJsonBoolean(obj, "share");
+			home.refresh_interval = getJsonInt(obj, "refresh_interval");
+			home.status = getJsonInt(obj, "status");
+			home.temp = getJsonString(obj, "temp");
+			home.humi = getJsonString(obj, "humi");
+			home.pa = getJsonString(obj, "pa");
+			home.pm25 = getJsonString(obj, "pm25");
+
+			try {
+				JSONArray jArray = obj.getJSONArray("xiaoxin");
+				home.xiaoxins = getXiaoxinFromJson(jArray);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				JSONArray jArray = obj.getJSONArray("notice");
+				home.notices = getNoticeFromJson((iAirApplication)activity.getApplication(),jArray);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+
+			ret.add(home);
+		}
+		return ret;
+	}
+	
+	static public List<City> getCityFromJson(JSONArray jArr) {
+		List<City> ret = new ArrayList<City>();
+
+		for (int i = 0; i < jArr.length(); i++) {
+
+			City city = new City();
+			JSONObject obj = null;
+			try {
+				obj = jArr.getJSONObject(i);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			getSingleCityFromJson(city, obj);
+
+
+			
+
+			ret.add(city);
+		}
+		return ret;
+	}
+
+	public static void getSingleCityFromJson(City city, JSONObject obj) {
+		city.areaId = getJsonString(obj, "area_id");
+		city.name = getJsonString(obj, "area_name");
+		city.temp = getJsonString(obj, "temp");
+		city.humi = getJsonString(obj, "humi");
+		city.wind_info = getJsonString(obj, "wind_info");
+		city.wind_speed = getJsonString(obj, "wind_speed");
+		city.today_car_limit = getJsonString(obj, "today_car_limit");
+		city.tmr_car_limit = getJsonString(obj, "tmr_car_limit");
+		city.aqi = getJsonString(obj, "aqi");
+		city.pm25 = getJsonString(obj, "pm25");
+		city.weather = getJsonString(obj, "weather");
+		city.weather_level = getJsonString(obj, "weather_level");
+	}
+
+	static public List<MessageVo> getNoticeFromJson(iAirApplication application,JSONArray jArr) {
+		List<MessageVo> ret = new ArrayList<MessageVo>();
+
+		for (int i = 0; i < jArr.length(); i++) {
+
+			
+			JSONObject obj = null;
+			try {
+				obj = jArr.getJSONObject(i);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			int dir = 0;
+			String userid = getJsonString(obj, "userid");
+			if (userid.equals(application.getUserid())) {
+				dir =1;
+			}
+			MessageVo msg = new MessageVo(getJsonString(obj, "noticeid"),
+					dir,
+					getJsonString(obj,"content"),
+					getJsonInt(obj,"time"),
+					getJsonString(obj,"username")
+					);
+		
+
+
+			
+
+			ret.add(msg);
+		}
+		return ret;
+	}
+
+	private static float getJsonDouble(JSONObject obj, String key) {
+		try {
+			float ret = (float) obj.getDouble(key);
+			return ret;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	private static int getJsonInt(JSONObject obj, String key) {
+		try {
+			int ret = (int) obj.getInt(key);
+			return ret;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	private static String getJsonString(JSONObject obj, String key) {
+		try {
+			String ret = obj.getString(key);
+			return ret;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	private static Boolean getJsonBoolean(JSONObject obj, String key) {
+		try {
+			Boolean ret = obj.getInt(key) == 1;
+			return ret;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	private static void postHttpBase(final Activity activity,
+			final onSuccess r, final RequestParams post_params,
+			final String postUrlString) {
+
 		activity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 
-					RequestParams post_params = new RequestParams();
-					post_params.put("oauth_name", authType);
-					post_params.put("oauth_access_token", token);
-					post_params.put("oauth_openid", openId);
-					post_params.put("oauth_nickname", nickName);
-					// post_params.put("sn", sn);
-
 					AsyncHttpClient client = getHttpClient();
-					client.post(iAirConstants.API_Login, post_params,
+					client.post(postUrlString, post_params,
 							new AsyncHttpResponseHandler() {
 								@Override
 								public void onSuccess(String response) {
 									System.out.println(response);
 									iAirUtil.toastMessage(activity, response);
-									// setStopLoop(2,response);
-									r.run(response);
-								}
 
+									try {
+										JSONObject jsonObject = new JSONObject(
+												response);
+										if (r != null) {
+											r.run(jsonObject);
+										}
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+
+									}
+
+									// r.run(response);
+								}
 							});
 
 				} catch (Exception e) {
@@ -65,271 +283,471 @@ public class XinServerManager {
 		});
 	}
 
-	static public void bind(final Activity activity, final String userid,
-			final String sn, final onSuccess r) {
-		RequestParams post_params = new RequestParams();
-		post_params.put("userid", userid);
-		post_params.put("sn", sn);
+	// A1.1 【登录接口】
+	// 1) 请求：http://112.124.58.144/android/login
+	// 2) form数据：
+	// oauth_name=xxx&oauth_access_token=xxx&oauth_openid=xxx&oauth_nickname=xxx
+	// 3) 返回：
+	// A. 成功：{"ret":"Ok","usertype":"new","userid":122}
+	// B. 失败：{"ret":"Fail"}
+	static public void login(final Activity activity, final String authType,
+			final String token, final String openId, final String nickName,
+			final onSuccess r) {
 
-		AsyncHttpClient client = getHttpClient();
-		client.post(iAirConstants.API_Bind, post_params,
-				new AsyncHttpResponseHandler() {
-					@Override
-					public void onSuccess(String response) {
-						System.out.println(response);
-						iAirUtil.toastMessage(activity, response);
-						r.run(response);
-					}
-				});
-	}
-	
-	static public void unbind(final Activity activity, final String userid,
-			final String sn, final onSuccess r) {
 		RequestParams post_params = new RequestParams();
-		post_params.put("userid", userid);
-		post_params.put("sn", sn);
+		post_params.put("oauth_name", authType);
+		post_params.put("oauth_access_token", token);
+		post_params.put("oauth_openid", openId);
+		post_params.put("oauth_nickname", nickName);
+		// post_params.put("sn", sn);
 
-		AsyncHttpClient client = getHttpClient();
-		client.post(iAirConstants.API_UnBind, post_params,
-				new AsyncHttpResponseHandler() {
-					@Override
-					public void onSuccess(String response) {
-						System.out.println(response);
-						iAirUtil.toastMessage(activity, response);
-						if(r!=null)
-							r.run(response);
-					}
-				});
+		postHttpBase(activity, r, post_params, iAirConstants.login);
+
 	}
 
-	static public void query_bindlist(final Activity activity, final String userid,
-			final onSuccess r)
-	{
-		final iAirApplication application = ((iAirApplication) activity
-				.getApplication());
+	// A1.1.1 【请求家结构信息接口】如果usertype为new，获得家及家所属小新的结构数据
+	// 1) 请求：http://112.124.58.144/android/gethome_structdata
+	// 2) form数据：userid=xxx
+	// 3) 返回：
+	// A.成功：{"ret":"Ok","homecount":1,"home":[{"homeid":100,"homename":"北京的家","share":0,"refresh_interval":30,"status":0,"xiaoxincount":1,"xiaoxin":[{"xiaoxinid":201,"sn":"V_122_201403312053","xiaoxinname":"您的设备","virtual":1,"share":0,"refresh_interval":30,"status":0},{"xiaoxinid":202,......}]},{"homeid":101,......}]}
+	// // 【说明】"share" 0:不共享，1：共享 ;
+	// "refresh_interval":30(30秒刷新一次家数据)；"status":0(所属的所有小新都离线，一个小新都没有也是离线状态)，离线状态时，刷新设置不可用
+	// 1：至少一个小新在线状态 // "virtual" 0:真实 1：虚拟；
+	//
+	// B.失败：{"ret":"Fail"}
+	static public void gethome_structdata(final Activity activity,
+			final String userid, final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		postHttpBase(activity, r, post_params, iAirConstants.gethome_structdata);
+	}
+
+	// 【注意】：1.1.2 和 1.1.3 可以在一个页面完成，”变更用户昵称，并设置所在城市“
+	// A1.1.2 【更新用户昵称接口】更新用户昵称
+	// 1) 请求：http://112.124.58.144/android/setuser_nickname
+	// 2) form数据：userid=xxx&nickname=yyy
+	// 3) 返回：
+	// A.成功：{"ret":"Ok"}
+	// B.失败：{"ret":"Fail"}
+	static public void setuser_nickname(final Activity activity,
+			final String userid, final String nickname, final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("nickname", nickname);
+		postHttpBase(activity, r, post_params, iAirConstants.setuser_nickname);
+	}
+
+	// A1.1.3 【获得地区结构信息接口】获得城市列表结构数据
+	// 1) 请求：http://112.124.58.144/android/getarea_structlist
+	// 2) form数据：无
+	// 3) 返回：
+	// A.成功：{"ret":"Ok","areacount":87,"area":[{"area_id":"001","area_name":"北京","region_name":"北京","pinyin":"beijing"},{"area_id":"003","area_name":"石家庄","region_name":"河北","pinyin":"shijiazhuang"},{"area_id":002,......}]}
+	// // 【说明】"area_id" 地区id； area_name：地区名称；region_name：省名称；pinyin：拼音
+	// B.失败：{"ret":"Fail"}
+	static public void getarea_structlist(final Activity activity,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		postHttpBase(activity, r, post_params, iAirConstants.getarea_structlist);
+	}
+
+	// A1.1.4
+	// 【添加城市接口】（步骤：1.1.3选择一个地区之后，执行本步骤，并返回1.1.2页面）添加用户关注地区（在初期登录页面，可以只让用户选择一个地区（用户所在城市））
+	// 1) 请求：http://112.124.58.144/android/binduser_area
+	// 2) form数据：userid=xxx&areaid=yyy
+	// 3) 返回：
+	// A.成功：{"ret":"Ok"}
+	// B.失败：{"ret":"Fail"}
+	static public void binduser_area(final Activity activity,
+			final String userid, final String areaid, final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("areaid", areaid);
+		postHttpBase(activity, r, post_params, iAirConstants.binduser_area);
+	}
+
+	// A1.1.5 【更新家基础信息接口】（该步骤为1.1.2的下一步）更新某个家的基础信息
+	// 1) 请求：http://112.124.58.144/android/sethome_baseinfo
+	// 2)
+	// form数据：userid=xxx&homeid=xxx&homename=XXX&share=yyyy&refreshinterval=xxx
+	// 3) 返回：
+	// A.成功：{"ret":"Ok"}
+	// B.失败：{"ret":"Fail"}
+	static public void sethome_baseinfo(final Activity activity,
+			final String userid, final String homeid, final String homename,
+			final String share, final String refreshinterval, final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("homeid", homeid);
+		post_params.put("homename", homename);
+		post_params.put("share", share);
+		post_params.put("refreshinterval", refreshinterval);
+		postHttpBase(activity, r, post_params, iAirConstants.sethome_baseinfo);
+	}
+
+	// A1.1.6 【更新小新基础信息接口】（该步骤为1.1.5的下一步）更新小新的基础信息
+	// 1) 请求：http://112.124.58.144/android/setxiaoxin_baseinfo
+	// 2)
+	// form数据：userid=xxx&xiaoxinid=xxx&xiaoxinname=XXX&share=yyyy&refreshinterval=xxx
+	// 3) 返回：
+	// A.成功：{"ret":"Ok"}
+	// B.失败：{"ret":"Fail"}
+	static public void setxiaoxin_baseinfo(final Activity activity,
+			final String userid, final String xiaoxinid, final String xiaoxinname,
+			final String share, final String refreshinterval, final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("xiaoxinid", xiaoxinid);
+		post_params.put("xiaoxinname", xiaoxinname);
+		post_params.put("share", share);
+		post_params.put("refreshinterval", refreshinterval);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.setxiaoxin_baseinfo);
+	}
+
+	// A1.2.1 【加载城市、家、告示简明信息接口】
+	// 1) 请求：http://112.124.58.144/android/getfirstpage_briefinfo
+	// 2) form数据：userid=xxx
+	// 3) 返回：
+	// A.成功：{"ret":"Ok","areacount":2,"area":[{"area_id":"001","area_name":"北京","temp":"25°","humi":"30","wind_info":"北风 微风","wind_speed":"1",
+	// today_car_limit":"2|7","tmr_car_limit":"2|7","aqi":150, "pm25":90,"weather":"晴","weather_level":3},{"area_id":"003","area_name":"石家庄",…}],
+	// "homecount":3,"home":[{"homeid":100,"homename":"北京的家",
+	// "temp":"25°","humi":"30", "pm25":180, "pa":1,
+	// "status":0,"notice_unread":5,
+	// "noticecount"：1,"notice":[{"noticeid":11,"content":"sssss","userid":122,"time":"2014/3/8 14:12:10"},{"noticeid":12,......}]},{"homeid":101,......},{"homeid":102,......}]}
+	// B.失败：{"ret":"Fail"}
+	static public void getfirstpage_briefinfo(final Activity activity,
+			final String userid,
+
+			final onSuccess r) {
+
 		RequestParams post_params = new RequestParams();
 		post_params.put("userid", userid);
 
-		AsyncHttpClient client = getHttpClient();
-		client.post(iAirConstants.API_QueryBindlist, post_params,
-				new AsyncHttpResponseHandler() {
-					@Override
-					public void onSuccess(String response) {
-						System.out.println(response);
-						iAirUtil.toastMessage(activity, response);
-						if (response.equals(iAirConstants.Server_Fail)) {
-							r.run(response);
-							return;
-						}
-						Map<String, String> snMap = iAirUtil
-								.getQueryMapFromUrl(response);
-
-						List<String> snlist = new ArrayList<String>();
-						
-						final int count = Integer.parseInt(snMap.get("count"));
-						
-						if (count == 0) {
-							r.run(response);
-							return;
-						}
-						
-						for (int i = 0; i < count; i++) {
-							String sn = snMap.get("sn" + i);
-							snlist.add(sn);
-						}
-						
-
-						application.setXiaoxinSnList(snlist);
-						
-						for (int i = 0; i < count; i++) {
-							String sn = snlist.get(i);
-							
-							final int xiaoin_idx = i;
-							getxiaoxin(activity,userid,sn,new onSuccess() {
-								
-								@Override
-								public void run(String response) {
-									// TODO Auto-generated method stub
-									
-									if (xiaoin_idx == count-1) {
-										r.run(response);
-									}
-									
-								}
-							});
-						}
-						
-
-						
-					}
-				});
+		postHttpBase(activity, r, post_params,
+				iAirConstants.getfirstpage_briefinfo);
 	}
-	
-	
-	static public void getxiaoxin(final Activity activity, final String userid,final String sn,
-			final onSuccess r)
-	{
-		final iAirApplication application = ((iAirApplication) activity
-				.getApplication());
+//	A6. 【获取家详细数据接口】家详细数据获取（家内所有小新的简明天气信息，告示栏的未读信息，告示栏的第一页信息）
+//	1) 请求：http://112.124.58.144/android/gethome_detailweather
+//	 2) form数据：userid=xx&homeid=xxx
+//	 3) 返回：
+//	A.成功：{"ret":"Ok","homeid":100,"homename":"北京的家", "temp":"25°","humi":"30", "pm25":180, "pa":1, "status":0,"own":1,"notice_unread":5, 
+//	 "xiaoxincount"：2,"xiaoxin":[{"xiaoxinid":11,"xiaoxinname":"厨房","temp":"25°","humi":30,"pm25":158,"pa"=1,"status":0},{"xiaoxinid":12,......}]
+//	 "noticecount"：3,"notice":[{"noticeid":11,"content":"sssss","userid":122,"time":"2014/3/8 14:12:10"},{"noticeid":12,......}]}
+//	 B.失败：{"ret":"Fail"}
+	static public void gethome_detailweather(final Activity activity,
+			final String userid,
+			final String homeid,
+			final onSuccess r) {
+
 		RequestParams post_params = new RequestParams();
-		post_params.put("sn", sn);
 		post_params.put("userid", userid);
-
-		AsyncHttpClient client = getHttpClient();
-		client.post(iAirConstants.API_GetXiaoxin, post_params,
-				new AsyncHttpResponseHandler() {
-					@Override
-					public void onSuccess(String response) {
-						//System.out.println(response);
-						iAirUtil.toastMessage(activity, response);
-						if (response.equals(iAirConstants.Server_Fail)) {
-							r.run(response);
-							return;
-						}
-						
-						Map<String, String> xiaoxinMap = iAirUtil
-								.getQueryMapFromUrl(response);
-						
-						Device xiaoxin = new Device();
-						xiaoxin.sn = sn;
-						xiaoxin.name = xiaoxinMap.get("name");
-						xiaoxin.temp = Double.parseDouble(xiaoxinMap.get("temp"));
-						xiaoxin.humi = Double.parseDouble(xiaoxinMap.get("humi"));
-						xiaoxin.pm25 = Double.parseDouble(xiaoxinMap.get("pm25"));
-						xiaoxin.pa = Double.parseDouble(xiaoxinMap.get("pa"));
-						xiaoxin.switchOn = Integer.parseInt(xiaoxinMap.get("switch"));
-						xiaoxin.speed = Integer.parseInt(xiaoxinMap.get("speed"));
-						xiaoxin.lastUpdateStamp = Integer.parseInt(xiaoxinMap.get("last_upload_time"));
-						
-						
-
-						application.setXiaoxin(xiaoxin);
-
-						r.run(response);
-					}
-				});
+		post_params.put("homeid", homeid);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.gethome_detailweather);
 	}
-	
-	static public void setxiaoxin_switch(final Activity activity, final String userid, final String sn,final int isOn,
-			final onSuccess r)
-	{
-		final iAirApplication application = ((iAirApplication) activity
-				.getApplication());
-		
-		Device xiaoxinDevice = application.getXiaoxin(sn);
-		xiaoxinDevice.switchOn = isOn;
-		application.setXiaoxin(xiaoxinDevice);
-		
-		RequestParams post_params = new RequestParams();
-		
-		post_params.put("userid", userid);
-		post_params.put("sn", sn);
-		post_params.put("switch", String.valueOf(isOn));
 
-		AsyncHttpClient client = getHttpClient();
-		client.post(iAirConstants.API_SetXiaoxinSwitch, post_params,
-				new AsyncHttpResponseHandler() {
-					@Override
-					public void onSuccess(String response) {
-						//System.out.println(response);
-						iAirUtil.toastMessage(activity, response);
-						if (response.equals(iAirConstants.Server_Fail)) {
-							if(r!=null)
-								r.run(response);
-							return;
-						}
-						
-						Device xiaoxin = application.getXiaoxin(sn);
-						xiaoxin.switchOn=isOn;
-
-						application.setXiaoxin(xiaoxin);
-
-						if(r!=null)
-							r.run(response);
-					}
-				});
-	}
-	
-	static public void setxiaoxin_speed(final Activity activity, final String userid,final String sn,final int speed,
-			final onSuccess r)
-	{
-		final iAirApplication application = ((iAirApplication) activity
-				.getApplication());
-		
-		Device xiaoxinDevice = application.getXiaoxin(sn);
-		xiaoxinDevice.speed = speed;
-		application.setXiaoxin(xiaoxinDevice);
-		
+//	 A7. 【获取小新详细数据接口】小新的详细数据获取
+//	1) 请求：http://112.124.58.144/android/getxiaoxin_detailweather
+//	 2) form数据：userid=xx&sn=xxx
+//	 3) 返回：
+//	A.成功：{"ret":"Ok","xiaoxinid":11,"xiaoxinname":"厨房","temp":"25°","humi":30,"pm25":158,"pa"=1,"status":0,"switch":1,"speed":5,"mode":2, "ontime":"18:00","offtime":"8:00"}
+//	 B.失败：{"ret":"Fail"}
+	static public void getxiaoxin_detailweather(final Activity activity,
+			final String userid,
+			final String sn,
+			final onSuccess r) {
 
 		RequestParams post_params = new RequestParams();
 		post_params.put("userid", userid);
 		post_params.put("sn", sn);
-		post_params.put("speed", String.valueOf(speed));
-
-		AsyncHttpClient client = getHttpClient();
-		client.post(iAirConstants.API_SetXiaoxinSeed, post_params,
-				new AsyncHttpResponseHandler() {
-					@Override
-					public void onSuccess(String response) {
-						//System.out.println(response);
-						iAirUtil.toastMessage(activity, response);
-						if (response.equals(iAirConstants.Server_Fail)) {
-							if(r!=null)
-								r.run(response);
-							return;
-						}
-						
-
-						Device xiaoxin = application.getXiaoxin(sn);
-						
-						xiaoxin.speed = speed;
-						application.setXiaoxin(xiaoxin);
-
-						if(r!=null)
-							r.run(response);
-					}
-				});
+		postHttpBase(activity, r, post_params,
+				iAirConstants.getxiaoxin_detailweather);
 	}
+
 	
-	static public void setxiaoxin_name(final Activity activity, final String userid,final String sn,final String name,
-			final onSuccess r)
-	{
-		
-		final iAirApplication application = ((iAirApplication) activity
-				.getApplication());
-		
-		Device xiaoxinDevice = application.getXiaoxin(sn);
-		xiaoxinDevice.name = name;
-		application.setXiaoxin(xiaoxinDevice);
-		
-		RequestParams post_params = new RequestParams();
-		
-		post_params.put("userid", userid);
-		post_params.put("sn", sn);
-		post_params.put("name", name);
+	// old interface
 
-		AsyncHttpClient client = getHttpClient();
-		client.post(iAirConstants.API_SetXiaoxinName, post_params,
-				new AsyncHttpResponseHandler() {
-					@Override
-					public void onSuccess(String response) {
-						//System.out.println(response);
-						iAirUtil.toastMessage(activity, response);
-						if (response.equals(iAirConstants.Server_Fail)) {
-							if(r!=null)
-								r.run(response);
-							return;
-						}
-						
-
-						Device xiaoxin = application.getXiaoxin(sn);
-						
-						xiaoxin.name = name;
-						application.setXiaoxin(xiaoxin);
-
-						if(r!=null)
-							r.run(response);
-					}
-				});
-	}
+	// static public void bind(final Activity activity, final String userid,
+	// final String sn, final onSuccess r) {
+	// RequestParams post_params = new RequestParams();
+	// post_params.put("userid", userid);
+	// post_params.put("sn", sn);
+	//
+	//
+	// postHttpBase(activity, r, post_params, iAirConstants.API_Bind);
+	// }
+	//
+	//
+	// static public void unbind(final Activity activity, final String userid,
+	// final String sn, final onSuccess r) {
+	// RequestParams post_params = new RequestParams();
+	// post_params.put("userid", userid);
+	// post_params.put("sn", sn);
+	//
+	// AsyncHttpClient client = getHttpClient();
+	// client.post(iAirConstants.API_UnBind, post_params,
+	// new AsyncHttpResponseHandler() {
+	// @Override
+	// public void onSuccess(String response) {
+	// System.out.println(response);
+	// iAirUtil.toastMessage(activity, response);
+	// if(r!=null)
+	// {
+	// JSONObject jsonObject=null;
+	// try {
+	// jsonObject = new JSONObject(response);
+	// } catch (JSONException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	//
+	// }
+	// r.run(jsonObject);
+	// }
+	// // r.run(response);
+	// }
+	// });
+	// }
+	//
+	// static public void query_bindlist(final Activity activity, final String
+	// userid,
+	// final onSuccess r)
+	// {
+	// final iAirApplication application = ((iAirApplication) activity
+	// .getApplication());
+	// RequestParams post_params = new RequestParams();
+	// post_params.put("userid", userid);
+	//
+	// AsyncHttpClient client = getHttpClient();
+	// client.post(iAirConstants.API_QueryBindlist, post_params,
+	// new AsyncHttpResponseHandler() {
+	// @Override
+	// public void onSuccess(String response) {
+	// System.out.println(response);
+	// iAirUtil.toastMessage(activity, response);
+	// if (response.equals(iAirConstants.Server_Fail)) {
+	// r.run(response);
+	// return;
+	// }
+	// Map<String, String> snMap = iAirUtil
+	// .getQueryMapFromUrl(response);
+	//
+	// List<String> snlist = new ArrayList<String>();
+	//
+	// final int count = Integer.parseInt(snMap.get("count"));
+	//
+	// if (count == 0) {
+	// r.run(response);
+	// return;
+	// }
+	//
+	// for (int i = 0; i < count; i++) {
+	// String sn = snMap.get("sn" + i);
+	// snlist.add(sn);
+	// }
+	//
+	//
+	// application.setXiaoxinSnList(snlist);
+	//
+	// for (int i = 0; i < count; i++) {
+	// String sn = snlist.get(i);
+	//
+	// final int xiaoin_idx = i;
+	// getxiaoxin(activity,userid,sn,new onSuccess() {
+	//
+	// @Override
+	// public void run(String response) {
+	// // TODO Auto-generated method stub
+	//
+	// if (xiaoin_idx == count-1) {
+	// r.run(response);
+	// }
+	//
+	// }
+	// });
+	// }
+	//
+	//
+	//
+	// }
+	// });
+	// }
+	//
+	//
+	// static public void getxiaoxin(final Activity activity, final String
+	// userid,final String sn,
+	// final onSuccess r)
+	// {
+	// final iAirApplication application = ((iAirApplication) activity
+	// .getApplication());
+	// RequestParams post_params = new RequestParams();
+	// post_params.put("sn", sn);
+	// post_params.put("userid", userid);
+	//
+	// AsyncHttpClient client = getHttpClient();
+	// client.post(iAirConstants.API_GetXiaoxin, post_params,
+	// new AsyncHttpResponseHandler() {
+	// @Override
+	// public void onSuccess(String response) {
+	// //System.out.println(response);
+	// iAirUtil.toastMessage(activity, response);
+	// if (response.equals(iAirConstants.Server_Fail)) {
+	// r.run(response);
+	// return;
+	// }
+	//
+	// Map<String, String> xiaoxinMap = iAirUtil
+	// .getQueryMapFromUrl(response);
+	//
+	// Device xiaoxin = new Device();
+	// xiaoxin.sn = sn;
+	// xiaoxin.name = xiaoxinMap.get("name");
+	// xiaoxin.temp = Double.parseDouble(xiaoxinMap.get("temp"));
+	// xiaoxin.humi = Double.parseDouble(xiaoxinMap.get("humi"));
+	// xiaoxin.pm25 = Double.parseDouble(xiaoxinMap.get("pm25"));
+	// xiaoxin.pa = Double.parseDouble(xiaoxinMap.get("pa"));
+	// xiaoxin.switchOn = Integer.parseInt(xiaoxinMap.get("switch"));
+	// xiaoxin.speed = Integer.parseInt(xiaoxinMap.get("speed"));
+	// xiaoxin.lastUpdateStamp =
+	// Integer.parseInt(xiaoxinMap.get("last_upload_time"));
+	//
+	//
+	//
+	// application.setXiaoxin(xiaoxin);
+	//
+	// r.run(response);
+	// }
+	// });
+	// }
+	//
+	// static public void setxiaoxin_switch(final Activity activity, final
+	// String userid, final String sn,final int isOn,
+	// final onSuccess r)
+	// {
+	// final iAirApplication application = ((iAirApplication) activity
+	// .getApplication());
+	//
+	// Device xiaoxinDevice = application.getXiaoxin(sn);
+	// xiaoxinDevice.switchOn = isOn;
+	// application.setXiaoxin(xiaoxinDevice);
+	//
+	// RequestParams post_params = new RequestParams();
+	//
+	// post_params.put("userid", userid);
+	// post_params.put("sn", sn);
+	// post_params.put("switch", String.valueOf(isOn));
+	//
+	// AsyncHttpClient client = getHttpClient();
+	// client.post(iAirConstants.API_SetXiaoxinSwitch, post_params,
+	// new AsyncHttpResponseHandler() {
+	// @Override
+	// public void onSuccess(String response) {
+	// //System.out.println(response);
+	// iAirUtil.toastMessage(activity, response);
+	// if (response.equals(iAirConstants.Server_Fail)) {
+	// if(r!=null)
+	// r.run(response);
+	// return;
+	// }
+	//
+	// Device xiaoxin = application.getXiaoxin(sn);
+	// xiaoxin.switchOn=isOn;
+	//
+	// application.setXiaoxin(xiaoxin);
+	//
+	// if(r!=null)
+	// r.run(response);
+	// }
+	// });
+	// }
+	//
+	// static public void setxiaoxin_speed(final Activity activity, final String
+	// userid,final String sn,final int speed,
+	// final onSuccess r)
+	// {
+	// final iAirApplication application = ((iAirApplication) activity
+	// .getApplication());
+	//
+	// Device xiaoxinDevice = application.getXiaoxin(sn);
+	// xiaoxinDevice.speed = speed;
+	// application.setXiaoxin(xiaoxinDevice);
+	//
+	//
+	// RequestParams post_params = new RequestParams();
+	// post_params.put("userid", userid);
+	// post_params.put("sn", sn);
+	// post_params.put("speed", String.valueOf(speed));
+	//
+	// AsyncHttpClient client = getHttpClient();
+	// client.post(iAirConstants.API_SetXiaoxinSeed, post_params,
+	// new AsyncHttpResponseHandler() {
+	// @Override
+	// public void onSuccess(String response) {
+	// //System.out.println(response);
+	// iAirUtil.toastMessage(activity, response);
+	// if (response.equals(iAirConstants.Server_Fail)) {
+	// if(r!=null)
+	// r.run(response);
+	// return;
+	// }
+	//
+	//
+	// Device xiaoxin = application.getXiaoxin(sn);
+	//
+	// xiaoxin.speed = speed;
+	// application.setXiaoxin(xiaoxin);
+	//
+	// if(r!=null)
+	// r.run(response);
+	// }
+	// });
+	// }
+	//
+	// static public void setxiaoxin_name(final Activity activity, final String
+	// userid,final String sn,final String name,
+	// final onSuccess r)
+	// {
+	//
+	// final iAirApplication application = ((iAirApplication) activity
+	// .getApplication());
+	//
+	// Device xiaoxinDevice = application.getXiaoxin(sn);
+	// xiaoxinDevice.name = name;
+	// application.setXiaoxin(xiaoxinDevice);
+	//
+	// RequestParams post_params = new RequestParams();
+	//
+	// post_params.put("userid", userid);
+	// post_params.put("sn", sn);
+	// post_params.put("name", name);
+	//
+	// AsyncHttpClient client = getHttpClient();
+	// client.post(iAirConstants.API_SetXiaoxinName, post_params,
+	// new AsyncHttpResponseHandler() {
+	// @Override
+	// public void onSuccess(String response) {
+	// //System.out.println(response);
+	// iAirUtil.toastMessage(activity, response);
+	// if (response.equals(iAirConstants.Server_Fail)) {
+	// if(r!=null)
+	// r.run(response);
+	// return;
+	// }
+	//
+	//
+	// Device xiaoxin = application.getXiaoxin(sn);
+	//
+	// xiaoxin.name = name;
+	// application.setXiaoxin(xiaoxin);
+	//
+	// if(r!=null)
+	// r.run(response);
+	// }
+	// });
+	// }
 }

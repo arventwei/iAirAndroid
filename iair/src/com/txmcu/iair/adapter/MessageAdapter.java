@@ -6,7 +6,7 @@
  * @date 2013-2-27 下午12:05:50 
  * @version V1.0
  */
-package com.txmcu.iair.chat;
+package com.txmcu.iair.adapter;
 
 import java.util.List;
 
@@ -23,13 +23,18 @@ public class MessageAdapter extends BaseAdapter{
     protected static final String TAG = "MessageAdapter";
     private Context context;
     private List<MessageVo> messageVo;
+    private Home home;
     
 
-    public MessageAdapter(Context context, List<MessageVo> messageVo) {
+    public MessageAdapter(Context context,Home home) {
         super();
         this.context = context;
-        this.messageVo = messageVo;
+        this.messageVo = home.notices;
     }
+    
+    public void syncMessage() {
+    	 this.messageVo = home.notices;
+	}
 
 
     @Override
@@ -74,7 +79,7 @@ public class MessageAdapter extends BaseAdapter{
             holder.time = (TextView)convertView.findViewById(R.id.time);
             convertView.setTag(holder);
         }
-        holder.content.setText(message.getContent());
+        holder.content.setText(message.getContent()+message.userName);
         holder.time.setText(message.getTime());
         return convertView;
     }

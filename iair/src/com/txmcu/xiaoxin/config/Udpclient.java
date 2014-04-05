@@ -71,18 +71,27 @@ public class Udpclient {
 			querySnTimer.cancel();
 	}
     public void setSendWifiInfo(String ssid,String pwd,String auth_mode,String encryp_type,
-    		String channel,String _sn,String _userid)
+    		String channel,String _sn,String _userid,String vsn,String homeId)
     {
     	//check input paramter
     	//if(_userid.length() > 20 )
     	//	_userid = _userid.substring(0, 20);
+    	//sn 10
+    	//userid:10
+    	//vsn:20
+    	//flag 1 ,0-home,1-vsn
+    	//home or vsn 19 bytes
+    	byte flag = 1;
+    	if (homeId.equals("")) {
+    		flag = 0;
+		}
     	
     	if(ssid.length()>20 ||pwd.length()>20)
     	{
     		operations.setState(false, "input ssid or pwd is wrong");
     		return;
     	}
-    	if(_sn.length()>20)
+    	if(_sn.length()>10)
     	{
     		operations.setState(false, "sn is to long");
     		return;
@@ -108,11 +117,23 @@ public class Udpclient {
     	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=5;
     	
     	bytes =sn.getBytes();
-    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
+    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=10;
     	
     	bytes =userid.getBytes();
-    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=20;
+    	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=10;
 
+    	bytes = new byte[]{flag};
+    	System.arraycopy(flag, 0, send_msg, len, 1);len+=1;
+    	
+    	if (flag==1) {
+    		bytes =vsn.getBytes();
+        	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=19;
+		}
+    	else {
+    		bytes =homeId.getBytes();
+        	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=19;
+		}
+    	
     	recvingMsg = "";
     	//stateCode=100;
     	
@@ -339,19 +360,19 @@ public class Udpclient {
        		    	leftTime = millisUntilFinished;
        		    	 
        		    	xinMgr.restoreCurrentWifiState();
-       		    	
-       		    		XinServerManager.bind(activity, userid, sn,new XinServerManager.onSuccess() {
-						
-						@Override
-						public void run(String response) {
-							// TODO Auto-generated method stub
-							if (response.equals("Ok")) {
-								stateCode = endState;
-								operations.setState(true,"Ok");
-							}
-							
-						}
-					});
+       		    	// TODO
+//       		    		XinServerManager.bind(activity, userid, sn,new XinServerManager.onSuccess() {
+//						
+//						@Override
+//						public void run(String response) {
+//						
+//							if (response.equals("Ok")) {
+//								stateCode = endState;
+//								operations.setState(true,"Ok");
+//							}
+//							
+//						}
+//					});
        		    	
        		     }
 

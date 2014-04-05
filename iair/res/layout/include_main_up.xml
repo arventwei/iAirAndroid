@@ -11,10 +11,18 @@
         android:layout_height="0.0dip" />
 
     <ListView
-        android:id="@+id/listView1"
-        
+        android:id="@+id/citylist"
+        android:layout_below="@id/topleft"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="#00000000"
+	/>
+    <ListView
+        android:id="@+id/homelist"
+        android:layout_below="@id/citylist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:cacheColorHint="@android:color/transparent"
         android:divider="#00000000"
 />
@@ -27,6 +35,7 @@
         android:layout_marginLeft="8.0dip"
         android:layout_marginRight="7.0dip"
         android:clickable="true"
+       
         android:paddingBottom="6.0dip"
         android:paddingTop="6.0dip" >
 

@@ -30,7 +30,7 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 		application = (iAirApplication)getApplication();
 		 snString =this.getIntent().getStringExtra("sn");
 		
-		 device = application.getXiaoxin(snString);
+		 device = null;//application.getXiaoxin(snString);
 		
 		findViewById(R.id.back_img).setOnClickListener(this);
 		new_name_EditText = (EditText)findViewById(R.id.new_name);
@@ -51,27 +51,27 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 			finish();
 		}
 		else if (view.getId()==R.id.modify_name_btn) {
-			
-			XinServerManager.setxiaoxin_name(this, application.getUserid(),snString, new_name_EditText.getText().toString(),new XinServerManager.onSuccess() {
-				
-				@Override
-				public void run(String response) {
-					// TODO Auto-generated method stub
-					if(DetailDeviceActivity.instance!=null)
-					{
-						DetailDeviceActivity.instance.adapter.updateView();
-						
-					}
-					if (HomeActivity.instance!=null) {
-						HomeActivity.instance.refreshlist();
-					}
-					if (DeviceManageActivity.instance!=null) {
-						DeviceManageActivity.instance.adapter.syncDevices();
-						DeviceManageActivity.instance.adapter.notifyDataSetChanged();
-					}
-					finish();
-				}
-			});
+			//TODO
+//			XinServerManager.setxiaoxin_name(this, application.getUserid(),snString, new_name_EditText.getText().toString(),new XinServerManager.onSuccess() {
+//				
+//				@Override
+//				public void run(String response) {
+//					
+//					if(DetailDeviceActivity.instance!=null)
+//					{
+//						DetailDeviceActivity.instance.adapter.updateView();
+//						
+//					}
+//					if (HomeActivity.instance!=null) {
+//						HomeActivity.instance.refreshlist();
+//					}
+//					if (DeviceManageActivity.instance!=null) {
+//						DeviceManageActivity.instance.adapter.syncDevices();
+//						DeviceManageActivity.instance.adapter.notifyDataSetChanged();
+//					}
+//					finish();
+//				}
+//			});
 			
 		}
 

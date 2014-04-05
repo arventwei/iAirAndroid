@@ -7,6 +7,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.Home;
 
@@ -14,6 +15,7 @@ public class iAirApplication extends Application {
 	
 	
 
+	
 	
 	private static final String Userid="userid";
 
@@ -60,97 +62,130 @@ public void setNickName(String nickName) {
 		return nickName;
 	}
 	
+	/// new
+	public List<Home> homeList = new ArrayList<Home>();
+	public List<City> cityList = new ArrayList<City>();
 	
-	public void setXiaoxinSnList(List<String> list) {
-		SharedPreferences.Editor mEditor = mPerferences.edit();  
-		
-		mEditor.putInt(xiaoxinlist_size,list.size());
-		for(int i=0;i<list.size();i++)
-		{
-			mEditor.putString(xiaoxinlist + i, list.get(i));//
-		}
-	    mEditor.commit(); 
-	}
-	public List<String> getXiaoxinSnList() {
-		List<String> xiaoxinList = new ArrayList<String>();
-		int size = mPerferences.getInt(xiaoxinlist_size, 0);
-		for(int i = 0; i < size;i++)
-		{
-			String sn = mPerferences.getString(xiaoxinlist + i, "");
-			xiaoxinList.add(sn);
-		}
-		return xiaoxinList;
-		//return mPerferences.getString(Userid, "");
-	}
-	public void removeXiaoxin(String sn) {
-		
-		List<String> snList = getXiaoxinSnList();
-		snList.remove(sn);
-		setXiaoxinSnList(snList);
 	
-	}
-	public void setXiaoxin(Device xiaoxin)
+	public Home getHome(String homeid)
 	{
-		SharedPreferences.Editor mEditor = mPerferences.edit();  
-		
-		mEditor.putString("xiaoxin_"+xiaoxin.sn,xiaoxin.ToJson());
-		
-	    mEditor.commit(); 
+		for (Home home : homeList) {
+			if (home.homeid.equals(homeid)) {
+				return home;
+			}
+		}
+		return null;
 	}
-	public Device getXiaoxin(String sn)
-	{
-		Device ret = new Device();
-		String xiaxinJsonString = mPerferences.getString("xiaoxin_"+sn, "");
-		ret.FromJson(xiaxinJsonString);
-		return ret;
-		
+	public Device  getXiaoxin(String sn) {
+		for (Home home : homeList) {
+			for (Device device:home.xiaoxins) {
+				if (device.sn.equals(sn)) {
+					return device;
+				}
+			}
+		}
+		return null;
 	}
+//	public void setHomeList(List<Home> _homeList) {
+//		homeList = _homeList;
+//	}
+//	public List<Home> getHomeList() {
+//		return homeList;
+//	}
+	
+	//// old
+	
+	
+//	public void setXiaoxinSnList(List<String> list) {
+//		SharedPreferences.Editor mEditor = mPerferences.edit();  
+//		
+//		mEditor.putInt(xiaoxinlist_size,list.size());
+//		for(int i=0;i<list.size();i++)
+//		{
+//			mEditor.putString(xiaoxinlist + i, list.get(i));//
+//		}
+//	    mEditor.commit(); 
+//	}
+//	public List<String> getXiaoxinSnList() {
+//		List<String> xiaoxinList = new ArrayList<String>();
+//		int size = mPerferences.getInt(xiaoxinlist_size, 0);
+//		for(int i = 0; i < size;i++)
+//		{
+//			String sn = mPerferences.getString(xiaoxinlist + i, "");
+//			xiaoxinList.add(sn);
+//		}
+//		return xiaoxinList;
+//		//return mPerferences.getString(Userid, "");
+//	}
+//	public void removeXiaoxin(String sn) {
+//		
+//		List<String> snList = getXiaoxinSnList();
+//		snList.remove(sn);
+//		setXiaoxinSnList(snList);
+//	
+//	}
+//	public void setXiaoxin(Device xiaoxin)
+//	{
+//		SharedPreferences.Editor mEditor = mPerferences.edit();  
+//		
+//		mEditor.putString("xiaoxin_"+xiaoxin.sn,xiaoxin.ToJson());
+//		
+//	    mEditor.commit(); 
+//	}
+//	public Device getXiaoxin(String sn)
+//	{
+//		Device ret = new Device();
+//		String xiaxinJsonString = mPerferences.getString("xiaoxin_"+sn, "");
+//		ret.FromJson(xiaxinJsonString);
+//		return ret;
+//		
+//	}
 	
 	///>home
-	public void setHomeSnList(List<String> list) {
-		SharedPreferences.Editor mEditor = mPerferences.edit();  
-		
-		mEditor.putInt(homelist_size,list.size());
-		for(int i=0;i<list.size();i++)
-		{
-			mEditor.putString(homelist + i, list.get(i));//
-		}
-	    mEditor.commit(); 
-	}
-	public List<String> getHomeSnList() {
-		List<String> homeList = new ArrayList<String>();
-		int size = mPerferences.getInt(homelist_size, 0);
-		for(int i = 0; i < size;i++)
-		{
-			String sn = mPerferences.getString(homelist + i, "");
-			homeList.add(sn);
-		}
-		return homeList;
-		//return mPerferences.getString(Userid, "");
-	}
-	public void removeHome(String sn) {
-		
-		List<String> snList = getHomeSnList();
-		snList.remove(sn);
-		setHomeSnList(snList);
-	
-	}
-	public void setHome(Home home)
-	{
-		SharedPreferences.Editor mEditor = mPerferences.edit();  
-		
-		mEditor.putString("home_"+home.sn,home.ToJson());
-		
-	    mEditor.commit(); 
-	}
-	public Home getHome(String sn)
-	{
-		Home ret = new Home();
-		String xiaxinJsonString = mPerferences.getString("home_"+sn, "");
-		ret.FromJson(xiaxinJsonString);
-		return ret;
-		
-	}
+//	public void setHomeSnList(List<String> list) {
+//		SharedPreferences.Editor mEditor = mPerferences.edit();  
+//		
+//		mEditor.putInt(homelist_size,list.size());
+//		for(int i=0;i<list.size();i++)
+//		{
+//			mEditor.putString(homelist + i, list.get(i));//
+//		}
+//	    mEditor.commit(); 
+//	}
+//	public List<String> getHomeSnList() {
+//		List<String> homeList = new ArrayList<String>();
+//		int size = mPerferences.getInt(homelist_size, 0);
+//		for(int i = 0; i < size;i++)
+//		{
+//			String sn = mPerferences.getString(homelist + i, "");
+//			homeList.add(sn);
+//		}
+//		return homeList;
+//		//return mPerferences.getString(Userid, "");
+//	}
+//	public void removeHome(String sn) {
+//		
+//		List<String> snList = getHomeSnList();
+//		snList.remove(sn);
+//		setHomeSnList(snList);
+//	
+//	}
+//	public void setHome(Home home)
+//	{
+//		SharedPreferences.Editor mEditor = mPerferences.edit();  
+//		
+//		mEditor.putString("home_"+home.sn,home.ToJson());
+//		
+//	    mEditor.commit(); 
+//	}
+//	public Home getHome(String sn)
+//	{
+//		Home ret = new Home();
+//		String xiaxinJsonString = mPerferences.getString("home_"+sn, "");
+//		ret.FromJson(xiaxinJsonString);
+//		return ret;
+//		
+//	}
 	///<
 	
 	///backup wifi info

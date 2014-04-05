@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:paddingBottom="3.0dip"
+        
             android:text="@string/detail_device_pm25"
             android:textColor="@color/white"
             android:textSize="@dimen/detail_text_size" />
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
              android:layout_weight="1"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:paddingBottom="3.0dip"
+     
             android:text="@string/detail_device_form"
             android:textColor="@color/white"
             android:textSize="@dimen/detail_text_size" />
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:paddingBottom="3.0dip"
+         
             android:text="@string/detail_device_temp"
             android:textColor="@color/white"
             android:textSize="@dimen/detail_text_size" />
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
-            android:paddingBottom="3.0dip"
+        
             android:text="@string/detail_device_humi"
             android:textColor="@color/white"
             android:textSize="@dimen/detail_text_size" />
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:layout_weight="1"
-            android:paddingBottom="3.0dip"
+        
             android:text="耗材更换倒计时: 240 小时"
             android:textColor="@color/white"
             android:textSize="@dimen/detail_text_size" />
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/weather_detail_activity_air_number_margin_top"
             android:layout_weight="1"
-            android:paddingBottom="3.0dip"
+           
             android:text="累计工作时间: 240 小时"
             android:textColor="@color/white"
             android:textSize="@dimen/detail_text_size" />
@@ -154,7 +154,7 @@
             android:textSize="@dimen/detail_text_size" />
 
         <CheckBox
-            android:id="@+id/xiaoxin_network"
+            android:id="@+id/deviceShare"
             style="@style/setting_item_checkbox"
             android:layout_width="0dp"
             android:layout_weight="1.0"
@@ -194,12 +194,12 @@
 
                 <Button
                     android:id="@+id/btn_speed"
-                    android:layout_width="0dp"
-                    android:layout_height="50dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:gravity="center"
                     android:textSize="@dimen/detail_text_size"
-                    android:background="@drawable/button_bg"
+   
                     android:text="@string/button_modify" />
 
             </LinearLayout>

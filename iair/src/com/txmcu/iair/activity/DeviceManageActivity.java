@@ -100,12 +100,11 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 						public void onItemClick(AdapterView parent, View view,
 								int position, long id) {
 							if (position == 0) {
-								 Intent localIntent = new
-								 Intent(DeviceManageActivity.this,DeviceAddActivity.class);
-								
+								 Intent localIntent = new Intent(DeviceManageActivity.this,DeviceAddActivity.class);
+								 localIntent.putExtra("homeId", "");
+								 localIntent.putExtra("vsn", "");
 								 startActivity(localIntent);
-								 overridePendingTransition(R.anim.left_enter,
-								 R.anim.alpha_out);
+								 overridePendingTransition(R.anim.left_enter,  R.anim.alpha_out);
 							} else {
 								 Intent localIntent = new
 								 Intent(DeviceManageActivity.this,DeviceBindActivity.class);
@@ -128,29 +127,30 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 
 				} else {
 					if (editMode) {
-
-						XinServerManager.unbind(DeviceManageActivity.this,
-								application.getUserid(), snString,
-								new XinServerManager.onSuccess() {
-
-									@Override
-									public void run(String response) {
-										if (response.equals("Ok")) {
-											application.removeXiaoxin(snString);
-											adapter.syncDevices();
-											adapter.notifyDataSetChanged();
-											if (MainActivity.instance != null) {
-												MainActivity.instance
-														.refreshlist();
-											}
-										}
-
-										// TODO Auto-generated method stub
-										// Toast.makeText(MainActivity.this,
-										// R.string.xiaoxin_login_ok,
-										// Toast.LENGTH_LONG).show();
-									}
-								});
+						//TODO
+//						XinServerManager.unbind(DeviceManageActivity.this,
+//								application.getUserid(), snString,
+								
+//								new XinServerManager.onSuccess() {
+//
+//									@Override
+//									public void run(String response) {
+//										if (response.equals("Ok")) {
+//											application.removeXiaoxin(snString);
+//											adapter.syncDevices();
+//											adapter.notifyDataSetChanged();
+//											if (MainActivity.instance != null) {
+//												MainActivity.instance
+//														.refreshlist();
+//											}
+//										}
+//
+//										
+//										// Toast.makeText(MainActivity.this,
+//										// R.string.xiaoxin_login_ok,
+//										// Toast.LENGTH_LONG).show();
+//									}
+//								});
 
 					} else {
 						Intent localIntent = new Intent(

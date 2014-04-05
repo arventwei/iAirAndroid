@@ -27,14 +27,14 @@ public class HomeAdapter extends BaseAdapter
 		homeManageActivity = activity;
 	}
 	
-	public  void addCity(int index,String name) {
-		Home book = new Home();
-    	book.id = index;
-    	book.name = name;
-    	//book.setName(name);
-    	//book.setBitmapId(R.drawable.b001);
-    	homes.add(book);
-	}
+//	public  void addCity(int index,String name) {
+//		Home book = new Home();
+//    	//book.id = index;
+//    	book.name = name;
+//    	//book.setName(name);
+//    	//book.setBitmapId(R.drawable.b001);
+//    	homes.add(book);
+//	}
 	public void waspping(int oldIndex, int newIndex) {
 		Home book = homes.get(oldIndex);
 		homes.remove(oldIndex);
@@ -54,17 +54,21 @@ public class HomeAdapter extends BaseAdapter
 
 	@Override
 	public long getItemId(int position) {
-		return homes.get(position).id;
+		//return homes.get(position).id;
+		return 0;
 	}
 	
 	public void syncHomes(){
 		homes.clear();
 		
 		iAirApplication application = (iAirApplication)homeManageActivity.getApplication();
-		List<String> snList = application.getHomeSnList();
-		for (String sn : snList) {
-			Home xiaoxinDevice = application.getHome(sn);
-			homes.add(xiaoxinDevice);
+//		List<String> snList = application.getHomeSnList();
+//		for (String sn : snList) {
+//			//Home xiaoxinDevice = application.getHome(sn);
+//			//homes.add(xiaoxinDevice);
+//		}
+		for (Home home : application.homeList) {
+			homes.add(home);
 		}
 		homes.add(new Home(""));
 	}
@@ -72,7 +76,7 @@ public class HomeAdapter extends BaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Home b = homes.get(position);
-		if(b.sn.equals(""))
+		if(b.homeid.equals(""))
 		{
 			convertView = View.inflate(homeManageActivity, 
 					R.layout.gridview_home_add, null);
@@ -82,7 +86,7 @@ public class HomeAdapter extends BaseAdapter
 		else
 		{
 			convertView = View.inflate(homeManageActivity, R.layout.gridview_home_item, null);
-			((TextView)convertView.findViewById(R.id.city_name)).setText(b.name);
+			((TextView)convertView.findViewById(R.id.city_name)).setText(b.homename);
 			//if (deviceManageActivity.editMode) {
 			//	convertView.findViewById(R.id.delete_btn).setVisibility(View.VISIBLE);
 			//}

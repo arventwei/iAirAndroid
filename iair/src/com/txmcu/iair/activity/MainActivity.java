@@ -1,7 +1,11 @@
 package com.txmcu.iair.activity;
 
-import java.util.Map;
+import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.R.bool;
 import android.app.ActivityGroup;
 import android.app.Dialog;
 import android.content.Context;
@@ -15,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -22,7 +27,6 @@ import android.widget.PopupWindow;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -30,10 +34,11 @@ import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPage
 import com.handmark.verticalview.VerticalViewPager;
 import com.pushlink.android.PushLink;
 import com.txmcu.iair.R;
+import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.adapter.Device;
+import com.txmcu.iair.adapter.Home;
 import com.txmcu.iair.adapter.MainEntryAdapter;
 import com.txmcu.iair.common.iAirApplication;
-import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class MainActivity extends ActivityGroup  implements
@@ -64,26 +69,32 @@ public class MainActivity extends ActivityGroup  implements
 
 		addButtonListener();
 
-		String authType = this.getIntent().getStringExtra("authType");
-		String token = this.getIntent().getStringExtra("token");
-		String openId = this.getIntent().getStringExtra("openId");
-		String nickName = this.getIntent().getStringExtra("nickName");
+		//refreshlist();
+		requestlist();
+	//	String authType = this.getIntent().getStringExtra("authType");
+	//	String token = this.getIntent().getStringExtra("token");
+	//	String openId = this.getIntent().getStringExtra("openId");
+	//	String nickName = this.getIntent().getStringExtra("nickName");
 
-		XinServerManager.login(this, authType, token, openId, nickName,
-				new XinServerManager.onSuccess() {
-
-					@Override
-					public void run(String response) {
-						// TODO Auto-generated method stub
-						Map<String, String> snMap = iAirUtil
-								.getQueryMapFromUrl(response);
-
-						application.setUserid(snMap.get("userid"));
-						Toast.makeText(MainActivity.this,
-								R.string.xiaoxin_login_ok, Toast.LENGTH_LONG)
-								.show();
-					}
-				});
+//		XinServerManager.login(this, authType, token, openId, nickName,
+//				new XinServerManager.onSuccess() {
+//
+//					@Override
+//					public void run(JSONObject response) throws JSONException {
+//						// TODO Auto-generated method stub
+//						String ret = response.getString("ret");
+//						String usertype = response.getString("usertype");
+//						String userid = response.getString("userid");
+//						
+//						//Map<String, String> snMap = iAirUtil
+//						//		.getQueryMapFromUrl(response);
+//
+//						application.setUserid(userid);
+//						Toast.makeText(MainActivity.this,
+//								R.string.xiaoxin_login_ok, Toast.LENGTH_LONG)
+//								.show();
+//					}
+//				});
 
 	}
 
@@ -119,6 +130,14 @@ public class MainActivity extends ActivityGroup  implements
 			// close the Activity
 
 			LoginActivity.logout(this);
+			//finish();
+			
+			Intent localIntent = new Intent(MainActivity.this,
+					LoginActivity.class);
+
+			
+			this.startActivity(localIntent);
+			this.finish();
 			return true;
 		}
 		return false;
@@ -194,9 +213,16 @@ public class MainActivity extends ActivityGroup  implements
 					null);
 
 			if (position == 0) {
+				
+	
+//				LayoutParams localLayoutParams = new LayoutParams(500,300);
+//			    localLayoutParams.width = 566;
+//			    localLayoutParams.height = 300;
+//			    subView.setLayoutParams(localLayoutParams);
+				//subView.setLayoutParams(params)
 				mainentryAdapter = new MainEntryAdapter(pageContext);//
 
-				listView = (ListView) subView.findViewById(R.id.listView1);// 实例化ListView
+				listView = (ListView) subView.findViewById(R.id.homelist);// 实例化ListView
 				listView.setAdapter(mainentryAdapter);//
 				// listView.setDividerHeight(0);
 
@@ -205,54 +231,83 @@ public class MainActivity extends ActivityGroup  implements
 					public void onItemClick(AdapterView parent, View view,
 							int position, long id) {
 						// Log.i("sfs", "asfasds");
-						Device b = (Device) mainentryAdapter.getItem(position);
-						if (position > 0) {
-							if (b.sn.equals("1111111")) {
-								Intent localIntent = new Intent(pageContext,
-										DetailCityActivity.class);
-								// localIntent.putExtra("sn", b.sn);
-								pageContext.startActivity(localIntent);
-								pageContext.overridePendingTransition(
-										R.anim.left_enter, R.anim.alpha_out);
-
-							} else if (b.sn.equals("1111112")) {
-								Intent localIntent = new Intent(pageContext,
-										HomeActivity.class);
-								// localIntent.putExtra("sn", b.sn);
-								pageContext.startActivity(localIntent);
-								pageContext.overridePendingTransition(
-										R.anim.left_enter, R.anim.alpha_out);
-
-							}
-
+						if (position == 0) {
+							return;
 						}
+						Object bObject = mainentryAdapter.getItem(position);
+						if (bObject.getClass() == City.class) {
+							Intent localIntent = new Intent(pageContext,
+									DetailCityActivity.class);
+							// localIntent.putExtra("sn", b.sn);
+							pageContext.startActivity(localIntent);
+							pageContext.overridePendingTransition(
+									R.anim.left_enter, R.anim.alpha_out);
+						}
+						else if (bObject.getClass() == Home.class) {
+							Home b = (Home)bObject;
+							Intent localIntent = new Intent(pageContext,
+									HomeActivity.class);
+							 localIntent.putExtra("homeid", b.homeid);
+							pageContext.startActivity(localIntent);
+							pageContext.overridePendingTransition(
+									R.anim.left_enter, R.anim.alpha_out);
+						}
+//						if (position > 0) {
+//							if (b.sn.equals("1111111")) {
+//								Intent localIntent = new Intent(pageContext,
+//										DetailCityActivity.class);
+//								// localIntent.putExtra("sn", b.sn);
+//								pageContext.startActivity(localIntent);
+//								pageContext.overridePendingTransition(
+//										R.anim.left_enter, R.anim.alpha_out);
+//
+//							} else if (b.sn.equals("1111112")) {
+//								
+//
+//							}
+
+					//	}
 					}
 				});
 				// iAirApplication application =
 				// (iAirApplication)pageContext.getApplication();
 
-				XinServerManager.query_bindlist(pageContext,
-						application.getUserid(),
-						new XinServerManager.onSuccess() {
-
-							@Override
-							public void run(String response) {
-
-								mainentryAdapter.syncHomes();
-								mainentryAdapter.notifyDataSetChanged();
-								// TODO Auto-generated method stub
-
-							}
-						});
+				// TODO
+//				XinServerManager.query_bindlist(pageContext,
+//						application.getUserid(),
+//						new XinServerManager.onSuccess() {
+//
+//							@Override
+//							public void run(String response) {
+//
+//								mainentryAdapter.syncHomes();
+//								mainentryAdapter.notifyDataSetChanged();
+//								// TODO Auto-generated method stub
+//
+//							}
+//						});
 
 			} else {
 
 				
 				mTabHost = (TabHost) subView.findViewById(android.R.id.tabhost);
 				mTabHost.setup(pageContext.getLocalActivityManager());
-				setupTab(new Intent(pageContext, MainDownChatActivity.class),  "我的家");
-				setupTab(new Intent(pageContext, MainDownChatActivity.class), "我的办公室");
-				setupTab(new Intent(pageContext, MainDownChatActivity.class),  "朋友的家");
+				mTabHost.clearAllTabs();
+				
+				
+				for(Home home:application.homeList)
+				{
+					Intent intent = new Intent(pageContext, MainDownChatActivity.class);
+					intent.putExtra("homeid", home.homeid);
+					setupTab(intent,  home.homename);
+				}
+				//setupTab(new Intent(pageContext, MainDownChatActivity.class),  "我的家");
+				//setupTab(new Intent(pageContext, MainDownChatActivity.class), "我的办公室");
+				//setupTab(new Intent(pageContext, MainDownChatActivity.class),  "朋友的家");
+				if (application.homeList.size()>0) {
+					mTabHost.setCurrentTab(0);
+				}
+				
 				
 
 			}
@@ -293,21 +348,38 @@ public class MainActivity extends ActivityGroup  implements
 		adapter.mainentryAdapter.notifyDataSetChanged();
 	}
 
+	public void requestlist()
+	{
+		XinServerManager.getfirstpage_briefinfo(this,application.getUserid(),new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(JSONObject response) throws JSONException {
+				
+				application.homeList = XinServerManager.getHomeFromJson(MainActivity.this,response.getJSONArray("home"));
+				application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
+				// TODO Auto-generated method stub
+				refreshlist();
+				
+			}
+		});
+	}
 	private void AsyncMainEntrys() {
 
 		mPullToRefreshViewPager.onRefreshComplete();
-		XinServerManager.query_bindlist(this, application.getUserid(),
-				new XinServerManager.onSuccess() {
-
-					@Override
-					public void run(String response) {
-
-						refreshlist();
-
-						// TODO Auto-generated method stub
-
-					}
-				});
+	//	refreshlist();
+		requestlist();
+		//TODO
+//		XinServerManager.query_bindlist(this, application.getUserid(),
+//				new XinServerManager.onSuccess() {
+//
+//					@Override
+//					public void run(String response) {
+//
+//						refreshlist();
+//
+//
+//					}
+//				});
 	}
 
 	// private class GetDataTask extends AsyncTask<MainActivity, Void, Void> {

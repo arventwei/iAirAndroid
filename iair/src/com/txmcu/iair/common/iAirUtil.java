@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
@@ -494,18 +495,18 @@ public class iAirUtil {
 		} else {
 			Log.d("sdkDemo", message);
 		}
-//		activity.runOnUiThread(new Runnable() {
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				if (mToast != null) {
-//					mToast.cancel();
-//					mToast = null;
-//				}
-//				mToast = Toast.makeText(activity, message, Toast.LENGTH_SHORT);
-//				mToast.show();
-//			}
-//		});
+		activity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if (mToast != null) {
+					mToast.cancel();
+					mToast = null;
+				}
+				mToast = Toast.makeText(activity, message, Toast.LENGTH_SHORT);
+				mToast.show();
+			}
+		});
 	}
 
 	/**
@@ -660,5 +661,20 @@ public class iAirUtil {
 	        }
 	    }
 	    return uniqueID;
+	}
+	
+	public static String getRandomString(int length)
+	{
+	String str="abcdefghigklmnopkrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789";
+	Random random=new Random();
+	StringBuffer sf=new StringBuffer();
+	for(int i=0;i<length;i++)
+	{
+	 int number=random.nextInt(62);//0~61
+	 sf.append(str.charAt(number));
+	 
+
+	}
+	return sf.toString();
 	}
 }

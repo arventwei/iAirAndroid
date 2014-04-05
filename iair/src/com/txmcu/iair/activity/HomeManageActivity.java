@@ -70,7 +70,7 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 				Log.d(TAG, "item : " + index + " -- clicked!");
 
 				Home device = (Home) adapter.getItem(index);
-				final String snString = device.sn;
+				final String snString = device.homeid;
 				
 					if (editMode) {
 

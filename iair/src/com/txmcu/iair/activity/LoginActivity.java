@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
-import java.util.Map;
+import java.util.List;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -41,6 +41,7 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.tendcloud.tenddata.TCAgent;
 import com.txmcu.iair.R;
+import com.txmcu.iair.adapter.Home;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
 import com.txmcu.iair.common.iAirUtil;
@@ -74,13 +75,15 @@ public class LoginActivity extends Activity implements OnClickListener {
 		this.application = ((iAirApplication) getApplication());
 		
 		
+
+		
+		PushLink.start(this, R.drawable.ic_launcher, "qk3ne7ortm8emgdf", iAirUtil.guid(this));
+
 		//Changing default notification messages
 		StatusBarStrategy sbs =  (StatusBarStrategy) PushLink.getCurrentStrategy();
 		sbs.setStatusBarTitle(getString(R.string.hasnewversion));
 		sbs.setStatusBarDescription(getString(R.string.clickupdate));
 		
-		PushLink.start(this, R.drawable.ic_launcher, "qk3ne7ortm8emgdf", iAirUtil.guid(this));
-
 		this.loginQQ = ((Button) findViewById(R.id.loginQQRL));
 		this.loginSina = ((Button) findViewById(R.id.loginSinaRL));
 		this.loginQQ.setOnClickListener(this);
@@ -126,7 +129,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		// getMenuInflater().inflate(R.menu.main, menu);
-		TryLoadMainActivity("qq", "test_token", "test_openid", "test_name");
+		TryLoadMainActivity("qq", "test_token", "test_openid"+iAirUtil.getRandomString(5), "test_name");
 		return true;
 	}
 
@@ -529,31 +532,82 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	public void TryLoadMainActivity(final String authType,final String token,
 			final String openId,final String nickName) {
-
+		
+		
+		
 		XinServerManager.login(this, authType, token, openId, nickName,
 				new XinServerManager.onSuccess() {
 
 					@Override
-					public void run(String response) {
+					public void run(JSONObject response) throws JSONException {
 						// TODO Auto-generated method stub
-						Map<String, String> snMap = iAirUtil
-								.getQueryMapFromUrl(response);
+						String ret = response.getString("ret");
+						String usertype = response.getString("usertype");
+						String userid = response.getString("userid");
+						
 
-						application.setUserid(snMap.get("userid"));
-
-						Intent localIntent = new Intent(LoginActivity.this,
-								MainActivity.class);
-						localIntent.putExtra("authType", authType);
-						localIntent.putExtra("token", token);
-						localIntent.putExtra("openId", openId);
-						localIntent.putExtra("nickName", nickName);
+						application.setUserid(userid);
 						application.setNickName(nickName);
-						LoginActivity.this.startActivity(localIntent);
-						LoginActivity.this.finish();
-						// Toast.makeText(MainActivity.this,
-						// R.string.xiaoxin_login_ok, Toast.LENGTH_LONG).show();
+						
+						if (usertype.equals("new")) {
+							
+							
+							XinServerManager.gethome_structdata(LoginActivity.this, userid, new XinServerManager.onSuccess() {
+								
+								@Override
+								public void run(JSONObject response) throws JSONException {
+									
+									List<Home> homes = XinServerManager.getHomeFromJson(LoginActivity.this,response.getJSONArray("home"));
+									application.homeList =(homes);
+									
+									Intent localIntent = new Intent(LoginActivity.this,
+											NewUser1Activity.class);
+									
+									LoginActivity.this.startActivity(localIntent);
+									LoginActivity.this.finish();
+								}
+							});
+							
+							
+						}
+						else {
+							
+							Intent localIntent = new Intent(LoginActivity.this,
+									MainActivity.class);
+							
+							LoginActivity.this.startActivity(localIntent);
+							LoginActivity.this.finish();
+						}
+						
+						
 					}
 				});
+		
+
+//		XinServerManager.login(this, authType, token, openId, nickName,
+//				new XinServerManager.onSuccess() {
+//
+//					@Override
+//					public void run(String response) {
+//						// TODO Auto-generated method stub
+//						Map<String, String> snMap = iAirUtil
+//								.getQueryMapFromUrl(response);
+//
+//						application.setUserid(snMap.get("userid"));
+//
+//						Intent localIntent = new Intent(LoginActivity.this,
+//								MainActivity.class);
+//						localIntent.putExtra("authType", authType);
+//						localIntent.putExtra("token", token);
+//						localIntent.putExtra("openId", openId);
+//						localIntent.putExtra("nickName", nickName);
+//						application.setNickName(nickName);
+//						LoginActivity.this.startActivity(localIntent);
+//						LoginActivity.this.finish();
+//						// Toast.makeText(MainActivity.this,
+//						// R.string.xiaoxin_login_ok, Toast.LENGTH_LONG).show();
+//					}
+//				});
 
 	}
 }

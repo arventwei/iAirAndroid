@@ -76,7 +76,7 @@ public class CityManageActivity extends Activity implements
 
 	private void initTestData() {
 		// books = new ArrayList<City>();
-		adapter.addCity(1, getString(R.string.beijing));
+		adapter.addCity( getString(R.string.beijing));
 		//adapter.addCity(2, "南京");
 		// for (int i = 0; i < 1; i++) {
 		// setBooks();

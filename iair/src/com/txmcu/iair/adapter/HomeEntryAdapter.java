@@ -12,28 +12,29 @@ import android.widget.TextView;
 import com.txmcu.iair.R;
 import com.txmcu.iair.common.iAirApplication;
 
-public class MainEntryAdapter extends BaseAdapter
+public class HomeEntryAdapter extends BaseAdapter
 {
 	
-	private List<City> cities = new ArrayList<City>();
-	private List<Home> entries = new ArrayList<Home>();
-	
+	private List<Device> devices = new ArrayList<Device>();
+
+	Home home;
 	
 	Activity deviceManageActivity;
 	
 	
-	public MainEntryAdapter(Activity contentContext)
+	public HomeEntryAdapter(Activity contentContext,Home home)
 	{
 		deviceManageActivity = contentContext;
+		this.home = home;
 		//Device header = new Device();
 		
 
 	}
 	
-	public void syncHomes() {
-		entries.clear();
-		cities.clear();
-		cities.add(new City());//head
+	public void sync() {
+		devices.clear();
+		devices.clear();
+		devices.add(new Device());//head
 		
 		//Device bj = new Device("1111111");
 		//bj.name=deviceManageActivity.getString(R.string.beijing);
@@ -45,13 +46,14 @@ public class MainEntryAdapter extends BaseAdapter
 		
 		//double totalpm=0,totaltemp=0,totalhumi=0,totalpa=0;
 		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();
+		;
 		
-		for (City city : application.cityList) {
-			cities.add(city);
+		for (Device city : home.xiaoxins) {
+			devices.add(city);
 		}
-		for (Home home : application.homeList) {
-			entries.add(home);
-		}
+//		for (Home home : application.homeList) {
+//			entries.add(home);
+//		}
 //		List<String> snList = application.getXiaoxinSnList();
 //		for (String sn : snList) {
 //			Device xiaoxinDevice = application.getXiaoxin(sn);
@@ -96,17 +98,12 @@ public class MainEntryAdapter extends BaseAdapter
 	@Override
 	public int getCount() {
 		//return 5;
-		return cities.size()+entries.size();
+		return devices.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		if (position <  cities.size()) {
-			return cities.get(position);
-		}
-		else {
-			return entries.get(position - cities.size());
-		}
+		return devices.get(position);
 		//return entries.get(position);
 	}
 
@@ -126,23 +123,14 @@ public class MainEntryAdapter extends BaseAdapter
 			convertView = View.inflate(deviceManageActivity, R.layout.entry_main_entry_detail, null);
 			
 			Object bObject =getItem(position);
-			if (bObject.getClass() == City.class) {
-				City b = (City)bObject;
+			
+				Device b = (Device)bObject;
 				((TextView)convertView.findViewById(R.id.entry_name_label)).setText(b.name);
-				((TextView)convertView.findViewById(R.id.entry_pm25_label)).setText(String.valueOf(b.pm25));
-				((TextView)convertView.findViewById(R.id.entry_temp_label)).setText(String.valueOf(b.temp));
-				((TextView)convertView.findViewById(R.id.entry_comment_label)).setText(String.valueOf(b.wind_info));
-				((TextView)convertView.findViewById(R.id.entry_form_label)).setText(String.valueOf(0));
-			}
-			else {
-				Home b = (Home)bObject;
-				((TextView)convertView.findViewById(R.id.entry_name_label)).setText(b.homename);
 				((TextView)convertView.findViewById(R.id.entry_pm25_label)).setText(String.valueOf(b.pm25));
 				((TextView)convertView.findViewById(R.id.entry_temp_label)).setText(String.valueOf(b.temp));
 				((TextView)convertView.findViewById(R.id.entry_comment_label)).setText(String.valueOf(b.humi));
 				((TextView)convertView.findViewById(R.id.entry_form_label)).setText(String.valueOf(b.pa));
-				
-			}
+			
 			//Home b = entries.get(position);
 			
 			//((ImageView) convertView.findViewById(R.id.imageView1)).setImageResource(b.getBitmapId());

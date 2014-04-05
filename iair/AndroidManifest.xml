@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.txmcu.iair"
-    android:versionCode="4"
-    android:versionName="1.0" >
+    android:versionCode="6"
+    android:versionName="1.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -101,7 +101,18 @@
             android:name="com.txmcu.iair.activity.MainDownChatActivity"
             android:configChanges="keyboardHidden|orientation" />
       
-      
+      <activity
+            android:name="com.txmcu.iair.activity.NewUser1Activity"
+            android:configChanges="keyboardHidden|orientation" />
+      <activity
+            android:name="com.txmcu.iair.activity.NewUser2Activity"
+            android:configChanges="keyboardHidden|orientation" />
+      <activity
+            android:name="com.txmcu.iair.activity.NewUser3Activity"
+            android:configChanges="keyboardHidden|orientation" />
+      <activity
+            android:name="com.txmcu.iair.activity.NewUser4Activity"
+            android:configChanges="keyboardHidden|orientation" />
       
       <activity
             android:name="com.txmcu.iair.activity.DeviceModifyActivity"

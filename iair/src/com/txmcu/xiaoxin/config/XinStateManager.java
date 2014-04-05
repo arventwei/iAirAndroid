@@ -162,7 +162,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		     }
 		  }.start();
 	}
-	public void Config(String SSID,String Pwd,String _userid,String _sn)
+	public void Config(String SSID,String Pwd,String _userid,String _sn,String vsn,String homeId)
 	{
 		mCurState = State.Config;
 		SSID = SSID.replace("\"", "");
@@ -176,7 +176,7 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		List<String> detailinfo = getWifiDetailInfo(SSID);
 		udpclient.setSendWifiInfo(SSID, Pwd,
 				detailinfo.get(0), detailinfo.get(1),
-					detailinfo.get(2),sn,userid);
+					detailinfo.get(2),sn,userid,vsn,homeId);
 			
 			//udpclient.Looper();
 		//}
