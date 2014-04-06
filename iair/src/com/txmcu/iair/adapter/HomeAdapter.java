@@ -86,13 +86,20 @@ public class HomeAdapter extends BaseAdapter
 		else
 		{
 			convertView = View.inflate(homeManageActivity, R.layout.gridview_home_item, null);
-			((TextView)convertView.findViewById(R.id.city_name)).setText(b.homename);
-			//if (deviceManageActivity.editMode) {
-			//	convertView.findViewById(R.id.delete_btn).setVisibility(View.VISIBLE);
-			//}
-			//else {
-			//	convertView.findViewById(R.id.delete_btn).setVisibility(View.INVISIBLE);
-			//}
+			((TextView)convertView.findViewById(R.id.grid_home_name)).setText(b.homename);
+			((TextView)convertView.findViewById(R.id.grid_home_id)).setText(b.homeid);
+			if (b.share) {
+				((TextView)convertView.findViewById(R.id.grid_home_share)).setText("共享");
+			}
+			else {
+				((TextView)convertView.findViewById(R.id.grid_home_share)).setText("不共享");
+			}
+			if (homeManageActivity.editMode) {
+				convertView.findViewById(R.id.delete_btn).setVisibility(View.VISIBLE);
+			}
+			else {
+				convertView.findViewById(R.id.delete_btn).setVisibility(View.INVISIBLE);
+			}
 		}
 		
 		setitemSize(convertView);

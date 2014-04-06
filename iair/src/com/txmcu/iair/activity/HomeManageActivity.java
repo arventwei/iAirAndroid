@@ -1,5 +1,8 @@
 package com.txmcu.iair.activity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +16,9 @@ import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Home;
 import com.txmcu.iair.adapter.HomeAdapter;
+import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
+import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class HomeManageActivity extends Activity implements OnClickListener {
@@ -39,8 +44,8 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 		application = (iAirApplication) getApplication();
 		findViewById(R.id.back_img).setOnClickListener(this);
 
-		findViewById(R.id.device_choose_refresh_img).setOnClickListener(this);
-		findViewById(R.id.device_edit_btn).setOnClickListener(this);
+		findViewById(R.id.home_choose_refresh_img).setOnClickListener(this);
+		findViewById(R.id.home_edit_btn).setOnClickListener(this);
 
 		mGridview = ((DragableGridview) findViewById(R.id.home_gridview));
 
@@ -48,19 +53,24 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 
 		adapter = new HomeAdapter(this);
 
-		adapter.syncHomes();
-		adapter.notifyDataSetChanged();
+		refreshlist();
 		// initTestData();
 		addGridViewListener();
 
 	}
 
+	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		instance = null;
 	}
 
+	public void refreshlist()
+	{
+		adapter.syncHomes();
+		adapter.notifyDataSetChanged();
+	}
 	protected void addGridViewListener() {
 		mGridview.setAdapter(adapter);
 		mGridview.setOnItemClick(new OnItemClickListener() {
@@ -69,35 +79,53 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 			public void click(int index) {
 				Log.d(TAG, "item : " + index + " -- clicked!");
 
-				Home device = (Home) adapter.getItem(index);
-				final String snString = device.homeid;
+				Home home = (Home) adapter.getItem(index);
+				final String homeIdString = home.homeid;
 				
 					if (editMode) {
 
-//						XinServerManager.unbind(HomeManageActivity.this,
-//								application.getUserid(), snString,
-//								new XinServerManager.onSuccess() {
-//
-//									@Override
-//									public void run(String response) {
-//										if (response.equals("Ok")) {
-//											application.removeXiaoxin(snString);
-//											adapter.syncHomes();
-//											adapter.notifyDataSetChanged();
-//											if (MainActivity.instance != null) {
-//												MainActivity.instance
-//														.refreshlist();
-//											}
-//										}
-//
-//										// TODO Auto-generated method stub
-//										// Toast.makeText(MainActivity.this,
-//										// R.string.xiaoxin_login_ok,
-//										// Toast.LENGTH_LONG).show();
-//									}
-//								});
+						iAirUtil.showProgressDialog(HomeManageActivity.this);
+						XinServerManager.unbinduser_home(HomeManageActivity.this, application.getUserid(), homeIdString,new XinServerManager.onSuccess() {
+							
+							@Override
+							public void run(JSONObject response) throws JSONException {
+								
+								requesthomelist();
+								//iAirUtil.dismissDialog();
+								//application.homeList = XinServerManager.getHomeFromJson(HomeManageActivity.this,response.getJSONArray("home"));
+								//application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
+								// TODO Auto-generated method stub
+								//MainActivity.instance.refreshlist();
+								//HomeManageActivity.instance.refreshlist();
+								
+							//	synchomebb();
+								
+							}
+						});
 
 					} else {
+						if (homeIdString.equals(""))
+						{
+							Intent localIntent = new Intent(
+							HomeManageActivity.this,
+							HomeAddActivity.class);
+				
+							startActivity(localIntent);
+							overridePendingTransition(R.anim.left_enter,
+									R.anim.alpha_out);
+						}
+						else {
+							XinSession.getSession().put("home", home);
+							Intent localIntent = new Intent(
+									HomeManageActivity.this,
+									HomeModifyActivity.class);
+							localIntent.putExtra("type", 2);
+						
+							startActivity(localIntent);
+							overridePendingTransition(R.anim.left_enter,
+											R.anim.alpha_out);
+						}
+						
 //						Intent localIntent = new Intent(
 //								HomeManageActivity.this,
 //								DeviceModifyActivity.class);
@@ -129,11 +157,11 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 		case R.id.back_img:
 			finish();
 			break;
-		case R.id.device_choose_refresh_img: {
+		case R.id.home_choose_refresh_img: {
 
 			break;
 		}
-		case R.id.device_edit_btn: {
+		case R.id.home_edit_btn: {
 			editMode = !editMode;
 			adapter.notifyDataSetChanged();
 			break;
@@ -142,6 +170,23 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	public void requesthomelist() {
+		XinServerManager.getfirstpage_briefinfo(HomeManageActivity.this,application.getUserid(),new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(JSONObject response) throws JSONException {
+				iAirUtil.dismissDialog();
+				application.homeList = XinServerManager.getHomeFromJson(HomeManageActivity.this,response.getJSONArray("home"));
+				application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
+				// TODO Auto-generated method stub
+				MainActivity.instance.refreshlist();
+				HomeManageActivity.instance.refreshlist();
+				
+			//	synchomebb();
+				
+			}
+		});
+	}
 	// private void initTestData() {
 	//
 	// adapter.addDevice(2,"father");

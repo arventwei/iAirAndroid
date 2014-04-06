@@ -52,7 +52,7 @@ public class NewUser4Activity extends Activity implements OnClickListener {
 			//finish();
 			Intent localIntent = new Intent(this,
 					MainActivity.class);
-			
+			localIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			this.startActivity(localIntent);
 			this.finish();
 			

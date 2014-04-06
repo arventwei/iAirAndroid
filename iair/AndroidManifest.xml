@@ -113,6 +113,12 @@
       <activity
             android:name="com.txmcu.iair.activity.NewUser4Activity"
             android:configChanges="keyboardHidden|orientation" />
+      <activity
+            android:name="com.txmcu.iair.activity.HomeAddActivity"
+            android:configChanges="keyboardHidden|orientation" />
+     <activity
+            android:name="com.txmcu.iair.activity.HomeModifyActivity"
+            android:configChanges="keyboardHidden|orientation" />
       
       <activity
             android:name="com.txmcu.iair.activity.DeviceModifyActivity"

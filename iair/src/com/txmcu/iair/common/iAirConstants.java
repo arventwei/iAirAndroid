@@ -60,10 +60,10 @@ public interface iAirConstants {
     public static final String getfirstpage_briefinfo  = "http://112.124.58.144/android/getfirstpage_briefinfo";
     public static final String gethome_detailweather  = "http://112.124.58.144/android/gethome_detailweather";
     public static final String getxiaoxin_detailweather  = "http://112.124.58.144/android/getxiaoxin_detailweather";
-    public static final String setxiaoxin_baseinfo3  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
-    public static final String setxiaoxin_baseinfo4  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
-    public static final String setxiaoxin_baseinfo5  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
-    public static final String setxiaoxin_baseinfo6  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
+    public static final String gethome_basedata  = "http://112.124.58.144/android/gethome_basedata";
+    public static final String binduser_home  = "http://112.124.58.144/android/binduser_home";
+    public static final String addhome  = "http://112.124.58.144/android/addhome";
+    public static final String unbinduser_home  = "http://112.124.58.144/android/unbinduser_home";
     
     
     

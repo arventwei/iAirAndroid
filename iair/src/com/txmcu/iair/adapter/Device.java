@@ -27,8 +27,8 @@ public class Device  implements Serializable {
 	
 	public Boolean share=false;
 	public Boolean isVirtual=false;
-	public int refresh_interval = 30;
-	public int status=0;
+	public String refresh_interval = "30";
+	public String status="0";
 	public String mode;
 	public String ontime;
 	public String offtime;

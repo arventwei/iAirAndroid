@@ -81,7 +81,7 @@ public class NewUser3Activity extends Activity implements OnClickListener {
 			String shareString = deviceShareBox.isChecked()?"1":"0";
 			
 			device.name = deviceName;
-			device.refresh_interval = Integer.valueOf(devicefresh);
+			device.refresh_interval =devicefresh;
 			device.share = Boolean.valueOf(shareString);
 			
 			//application.setNickName(userName);

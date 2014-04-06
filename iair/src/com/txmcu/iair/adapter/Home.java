@@ -31,8 +31,12 @@ public class Home  implements Serializable {
 	public String pa;
 	
 	public Boolean share=false;
-	public int refresh_interval = 30;
-	public int status=0;
+	public String refresh_interval = "30";
+	public String status="0";
+	
+	public String own;
+	public String ownernickname;
+	
 	
 	public List<Device> xiaoxins = new ArrayList<Device>();
 	public List<MessageVo> notices = new ArrayList<MessageVo>();

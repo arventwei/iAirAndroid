@@ -67,8 +67,8 @@ public class XinServerManager {
 			device.vsn = device.sn;
 		}
 		device.share = getJsonBoolean(obj, "share");
-		device.refresh_interval = getJsonInt(obj, "refresh_interval");
-		device.status = getJsonInt(obj, "status");
+		device.refresh_interval = getJsonString(obj, "refresh_interval");
+		device.status = getJsonString(obj, "status");
 		device.temp = getJsonString(obj, "temp");
 		device.humi = getJsonString(obj, "humi");
 		device.pm25 = getJsonString(obj, "pm25");
@@ -94,15 +94,7 @@ public class XinServerManager {
 				e.printStackTrace();
 			}
 
-			home.homeid = getJsonString(obj, "homeid");
-			home.homename = getJsonString(obj, "homename");
-			home.share = getJsonBoolean(obj, "share");
-			home.refresh_interval = getJsonInt(obj, "refresh_interval");
-			home.status = getJsonInt(obj, "status");
-			home.temp = getJsonString(obj, "temp");
-			home.humi = getJsonString(obj, "humi");
-			home.pa = getJsonString(obj, "pa");
-			home.pm25 = getJsonString(obj, "pm25");
+			getSingleHomeFromJson(home, obj);
 
 			try {
 				JSONArray jArray = obj.getJSONArray("xiaoxin");
@@ -124,6 +116,20 @@ public class XinServerManager {
 			ret.add(home);
 		}
 		return ret;
+	}
+
+	public static void getSingleHomeFromJson(Home home, JSONObject obj) {
+		home.homeid = getJsonString(obj, "homeid");
+		home.homename = getJsonString(obj, "homename");
+		home.share = getJsonBoolean(obj, "share");
+		home.refresh_interval = getJsonString(obj, "refresh_interval");
+		home.status = getJsonString(obj, "status");
+		home.temp = getJsonString(obj, "temp");
+		home.humi = getJsonString(obj, "humi");
+		home.pa = getJsonString(obj, "pa");
+		home.pm25 = getJsonString(obj, "pm25");
+		home.own  = getJsonString(obj, "own");
+		home.ownernickname = getJsonString(obj, "ownernickname");
 	}
 	
 	static public List<City> getCityFromJson(JSONArray jArr) {
@@ -469,7 +475,82 @@ public class XinServerManager {
 		postHttpBase(activity, r, post_params,
 				iAirConstants.getxiaoxin_detailweather);
 	}
+//	A1.1.7 【请求家本身的基础信息】关注其他人家的时候，获得指定家ID的基础信息
+//	1) 请求：http://112.124.58.144/android/gethome_basedata 
+//	2) form数据：userid=xxx&homeid=yyyy
+//	3) 返回：
+//	A.成功：{"ret":"Ok","homecount":1,"home":[{"homeid":100,"homename":"北京的家","share":0,"refresh_interval":30,"status":0,"own":1,"ownernickname":"fill西天取经"}]}
+//	B.失败：{"ret":"Fail"}
+	static public void gethome_basedata(final Activity activity,
+			final String userid,
+			final String homeid,
+			final onSuccess r) {
 
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("homeid", homeid);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.gethome_basedata);
+	}
+
+//	A3.2 【绑定已有的家接口】添加别人家的关注
+//	1) 请求：http://112.124.58.144/android/binduser_home
+//	2) form数据：userid=xxx&homeid=yyy&homenickname=yyy
+//	3) 返回：
+//	A.成功：{"ret":"Ok"}
+//	B.失败：{"ret":"Fail"}
+	static public void binduser_home(final Activity activity,
+			final String userid,
+			final String homeid,
+			final String homenickname,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("homeid", homeid);
+		post_params.put("homenickname", homenickname);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.binduser_home);
+	}
+//	A3. 家 添加新家、添加别人家的关注、删除家
+//	A3.1 【添加新家接口】添加新家
+//	1) 请求：http://112.124.58.144/android/addhome
+//	2) form数据：userid=xxx&homename=yyy&share=xxx&refreshinterval=yyy
+//	3) 返回：
+//	A.成功：{"ret":"Ok"}
+//	B.失败：{"ret":"Fail"}
+	static public void addhome(final Activity activity,
+			final String userid,
+			final String homename,
+			final String share,
+			final String refreshinterval,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("homename", homename);
+		post_params.put("share", share);
+		post_params.put("refreshinterval", refreshinterval);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.addhome);
+	}
+//	A3.3 【解除绑定家接口】删除家绑定
+//	1) 请求：http://112.124.58.144/android/unbinduser_home
+//	2) form数据：userid=xxx&homeid=yyy
+//	3) 返回：
+//	A.成功：{"ret":"Ok"}
+//	B.失败：{"ret":"Fail"}
+	static public void unbinduser_home(final Activity activity,
+			final String userid,
+			final String homeid,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("homeid", homeid);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.unbinduser_home);
+	}
 	
 	// old interface
 

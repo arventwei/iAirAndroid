@@ -125,8 +125,10 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 					dialog.show();
 
 
-				} else {
-					if (editMode) {
+				} else 
+				{
+					if (editMode) 
+					{
 						//TODO
 //						XinServerManager.unbind(DeviceManageActivity.this,
 //								application.getUserid(), snString,
