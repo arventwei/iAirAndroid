@@ -23,7 +23,7 @@
         android:textSize="@dimen/weather_detail_activity_title_bar_size" />
 
     <ImageView
-        android:id="@+id/device_choose_refresh_img"
+        android:id="@+id/home_refresh_top_btn"
         android:layout_width="@dimen/title_bar_btn_width"
         android:layout_height="fill_parent"
         android:background="@drawable/main_detail_activity_btn_bg"
@@ -38,7 +38,7 @@
         />
 
     <ImageView
-        android:id="@+id/device_edit_btn"
+        android:id="@+id/home_edit_top_btn"
         android:layout_width="@dimen/title_bar_btn_width"
         android:layout_height="fill_parent"
         android:background="@drawable/main_detail_activity_btn_bg"

@@ -8,6 +8,7 @@
  */
 package com.txmcu.iair.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -22,17 +23,18 @@ import com.txmcu.iair.R;
 public class MessageAdapter extends BaseAdapter{
     protected static final String TAG = "MessageAdapter";
     private Context context;
-    private List<MessageVo> messageVo;
-    private Home home;
+    private List<MessageVo> messageVo = new ArrayList<MessageVo>();
+    //private Home home;
     
 
-    public MessageAdapter(Context context,Home home) {
+    public MessageAdapter(Context context) {
         super();
         this.context = context;
-        this.messageVo = home.notices;
+       // this.messageVo = home.notices;
     }
     
-    public void syncMessage() {
+    public void syncMessage(Home home) {
+    	
     	 this.messageVo = home.notices;
 	}
 

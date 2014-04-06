@@ -5,26 +5,26 @@
     android:background="@drawable/popupwindow_bg" >
 
     <RelativeLayout
-        android:id="@+id/set_broad_layout"
+        android:id="@+id/logout_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10.0dip" >
 
         <ImageView
-            android:id="@+id/set_broad_img"
+            android:id="@+id/logout_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:src="@drawable/addcity_radio_icon" />
 
         <TextView
-            android:id="@+id/set_broad"
+            android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14.0dip"
-            android:layout_toRightOf="@id/set_broad_img"
-            android:text="@string/popwin_broad"
+            android:layout_toRightOf="@id/logout_img"
+            android:text="退出"
             android:textSize="16.0sp" />
     </RelativeLayout>
 
@@ -32,9 +32,9 @@
         android:id="@+id/barrage_popup_divider"
         android:layout_width="wrap_content"
         android:layout_height="1.0dip"
-        android:layout_alignLeft="@id/set_broad_layout"
-        android:layout_alignRight="@id/set_broad_layout"
-        android:layout_below="@id/set_broad_layout"
+        android:layout_alignLeft="@id/logout_layout"
+        android:layout_alignRight="@id/logout_layout"
+        android:layout_below="@id/logout_layout"
         android:layout_marginLeft="2.0dip"
         android:background="@drawable/popupwindow_list_divider" />
 

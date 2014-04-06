@@ -22,16 +22,17 @@ public class HomeEntryAdapter extends BaseAdapter
 	Activity deviceManageActivity;
 	
 	
-	public HomeEntryAdapter(Activity contentContext,Home home)
+	public HomeEntryAdapter(Activity contentContext)
 	{
 		deviceManageActivity = contentContext;
-		this.home = home;
+		
 		//Device header = new Device();
 		
 
 	}
 	
-	public void sync() {
+	public void sync(Home home) {
+		this.home = home;
 		devices.clear();
 		devices.clear();
 		devices.add(new Device());//head

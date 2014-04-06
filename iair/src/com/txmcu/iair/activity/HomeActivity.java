@@ -1,12 +1,12 @@
 package com.txmcu.iair.activity;
 
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +14,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
-import com.pushlink.android.PushLink;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.Home;
@@ -39,8 +40,11 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 	iAirApplication application;
 
 	public static  HomeActivity instance;
+	String homeidString;
 	public Home home;
 	ListView listView;
+	private PopupWindow popWinSetting;
+	public SamplePagerAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,30 +52,24 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 		instance = this;
 		application = (iAirApplication)getApplication();
 		Intent intent = getIntent();
-		final String homeidString = intent.getStringExtra("homeid");
+		homeidString = intent.getStringExtra("homeid");
 
-		XinServerManager.gethome_detailweather(this, application.getUserid(),
-				homeidString, new XinServerManager.onSuccess() {
-			
-			@Override
-			public void run(JSONObject response) throws JSONException {
-				home = application.getHome(homeidString);
-				home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
-				//application.homeList =(homes);
-				mPullToRefreshViewPager = (PullToRefreshViewPager) findViewById(R.id.pull_refresh_viewpager);
-				mPullToRefreshViewPager.setOnRefreshListener(HomeActivity.this);
+		
+		//application.homeList =(homes);
+		mPullToRefreshViewPager = (PullToRefreshViewPager) findViewById(R.id.pull_refresh_viewpager);
+		mPullToRefreshViewPager.setOnRefreshListener(HomeActivity.this);
 
-				VerticalViewPager vp = mPullToRefreshViewPager.getRefreshableView();
-				vp.setAdapter(new SamplePagerAdapter(HomeActivity.this));
-				
-			}
-		});
-		//home = application.getHome(homeidString);
-		//TODO...
+		VerticalViewPager vp = mPullToRefreshViewPager.getRefreshableView();
+		vp.setAdapter(new SamplePagerAdapter(HomeActivity.this));
+		
+		
+		requestlist();
 		
 
 
 		findViewById(R.id.back_img).setOnClickListener(this);
+		findViewById(R.id.home_edit_top_btn).setOnClickListener(this);
+		findViewById(R.id.home_refresh_top_btn).setOnClickListener(this);
 	}
 	@Override
 	protected void onDestroy() {
@@ -83,11 +81,11 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 	// Call it in the Activity you want to show the popup.
 	// You can show the popup in many screens by adding this in more than one
 	// Activity.
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PushLink.setCurrentActivity(this);
-	}
+//	@Override
+//	protected void onResume() {
+//		super.onResume();
+//		PushLink.setCurrentActivity(this);
+//	}
 //	public void refreshlist()
 //	{
 //		//  mainentryAdapter.syncDevices();
@@ -98,7 +96,92 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 		if (view.getId()==R.id.back_img) {
 			finish();
 		}
+		else if (view.getId()==R.id.home_edit_top_btn) {
+			main_top_setting();
+		}
+		else if (view.getId()==R.id.set_broad_layout) {
+			popwin_set_broad();
+		}
+		else  if (view.getId()==R.id.add_device_layout) {
+	
+			popwin_add_device();
+		
+		}
+	}
+	
+	private void main_top_setting() {
 
+		if (popWinSetting == null) {
+			View localView = getLayoutInflater().inflate(
+					R.layout.popup_window_home_layout, null, false);
+			popWinSetting = new PopupWindow(localView, LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT, true);
+			popWinSetting.setBackgroundDrawable(new ColorDrawable(0));
+			popWinSetting.setFocusable(true);
+			popWinSetting.setTouchable(true);
+			popWinSetting.setOutsideTouchable(true);
+			popWinSetting.update();
+			popWinSetting.setAnimationStyle(R.style.popwindow_anim_style);
+			localView.findViewById(R.id.set_broad_layout).setOnClickListener(
+					this);
+			localView.findViewById(R.id.add_device_layout).setOnClickListener(
+					this);
+			
+		}
+
+		popWinSetting.showAsDropDown(findViewById(R.id.home_edit_top_btn), 0, 0);
+	}
+	protected void CloseAddPopWindowAndOpenSubView(Class<?> cls) {
+		if (popWinSetting != null) {
+			popWinSetting.dismiss();
+			popWinSetting = null;
+		}
+
+		Intent localIntent = new Intent(this, cls);
+		startActivity(localIntent);
+		overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
+	}
+	private void popwin_add_device() {
+		CloseAddPopWindowAndOpenSubView(DeviceManageActivity.class);
+	}
+	private void popwin_set_broad() {
+
+		if (popWinSetting != null) {
+			popWinSetting.dismiss();
+			popWinSetting = null;
+		}
+
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.broad_dialog);
+		dialog.setTitle(R.string.broad_dialog_text_title);
+
+		// set the custom dialog components - text, image and button
+		// TextView text = (TextView) dialog.findViewById(R.id.text);
+		// text.setText("Android custom dialog example!");
+		// ImageView image = (ImageView) dialog.findViewById(R.id.image);
+		// image.setImageResource(R.drawable.ic_launcher);
+
+		Button dialogCancelButton = (Button) dialog
+				.findViewById(R.id.correct_cancel_btn);
+		// if button is clicked, close the custom dialog
+		dialogCancelButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		Button dialogOkButton = (Button) dialog
+				.findViewById(R.id.correct_ok_btn);
+		// if button is clicked, close the custom dialog
+		dialogOkButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+
+			}
+		});
+
+		dialog.show();
 	}
 	
 	@Override
@@ -127,7 +210,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 
 		public SamplePagerAdapter(HomeActivity paramContext) {
 			pageContext = paramContext;
-			messageAdapter = new MessageAdapter(pageContext, pageContext.home);;
+			messageAdapter = new MessageAdapter(pageContext);
 			application = (iAirApplication) pageContext.getApplication();
 		}
 
@@ -146,7 +229,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 					null);
 
 			if (position == 0) {
-				mainentryAdapter = new HomeEntryAdapter(pageContext,pageContext.home);//
+				mainentryAdapter = new HomeEntryAdapter(pageContext);//
 
 				listView = (ListView) subView.findViewById(R.id.homelist);// 实例化ListView
 				listView.setAdapter(mainentryAdapter);//
@@ -172,25 +255,9 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 
 					}
 				});
-				// iAirApplication application =
-				// (iAirApplication)pageContext.getApplication();
 
-//				XinServerManager.query_bindlist(pageContext,
-//						application.getUserid(),
-//						new XinServerManager.onSuccess() {
-//
-//							@Override
-//							public void run(String response) {
-//
-//								mainentryAdapter.syncDevices();
-//								mainentryAdapter.notifyDataSetChanged();
-//								// TODO Auto-generated method stub
-//
-//							}
-//						});
 				
-				mainentryAdapter.sync();
-				mainentryAdapter.notifyDataSetChanged();
+
 
 			} else {
 				
@@ -226,11 +293,27 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 		}
 	}
 
+	public void requestlist()
+	{
+		XinServerManager.gethome_detailweather(this, application.getUserid(),
+				homeidString, new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(JSONObject response) throws JSONException {
+				home = application.getHome(homeidString);
+				home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
+				refreshlist();
+				
+			}
+		});
+	}
 	public void refreshlist() {
 		SamplePagerAdapter adapter = (SamplePagerAdapter) (mPullToRefreshViewPager
 				.getRefreshableView().getAdapter());
-		adapter.mainentryAdapter.sync();
+		adapter.mainentryAdapter.sync(home);
 		adapter.mainentryAdapter.notifyDataSetChanged();
+		adapter.messageAdapter.syncMessage(home);
+		adapter.messageAdapter.notifyDataSetChanged();
 	}
 
 	private void AsyncMainEntrys() {

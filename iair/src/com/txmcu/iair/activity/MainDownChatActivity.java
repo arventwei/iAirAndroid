@@ -41,9 +41,11 @@ public class MainDownChatActivity extends Activity implements OnClickListener {
 		String homeidString = intent.getStringExtra("homeid");
 		home = application.getHome(homeidString);
 		
-		messageAdapter = new MessageAdapter(this, home);;
+		messageAdapter = new MessageAdapter(this);
 		chatlistView = (ListView) this.findViewById(R.id.chat_listView);// 实例化ListView
 		chatlistView.setAdapter(messageAdapter);//
+		
+		messageAdapter.syncMessage(home);
 		
 		//test data
 		//SimpleDateFormat df = new SimpleDateFormat("HH:mm");

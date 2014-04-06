@@ -1,13 +1,9 @@
 package com.txmcu.iair.activity;
 
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.bool;
 import android.app.ActivityGroup;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -19,9 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TabHost;
@@ -32,10 +26,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
-import com.pushlink.android.PushLink;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.City;
-import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.Home;
 import com.txmcu.iair.adapter.MainEntryAdapter;
 import com.txmcu.iair.common.iAirApplication;
@@ -43,6 +35,8 @@ import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class MainActivity extends ActivityGroup  implements
 		OnRefreshListener<VerticalViewPager>, OnClickListener {
+
+
 
 	private iAirApplication application;
 
@@ -109,11 +103,11 @@ public class MainActivity extends ActivityGroup  implements
 	// Call it in the Activity you want to show the popup.
 	// You can show the popup in many screens by adding this in more than one
 	// Activity.
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PushLink.setCurrentActivity(this);
-	}
+//	@Override
+//	protected void onResume() {
+//		super.onResume();
+//		PushLink.setCurrentActivity(this);
+//	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -155,19 +149,27 @@ public class MainActivity extends ActivityGroup  implements
 		case R.id.main_setting:
 			main_top_setting();
 			break;
+		case R.id.logout_layout:
+		{
+			LoginActivity.logout(this);
+			//finish();
+			
+			Intent localIntent = new Intent(MainActivity.this,
+					LoginActivity.class);
 
+			
+			this.startActivity(localIntent);
+			this.finish();
+			break;
+		}
 		case R.id.add_city_layout:
 			popwin_add_city();
 			break;
-		case R.id.add_device_layout:
-			popwin_add_device();
-			break;
+
 		case R.id.add_home_layout:
 			popwin_add_home();
 			break;
-		case R.id.set_broad_layout:
-			popwin_set_broad();
-			break;
+
 		case R.id.setting_layout:
 			popwin_setting();
 			break;
@@ -186,14 +188,14 @@ public class MainActivity extends ActivityGroup  implements
 
 		private static int[] sDrawables = { R.layout.include_main_up,
 				R.layout.include_main_down };
-		private ActivityGroup  pageContext;
+		private MainActivity  pageContext;
 
 		public ListView listView;
 		public MainEntryAdapter mainentryAdapter;
 		iAirApplication application;
 		public TabHost mTabHost;
 
-		public SamplePagerAdapter(ActivityGroup  paramContext) {
+		public SamplePagerAdapter(MainActivity  paramContext) {
 			pageContext = paramContext;
 			application = (iAirApplication) pageContext.getApplication();
 		}
@@ -292,21 +294,7 @@ public class MainActivity extends ActivityGroup  implements
 				
 				mTabHost = (TabHost) subView.findViewById(android.R.id.tabhost);
 				mTabHost.setup(pageContext.getLocalActivityManager());
-				mTabHost.clearAllTabs();
-				
-				
-				for(Home home:application.homeList)
-				{
-					Intent intent = new Intent(pageContext, MainDownChatActivity.class);
-					intent.putExtra("homeid", home.homeid);
-					setupTab(intent,  home.homename);
-				}
-				//setupTab(new Intent(pageContext, MainDownChatActivity.class),  "我的家");
-				//setupTab(new Intent(pageContext, MainDownChatActivity.class), "我的办公室");
-				//setupTab(new Intent(pageContext, MainDownChatActivity.class),  "朋友的家");
-				if (application.homeList.size()>0) {
-					mTabHost.setCurrentTab(0);
-				}
+				pageContext.synchomebb();
 				
 				
 
@@ -346,6 +334,7 @@ public class MainActivity extends ActivityGroup  implements
 				.getRefreshableView().getAdapter());
 		adapter.mainentryAdapter.syncHomes();
 		adapter.mainentryAdapter.notifyDataSetChanged();
+		synchomebb();
 	}
 
 	public void requestlist()
@@ -359,9 +348,31 @@ public class MainActivity extends ActivityGroup  implements
 				application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
 				// TODO Auto-generated method stub
 				refreshlist();
+			//	synchomebb();
 				
 			}
 		});
+	}
+	public  void synchomebb() {
+		
+		SamplePagerAdapter adapter = (SamplePagerAdapter) (mPullToRefreshViewPager
+				.getRefreshableView().getAdapter());
+		
+		adapter.mTabHost.clearAllTabs();
+		
+		
+		for(Home home:application.homeList)
+		{
+			Intent intent = new Intent(this, MainDownChatActivity.class);
+			intent.putExtra("homeid", home.homeid);
+			adapter.setupTab(intent,  home.homename);
+		}
+		//setupTab(new Intent(pageContext, MainDownChatActivity.class),  "我的家");
+		//setupTab(new Intent(pageContext, MainDownChatActivity.class), "我的办公室");
+		//setupTab(new Intent(pageContext, MainDownChatActivity.class),  "朋友的家");
+		if (application.homeList.size()>0) {
+			adapter.mTabHost.setCurrentTab(0);
+		}
 	}
 	private void AsyncMainEntrys() {
 
@@ -425,8 +436,7 @@ public class MainActivity extends ActivityGroup  implements
 			popWin.setAnimationStyle(R.style.popwindow_anim_style);
 			localView.findViewById(R.id.add_city_layout).setOnClickListener(
 					this);
-			localView.findViewById(R.id.add_device_layout).setOnClickListener(
-					this);
+
 			localView.findViewById(R.id.add_home_layout).setOnClickListener(
 					this);
 		}
@@ -461,9 +471,7 @@ public class MainActivity extends ActivityGroup  implements
 
 	}
 
-	private void popwin_add_device() {
-		CloseAddPopWindowAndOpenSubView(DeviceManageActivity.class);
-	}
+	
 	private void popwin_add_home() {
 		CloseAddPopWindowAndOpenSubView(HomeManageActivity.class);
 	}
@@ -485,54 +493,16 @@ public class MainActivity extends ActivityGroup  implements
 			popWinSetting.setOutsideTouchable(true);
 			popWinSetting.update();
 			popWinSetting.setAnimationStyle(R.style.popwindow_anim_style);
-			localView.findViewById(R.id.set_broad_layout).setOnClickListener(
-					this);
 			localView.findViewById(R.id.setting_layout)
 					.setOnClickListener(this);
+			localView.findViewById(R.id.logout_layout)
+			.setOnClickListener(this);
 		}
-
+		
 		popWinSetting.showAsDropDown(findViewById(R.id.main_setting), 0, 0);
 	}
 
-	private void popwin_set_broad() {
 
-		if (popWinSetting != null) {
-			popWinSetting.dismiss();
-			popWinSetting = null;
-		}
-
-		final Dialog dialog = new Dialog(this);
-		dialog.setContentView(R.layout.broad_dialog);
-		dialog.setTitle(R.string.broad_dialog_text_title);
-
-		// set the custom dialog components - text, image and button
-		// TextView text = (TextView) dialog.findViewById(R.id.text);
-		// text.setText("Android custom dialog example!");
-		// ImageView image = (ImageView) dialog.findViewById(R.id.image);
-		// image.setImageResource(R.drawable.ic_launcher);
-
-		Button dialogCancelButton = (Button) dialog
-				.findViewById(R.id.correct_cancel_btn);
-		// if button is clicked, close the custom dialog
-		dialogCancelButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-		Button dialogOkButton = (Button) dialog
-				.findViewById(R.id.correct_ok_btn);
-		// if button is clicked, close the custom dialog
-		dialogOkButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-
-			}
-		});
-
-		dialog.show();
-	}
 
 	private void popwin_setting() {
 		CloseSettingPopWindowAndOpenSubView(SettingActivity.class);
