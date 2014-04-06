@@ -13,7 +13,7 @@ import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class DeviceBindActivity extends Activity implements OnClickListener {
 
-	private static final String TAG = "iair";
+	private static final String TAG = "DeviceBindActivity";
 
 	EditText new_sn_EditText ;
 	Button   bindButton;

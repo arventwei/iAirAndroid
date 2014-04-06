@@ -119,11 +119,11 @@ public class MainEntryAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (position==0 ) 
 		{
-			convertView = View.inflate(deviceManageActivity, R.layout.entry_main_entry_detail_header, null);			
+			convertView = View.inflate(deviceManageActivity, R.layout.entry_new_main_entry_detail_header, null);			
 		}
 		else if(position >= 1)
 		{
-			convertView = View.inflate(deviceManageActivity, R.layout.entry_main_entry_detail, null);
+			convertView = View.inflate(deviceManageActivity, R.layout.entry_newmain_entry_detail, null);
 			
 			Object bObject =getItem(position);
 			if (bObject.getClass() == City.class) {
@@ -132,15 +132,15 @@ public class MainEntryAdapter extends BaseAdapter
 				((TextView)convertView.findViewById(R.id.entry_pm25_label)).setText(String.valueOf(b.pm25));
 				((TextView)convertView.findViewById(R.id.entry_temp_label)).setText(String.valueOf(b.temp));
 				((TextView)convertView.findViewById(R.id.entry_comment_label)).setText(String.valueOf(b.wind_info));
-				((TextView)convertView.findViewById(R.id.entry_form_label)).setText(String.valueOf(0));
+				//((TextView)convertView.findViewById(R.id.entry_form_label)).setText(String.valueOf(0));
 			}
 			else {
 				Home b = (Home)bObject;
 				((TextView)convertView.findViewById(R.id.entry_name_label)).setText(b.homename);
 				((TextView)convertView.findViewById(R.id.entry_pm25_label)).setText(String.valueOf(b.pm25));
 				((TextView)convertView.findViewById(R.id.entry_temp_label)).setText(String.valueOf(b.temp));
-				((TextView)convertView.findViewById(R.id.entry_comment_label)).setText(String.valueOf(b.humi));
-				((TextView)convertView.findViewById(R.id.entry_form_label)).setText(String.valueOf(b.pa));
+				((TextView)convertView.findViewById(R.id.entry_comment_label)).setText("甲醛:"+String.valueOf(b.pa));
+				//((TextView)convertView.findViewById(R.id.entry_form_label)).setText(String.valueOf(b.pa));
 				
 			}
 			//Home b = entries.get(position);

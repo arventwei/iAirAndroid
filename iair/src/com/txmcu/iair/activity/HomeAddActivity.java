@@ -56,7 +56,7 @@ public class HomeAddActivity extends Activity implements OnClickListener {
 			String homeid = exist_homeid_ed.getText().toString();
 			//String citName = cityNameEditText.getText().toString();
 			
-			iAirUtil.showProgressDialog(HomeAddActivity.this);
+			iAirUtil.showProgressDialogCancelable(HomeAddActivity.this);
 			XinServerManager.gethome_basedata (this,application.getUserid(),homeid,new XinServerManager.onSuccess() {
 				
 				@Override

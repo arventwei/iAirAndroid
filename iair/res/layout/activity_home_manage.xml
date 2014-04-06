@@ -19,7 +19,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10.0dip"
         android:gravity="center"
-        android:text="@string/drag_tip"
+        android:text="长按家，可拖动改变家顺序"
         android:textColor="@color/white"
         android:textSize="13.0dip" />
     

@@ -47,7 +47,7 @@ public class HomeEntryAdapter extends BaseAdapter
 		
 		//double totalpm=0,totaltemp=0,totalhumi=0,totalpa=0;
 		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();
-		;
+		
 		
 		for (Device city : home.xiaoxins) {
 			devices.add(city);

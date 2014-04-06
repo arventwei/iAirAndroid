@@ -20,6 +20,7 @@ public class City  implements Serializable {
 	public String    aqi;
 	public String weather;
 	public String weather_level;
+	public int sortseq;
 	
 	
 }

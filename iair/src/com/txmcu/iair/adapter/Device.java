@@ -32,6 +32,9 @@ public class Device  implements Serializable {
 	public String mode;
 	public String ontime;
 	public String offtime;
+	public int sortseq;
+
+	//public int sortseq;
 	
 	public Device() {
 		//this.id = imaxid++;

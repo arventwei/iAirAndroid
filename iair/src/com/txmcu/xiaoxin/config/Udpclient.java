@@ -8,6 +8,9 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.wifi.SupplicantState;
@@ -18,6 +21,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 
+import com.txmcu.iair.activity.MainActivity;
 import com.txmcu.iair.common.iAirConstants;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
 //import android.widget.Toast;
@@ -81,9 +85,12 @@ public class Udpclient {
     	//vsn:20
     	//flag 1 ,0-home,1-vsn
     	//home or vsn 19 bytes
-    	byte flag = 1;
-    	if (homeId.equals("")) {
-    		flag = 0;
+    	String  flag = "1";
+    	if (homeId.length()>0) {
+    		flag = "0";
+		}
+    	else if (vsn.length()>0){
+    		flag = "1";
 		}
     	
     	if(ssid.length()>20 ||pwd.length()>20)
@@ -122,14 +129,17 @@ public class Udpclient {
     	bytes =userid.getBytes();
     	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=10;
 
-    	bytes = new byte[]{flag};
-    	System.arraycopy(flag, 0, send_msg, len, 1);len+=1;
+    	//bytes = flag.getBytes();
+    	//System.arraycopy(bytes, 0, send_msg, len, bytes.length);len+=1;
     	
-    	if (flag==1) {
+    	if (flag.equals("1")) {
+    		send_msg[len]=1;len+=1;
     		bytes =vsn.getBytes();
+    		
         	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=19;
 		}
     	else {
+    		send_msg[len]=0;len+=1;
     		bytes =homeId.getBytes();
         	System.arraycopy(bytes,0,send_msg,len,bytes.length);len+=19;
 		}
@@ -360,6 +370,30 @@ public class Udpclient {
        		    	leftTime = millisUntilFinished;
        		    	 
        		    	xinMgr.restoreCurrentWifiState();
+       		    	
+       		    	
+       		    	
+       		    	//
+       		    	
+       		    	XinServerManager.checkxiaoxin_exist(activity,userid,sn,new XinServerManager.onSuccess() {
+       					
+       					@Override
+       					public void run(JSONObject response) throws JSONException {
+       						
+       						if(response.get("ret").equals("Ok"))
+       						{
+           						stateCode = endState;
+    							operations.setState(true,"Ok");	
+       						}
+
+       						//application.homeList = XinServerManager.getHomeFromJson(MainActivity.this,response.getJSONArray("home"));
+       						//application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
+       						// TODO Auto-generated method stub
+       						//refreshlist();
+       					//	synchomebb();
+       						
+       					}
+       				});
        		    	// TODO
 //       		    		XinServerManager.bind(activity, userid, sn,new XinServerManager.onSuccess() {
 //						

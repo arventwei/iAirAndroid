@@ -66,6 +66,19 @@ public interface iAirConstants {
     public static final String unbinduser_home  = "http://112.124.58.144/android/unbinduser_home";
     
     
+    public static final String addhomenotice  = "http://112.124.58.144/android/addhomenotice";
+    public static final String checkxiaoxin_exist  = "http://112.124.58.144/android/checkxiaoxin_exist";
+    
+    public static final String unbindhome_xiaoxin  = "http://112.124.58.144/android/unbindhome_xiaoxin";
+    public static final String setxiaoxin_switch  = "http://112.124.58.144/android/setxiaoxin_switch";
+    
+    public static final String unbinduser_home5  = "http://112.124.58.144/android/unbinduser_home";
+    public static final String unbinduser_home6  = "http://112.124.58.144/android/unbinduser_home";
+    public static final String unbinduser_home7  = "http://112.124.58.144/android/unbinduser_home";
+    
+    public static final String unbinduser_home8  = "http://112.124.58.144/android/unbinduser_home";
+    
+    
     
     
     public static final String API_Bind  ="http://112.124.58.144/mobile/bind";

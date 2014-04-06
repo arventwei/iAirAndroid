@@ -36,7 +36,7 @@ public class HomeModifyActivity extends Activity implements OnClickListener {
 	EditText homeNameEditText;
 	CheckBox homeShareCheckBox;
 	EditText homerefreshInterval;
-	
+	int autoadd;
 	//EditText cityNameEditText;
 
 	@Override
@@ -45,6 +45,7 @@ public class HomeModifyActivity extends Activity implements OnClickListener {
 		
 		Intent intent = getIntent();
 		type = intent.getIntExtra("type", 0);
+		autoadd = intent.getIntExtra("autoadd", 0);
 		home = (Home)XinSession.getSession().get("home");
 		XinSession.getSession().cleanUpSession();
 		
@@ -129,7 +130,7 @@ public class HomeModifyActivity extends Activity implements OnClickListener {
 		if (view.getId()==R.id.ok_btn) {
 			
 			if (type==0) {
-				iAirUtil.showProgressDialog(this);
+				iAirUtil.showProgressDialogCancelable(this);
 				String homenickname = homeNameEditText.getText().toString();
 				XinServerManager.binduser_home(this, application.getUserid(), home.homeid, homenickname, new XinServerManager.onSuccess() {
 					
@@ -142,7 +143,7 @@ public class HomeModifyActivity extends Activity implements OnClickListener {
 							iAirUtil.toastMessage(HomeModifyActivity.this, "添加别人家成功");
 							
 							
-							requesthomelist();
+							XinServerManager.requesthomelist(HomeModifyActivity.this,true);
 						}
 						else {
 							iAirUtil.dismissDialog();
@@ -152,12 +153,14 @@ public class HomeModifyActivity extends Activity implements OnClickListener {
 					}
 				});
 			}
-			else if (type==1) {
-				iAirUtil.showProgressDialog(this);
+			else if (type==1)
+			{
+				iAirUtil.showProgressDialogCancelable(this);
 				String homenickname = homeNameEditText.getText().toString();
 				String shareString  = homeShareCheckBox.isChecked()?"1":"0";
 				String refreshString = homerefreshInterval.getText().toString();
-				XinServerManager.addhome(this, application.getUserid(), homenickname, shareString,refreshString, new XinServerManager.onSuccess() {
+				XinServerManager.addhome(this, application.getUserid(), homenickname, shareString,refreshString, new XinServerManager.onSuccess() 
+				{
 					
 					@Override
 					public void run(JSONObject response) throws JSONException {
@@ -165,22 +168,45 @@ public class HomeModifyActivity extends Activity implements OnClickListener {
 						
 						if (response.get("ret").equals("Ok")) {
 							
+							final String homeidNewString = response.get("homeid").toString();
 							iAirUtil.toastMessage(HomeModifyActivity.this, "新建家成功");
 							
 							
-							requesthomelist();
+							XinServerManager.requesthomelist(HomeModifyActivity.this,true,new XinServerManager.onSuccess() {
+								
+								@Override
+								public void run(JSONObject response) throws JSONException {
+									// TODO Auto-generated method stub
+									if (autoadd==1) {
+										//TODO....
+										Home newHome = application.getHome(homeidNewString);
+										Intent localIntent = new Intent(
+												HomeModifyActivity.this,
+												DeviceManageActivity.class);
+										XinSession.getSession().put("home", newHome);
+										localIntent.putExtra("autoadd", 1);
+									
+										HomeModifyActivity.this.startActivity(localIntent);
+										HomeModifyActivity.this.overridePendingTransition(R.anim.left_enter,
+														R.anim.alpha_out);
+									}
+								}
+							});
+							
+							
 						}
 						else {
 							iAirUtil.dismissDialog();
 							iAirUtil.toastMessage(HomeModifyActivity.this, "新建家失败");
 						}
 						
+						
 					}
 				});
 				//addhome
 			}
 			else if (type==2) {
-				iAirUtil.showProgressDialog(this);
+				iAirUtil.showProgressDialogCancelable(this);
 				String homenickname = homeNameEditText.getText().toString();
 				String shareString  = homeShareCheckBox.isChecked()?"1":"0";
 				String refreshString = homerefreshInterval.getText().toString();
@@ -195,7 +221,7 @@ public class HomeModifyActivity extends Activity implements OnClickListener {
 							iAirUtil.toastMessage(HomeModifyActivity.this, "修改家成功");
 							
 							
-							requesthomelist();
+							XinServerManager.requesthomelist(HomeModifyActivity.this,true);
 						}
 						else {
 							iAirUtil.dismissDialog();
@@ -235,22 +261,7 @@ public class HomeModifyActivity extends Activity implements OnClickListener {
 
 
 
-	public void requesthomelist() {
-		XinServerManager.getfirstpage_briefinfo(HomeModifyActivity.this,application.getUserid(),new XinServerManager.onSuccess() {
-			
-			@Override
-			public void run(JSONObject response) throws JSONException {
-				iAirUtil.dismissDialog();
-				application.homeList = XinServerManager.getHomeFromJson(HomeModifyActivity.this,response.getJSONArray("home"));
-				application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
-				// TODO Auto-generated method stub
-				MainActivity.instance.refreshlist();
-				HomeManageActivity.instance.refreshlist();
-				HomeModifyActivity.this.finish();
-			//	synchomebb();
-				
-			}
-		});
-	}
+
+	//}
 
 }

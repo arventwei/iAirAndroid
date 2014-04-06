@@ -7,13 +7,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.bool;
 import android.app.Activity;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.tencent.record.debug.i;
+import com.txmcu.iair.activity.HomeManageActivity;
+import com.txmcu.iair.activity.HomeModifyActivity;
+import com.txmcu.iair.activity.MainActivity;
 import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.Home;
@@ -36,6 +39,43 @@ public class XinServerManager {
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.setTimeout(10000);
 		return client;
+	}
+	public static void requesthomelist(final Activity activity,final Boolean closeself) {
+		requesthomelist(activity,closeself,null);
+	}
+	public static void requesthomelist(final Activity activity,final Boolean closeself,final onSuccess r) {
+		
+		final iAirApplication application = (iAirApplication)activity.getApplication();
+		XinServerManager.getfirstpage_briefinfo(activity,application.getUserid(),new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(JSONObject response) throws JSONException {
+				iAirUtil.dismissDialog();
+				application.homeList = XinServerManager.getHomeFromJson(activity,response.getJSONArray("home"));
+				application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
+				
+				// TODO Auto-generated method stub
+				
+				if (MainActivity.instance!=null) {
+					MainActivity.instance.refreshlist();
+				}
+				if (HomeManageActivity.instance!=null) {
+					HomeManageActivity.instance.refreshlist();
+				}
+				if (closeself) {
+					activity.finish();
+				}
+				if (r!=null) {
+					r.run(response);
+				}
+//				if (HomeModifyActivity.this!=null) {
+//					HomeModifyActivity.this.finish();
+//				}
+				
+			//	synchomebb();
+				
+			}
+		});
 	}
 
 	static public List<Device> getXiaoxinFromJson(JSONArray jArr) {
@@ -78,6 +118,7 @@ public class XinServerManager {
 		device.mode = getJsonString(obj, "mode");
 		device.ontime = getJsonString(obj, "ontime");
 		device.offtime = getJsonString(obj, "offtime");
+		device.sortseq = getJsonInt(obj, "sortseq");
 	}
 
 	static public List<Home> getHomeFromJson(Activity activity,JSONArray jArr) {
@@ -130,6 +171,7 @@ public class XinServerManager {
 		home.pm25 = getJsonString(obj, "pm25");
 		home.own  = getJsonString(obj, "own");
 		home.ownernickname = getJsonString(obj, "ownernickname");
+		home.sortseq = getJsonInt(obj, "sortseq");
 	}
 	
 	static public List<City> getCityFromJson(JSONArray jArr) {
@@ -169,6 +211,7 @@ public class XinServerManager {
 		city.pm25 = getJsonString(obj, "pm25");
 		city.weather = getJsonString(obj, "weather");
 		city.weather_level = getJsonString(obj, "weather_level");
+		city.sortseq = getJsonInt(obj, "sortseq");
 	}
 
 	static public List<MessageVo> getNoticeFromJson(iAirApplication application,JSONArray jArr) {
@@ -391,7 +434,7 @@ public class XinServerManager {
 		post_params.put("homeid", homeid);
 		post_params.put("homename", homename);
 		post_params.put("share", share);
-		post_params.put("refreshinterval", refreshinterval);
+		post_params.put("refresh_interval", refreshinterval);
 		postHttpBase(activity, r, post_params, iAirConstants.sethome_baseinfo);
 	}
 
@@ -411,7 +454,7 @@ public class XinServerManager {
 		post_params.put("xiaoxinid", xiaoxinid);
 		post_params.put("xiaoxinname", xiaoxinname);
 		post_params.put("share", share);
-		post_params.put("refreshinterval", refreshinterval);
+		post_params.put("refresh_interval", refreshinterval);
 		postHttpBase(activity, r, post_params,
 				iAirConstants.setxiaoxin_baseinfo);
 	}
@@ -530,7 +573,7 @@ public class XinServerManager {
 		post_params.put("userid", userid);
 		post_params.put("homename", homename);
 		post_params.put("share", share);
-		post_params.put("refreshinterval", refreshinterval);
+		post_params.put("refresh_interval", refreshinterval);
 		postHttpBase(activity, r, post_params,
 				iAirConstants.addhome);
 	}
@@ -551,7 +594,88 @@ public class XinServerManager {
 		postHttpBase(activity, r, post_params,
 				iAirConstants.unbinduser_home);
 	}
+	//binduser_home
 	
+	//notice
+//	A10.1. 【添加告示接口】添加自己告示
+//	1) 请求：http://112.124.58.144/android/addhomenotice
+//	2) form数据：userid=xx&homeid=xxx&content=XXX
+//	3) 返回：
+//	A.成功：{"ret":"Ok"}
+//	B.失败：{"ret":"Fail"}
+	static public void addhomenotice(final Activity activity,
+			final String userid,
+			final String homeid,
+			final String content,
+			
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("homeid", homeid);
+		post_params.put("content", content);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.addhomenotice);
+	}
+//	A1.1.8 【检查小新是否存在接口】（该步骤为1.1.5的下一步）更新小新的基础信息
+//	1) 请求：http://112.124.58.144/android/checkxiaoxin_exist 
+//	2) form数据：userid=xxx&sn=xxx
+//	3) 返回：
+//	A.成功：{"ret":"Ok"}
+//	B.失败：{"ret":"Fail"}
+	static public void checkxiaoxin_exist(final Activity activity,
+			final String userid,
+			final String sn,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("sn", sn);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.checkxiaoxin_exist);
+	}
+	
+//	A4.2 【解绑小新接口】删除小新绑定
+//	1) 请求：http://112.124.58.144/android/unbindhome_xiaoxin
+//	2) form数据：userid=xx&homeid=yyy&sn=xxxx
+//	3) 返回：
+//	A.成功：{"ret":"Ok"}
+//	B.失败：{"ret":"Fail"}
+	static public void unbindhome_xiaoxin(final Activity activity,
+			final String userid,
+			final String homeid,
+			final String xiaoxinid,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("homeid", homeid);
+		post_params.put("xiaoxinid", xiaoxinid);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.unbindhome_xiaoxin);
+	}
+//	A8.1 【设置小新开关接口】切换开关
+//	1) 请求：http://112.124.58.144/android/setxiaoxin_switch
+//	2) form数据：userid=xx&sn=xxx&switch=xx
+//	3) 返回：
+//	A.成功：{"ret":"Ok"}
+//	B.失败：{"ret":"Fail"}
+	static public void setxiaoxin_switch(final Activity activity,
+			final String userid,
+			final String sn,
+			final String swh,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("sn", sn);
+		post_params.put("switch", swh);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.setxiaoxin_switch);
+	}
+	//setxiaoxin_switch
+	//unbindhome_xiaoxin
+	//checkxiaoxin_exist
 	// old interface
 
 	// static public void bind(final Activity activity, final String userid,

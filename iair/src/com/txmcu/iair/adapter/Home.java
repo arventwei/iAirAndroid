@@ -36,10 +36,20 @@ public class Home  implements Serializable {
 	
 	public String own;
 	public String ownernickname;
+	public int sortseq;
 	
 	
 	public List<Device> xiaoxins = new ArrayList<Device>();
 	public List<MessageVo> notices = new ArrayList<MessageVo>();
+	
+	
+	public void removeXiaoxin(Device xx) {
+	
+	List<Device> snList = xiaoxins;
+	snList.remove(xx);
+	xiaoxins = snList;
+
+}
 	//	public String ToJson()
 //	{
 //		try 

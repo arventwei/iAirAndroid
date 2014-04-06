@@ -28,6 +28,7 @@ import com.handmark.verticalview.VerticalViewPager;
 import com.txmcu.iair.R;
 import com.txmcu.iair.activity.HomeActivity.SamplePagerAdapter;
 import com.txmcu.iair.adapter.Device;
+import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
 import com.txmcu.xiaoxin.config.XinServerManager;
@@ -148,7 +149,8 @@ public class DetailDeviceActivity extends Activity implements
 
 	private void StartModifyView() {
 		Intent localIntent = new Intent(this, DeviceModifyActivity.class);
-		localIntent.putExtra("sn", xiaoxinDevice.sn);
+		localIntent.putExtra("type", 2);
+		XinSession.getSession().put("device", xiaoxinDevice);
 		this.startActivity(localIntent);
 		this.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
 
@@ -227,10 +229,12 @@ public class DetailDeviceActivity extends Activity implements
 				@Override
 				public void onClick(View v) {
 					String sn = xiaoxinDevice.sn;
-					int isOn = 0;
+					String isOn = "0";
 					if (((CheckBox) v).isChecked()) {
-						isOn = 1;
+						isOn = "1";
 					}
+					XinServerManager.setxiaoxin_switch(pageContext, pageContext.application.getUserid(),
+							sn, isOn, null);
 					//TODO
 //					XinServerManager.setxiaoxin_switch(pageContext,
 //									pageContext.application.getUserid(), sn,
@@ -262,8 +266,7 @@ public class DetailDeviceActivity extends Activity implements
 						// if(pageContext.application.getWifibackupNetId()!=-1)
 						// pageContext.wifiHotM.enableNetWorkById(pageContext.application.getWifibackupNetId());
 					}
-					// XinServerManager.setxiaoxin_switch(pageContext, sn, isOn,
-					// null);
+
 
 				}
 

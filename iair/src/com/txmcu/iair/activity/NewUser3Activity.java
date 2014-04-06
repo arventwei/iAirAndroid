@@ -32,9 +32,11 @@ public class NewUser3Activity extends Activity implements OnClickListener {
 	Home home;
 	Device device;
 
+public static NewUser3Activity instance;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		instance = this;
 		setContentView(R.layout.activity_newuser_3);
 		application = (iAirApplication)getApplication();
 		findViewById(R.id.prev_btn).setOnClickListener(this);

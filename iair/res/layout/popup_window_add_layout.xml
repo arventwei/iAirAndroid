@@ -62,5 +62,40 @@
             android:text="添加家"
             android:textSize="16.0sp" />
     </RelativeLayout>
+    
+    <View
+        android:id="@+id/barrage_popup_divider2"
+        android:layout_width="wrap_content"
+        android:layout_height="1.0dip"
+        android:layout_alignLeft="@id/add_home_layout"
+        android:layout_alignRight="@id/add_home_layout"
+        android:layout_below="@id/add_home_layout"
+        android:layout_marginLeft="2.0dip"
+        android:background="@drawable/popupwindow_list_divider" />
+<RelativeLayout
+        android:id="@+id/add_device_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barrage_popup_divider2"
+        android:padding="10.0dip" >
+
+        <ImageView
+            android:id="@+id/add_device_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/addcity_radio_icon" />
+
+        <TextView
+            android:id="@+id/add_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14.0dip"
+            android:layout_toRightOf="@id/add_device_img"
+            android:drawablePadding="5.0dip"
+            android:text="添加设备"
+            android:textSize="16.0sp" />
+    </RelativeLayout>
 
 </RelativeLayout>

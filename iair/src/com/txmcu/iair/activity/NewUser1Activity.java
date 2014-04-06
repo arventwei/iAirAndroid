@@ -3,6 +3,7 @@ package com.txmcu.iair.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract.Instances;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -20,12 +21,13 @@ public class NewUser1Activity extends Activity implements OnClickListener {
 
 	EditText userNameEditText;
 	EditText cityNameEditText;
+	public static NewUser1Activity instance;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_newuser_1);
-
+		instance  = this;
 		application = (iAirApplication)getApplication();
 		findViewById(R.id.next_btn).setOnClickListener(this);
 		userNameEditText = (EditText)findViewById(R.id.userName);

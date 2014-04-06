@@ -29,10 +29,12 @@ public class NewUser2Activity extends Activity implements OnClickListener {
 	CheckBox homeShareCheckBox;
 	EditText homerefreshInterval;
 	Home home;
+	public static NewUser2Activity instance;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		instance = this;
 		setContentView(R.layout.activity_newuser_2);
 		application = (iAirApplication)getApplication();
 		findViewById(R.id.prev_btn).setOnClickListener(this);

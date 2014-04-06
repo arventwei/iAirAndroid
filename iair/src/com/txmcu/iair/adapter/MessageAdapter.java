@@ -38,6 +38,10 @@ public class MessageAdapter extends BaseAdapter{
     	 this.messageVo = home.notices;
 	}
 
+    public void addmessage(MessageVo vo)
+    {
+    	this.messageVo.add(vo);
+    }
 
     @Override
     public int getCount() {
@@ -81,8 +85,8 @@ public class MessageAdapter extends BaseAdapter{
             holder.time = (TextView)convertView.findViewById(R.id.time);
             convertView.setTag(holder);
         }
-        holder.content.setText(message.getContent()+message.userName);
-        holder.time.setText(message.getTime());
+        holder.content.setText(message.getContent());
+        holder.time.setText(message.userName+":"+message.getTime());
         return convertView;
     }
     

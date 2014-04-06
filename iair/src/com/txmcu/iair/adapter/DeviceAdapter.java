@@ -27,16 +27,24 @@ public class DeviceAdapter extends BaseAdapter
 	{
 		deviceManageActivity = activity;
 	}
-	public void syncDevices(){
+	public void syncDevices(Home home){
 		devices.clear();
-		
+		if (home==null) {
+			return;
+		}
 		iAirApplication application = (iAirApplication)deviceManageActivity.getApplication();
+		for (Device device : home.xiaoxins) {
+			devices.add(device);
+		}
 //		List<String> snList = application.getXiaoxinSnList();
 //		for (String sn : snList) {
 //			Device xiaoxinDevice = application.getXiaoxin(sn);
 //			devices.add(xiaoxinDevice);
 //		}
-		devices.add(new Device(""));
+		if (home.own.equals("1")) {
+			devices.add(new Device(""));
+		}
+		
 	}
 //	public  void addDevice(String sn) {
 //		Device book = new Device();
@@ -46,6 +54,11 @@ public class DeviceAdapter extends BaseAdapter
 //    	devices.add(book);
 //	}
 	public void waspping(int oldIndex, int newIndex) {
+		if (oldIndex == devices.size()-1
+				||newIndex == devices.size()-1) {
+			return;
+		}
+		
 		Device book = devices.get(oldIndex);
 		Device newOneDevice = devices.get(newIndex);
 		if( (book!=null && book.sn.equals("")) 
@@ -85,6 +98,21 @@ public class DeviceAdapter extends BaseAdapter
 		{
 			convertView = View.inflate(deviceManageActivity, R.layout.gridview_device_item, null);
 			((TextView)convertView.findViewById(R.id.city_name)).setText(b.name);
+			String idString = b.id;
+			if (b.status.equals("0")) {
+				idString+="/离线";
+			}
+			else {
+				idString+="/在线";
+			}
+			((TextView)convertView.findViewById(R.id.grid_device_id)).setText(idString);
+			
+			if (b.share) {
+				((TextView)convertView.findViewById(R.id.grid_device_share)).setText("共享");
+			}
+			else {
+				((TextView)convertView.findViewById(R.id.grid_device_share)).setText("不共享");
+			}
 			if (deviceManageActivity.editMode) {
 				convertView.findViewById(R.id.delete_btn).setVisibility(View.VISIBLE);
 			}

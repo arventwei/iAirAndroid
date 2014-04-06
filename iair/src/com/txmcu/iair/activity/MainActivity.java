@@ -1,5 +1,7 @@
 package com.txmcu.iair.activity;
 
+import java.text.SimpleDateFormat;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TabHost;
@@ -65,30 +68,7 @@ public class MainActivity extends ActivityGroup  implements
 
 		//refreshlist();
 		requestlist();
-	//	String authType = this.getIntent().getStringExtra("authType");
-	//	String token = this.getIntent().getStringExtra("token");
-	//	String openId = this.getIntent().getStringExtra("openId");
-	//	String nickName = this.getIntent().getStringExtra("nickName");
 
-//		XinServerManager.login(this, authType, token, openId, nickName,
-//				new XinServerManager.onSuccess() {
-//
-//					@Override
-//					public void run(JSONObject response) throws JSONException {
-//						// TODO Auto-generated method stub
-//						String ret = response.getString("ret");
-//						String usertype = response.getString("usertype");
-//						String userid = response.getString("userid");
-//						
-//						//Map<String, String> snMap = iAirUtil
-//						//		.getQueryMapFromUrl(response);
-//
-//						application.setUserid(userid);
-//						Toast.makeText(MainActivity.this,
-//								R.string.xiaoxin_login_ok, Toast.LENGTH_LONG)
-//								.show();
-//					}
-//				});
 
 	}
 
@@ -169,7 +149,9 @@ public class MainActivity extends ActivityGroup  implements
 		case R.id.add_home_layout:
 			popwin_add_home();
 			break;
-
+		case R.id.add_device_layout:
+			popwin_add_device();
+			break;
 		case R.id.setting_layout:
 			popwin_setting();
 			break;
@@ -215,13 +197,7 @@ public class MainActivity extends ActivityGroup  implements
 					null);
 
 			if (position == 0) {
-				
-	
-//				LayoutParams localLayoutParams = new LayoutParams(500,300);
-//			    localLayoutParams.width = 566;
-//			    localLayoutParams.height = 300;
-//			    subView.setLayoutParams(localLayoutParams);
-				//subView.setLayoutParams(params)
+
 				mainentryAdapter = new MainEntryAdapter(pageContext);//
 
 				listView = (ListView) subView.findViewById(R.id.homelist);// 实例化ListView
@@ -254,19 +230,7 @@ public class MainActivity extends ActivityGroup  implements
 							pageContext.overridePendingTransition(
 									R.anim.left_enter, R.anim.alpha_out);
 						}
-//						if (position > 0) {
-//							if (b.sn.equals("1111111")) {
-//								Intent localIntent = new Intent(pageContext,
-//										DetailCityActivity.class);
-//								// localIntent.putExtra("sn", b.sn);
-//								pageContext.startActivity(localIntent);
-//								pageContext.overridePendingTransition(
-//										R.anim.left_enter, R.anim.alpha_out);
-//
-//							} else if (b.sn.equals("1111112")) {
-//								
-//
-//							}
+
 
 					//	}
 					}
@@ -339,6 +303,12 @@ public class MainActivity extends ActivityGroup  implements
 
 	public void requestlist()
 	{
+		
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+		String updateText = "今天"+df.format(new  java.util.Date()).toString()+"发布";
+		
+		TextView lblEditText = (TextView)findViewById(R.id.update_time);
+		lblEditText.setText(updateText);
 		XinServerManager.getfirstpage_briefinfo(this,application.getUserid(),new XinServerManager.onSuccess() {
 			
 			@Override
@@ -434,11 +404,10 @@ public class MainActivity extends ActivityGroup  implements
 			popWin.setOutsideTouchable(true);
 			popWin.update();
 			popWin.setAnimationStyle(R.style.popwindow_anim_style);
-			localView.findViewById(R.id.add_city_layout).setOnClickListener(
-					this);
-
-			localView.findViewById(R.id.add_home_layout).setOnClickListener(
-					this);
+			localView.findViewById(R.id.add_city_layout).setOnClickListener(this);
+			localView.findViewById(R.id.add_home_layout).setOnClickListener(this);
+			localView.findViewById(R.id.add_device_layout).setOnClickListener(this);
+			
 		}
 
 		popWin.showAsDropDown(findViewById(R.id.add_city), 0, 0);
@@ -452,6 +421,7 @@ public class MainActivity extends ActivityGroup  implements
 
 		Intent localIntent = new Intent(this, cls);
 		startActivity(localIntent);
+		
 		overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
 	}
 
@@ -476,6 +446,10 @@ public class MainActivity extends ActivityGroup  implements
 		CloseAddPopWindowAndOpenSubView(HomeManageActivity.class);
 	}
 
+	private void popwin_add_device()
+	{
+		CloseAddPopWindowAndOpenSubView(DeviceMenuAddActivity.class);
+	}
 	private void main_top_share() {
 
 	}

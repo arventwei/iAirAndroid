@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
@@ -27,6 +28,7 @@ import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.Home;
 import com.txmcu.iair.adapter.HomeEntryAdapter;
 import com.txmcu.iair.adapter.MessageAdapter;
+import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
@@ -102,11 +104,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 		else if (view.getId()==R.id.set_broad_layout) {
 			popwin_set_broad();
 		}
-		else  if (view.getId()==R.id.add_device_layout) {
-	
-			popwin_add_device();
 		
-		}
 	}
 	
 	private void main_top_setting() {
@@ -124,26 +122,14 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 			popWinSetting.setAnimationStyle(R.style.popwindow_anim_style);
 			localView.findViewById(R.id.set_broad_layout).setOnClickListener(
 					this);
-			localView.findViewById(R.id.add_device_layout).setOnClickListener(
-					this);
+//			localView.findViewById(R.id.add_device_layout).setOnClickListener(
+//					this);
 			
 		}
 
 		popWinSetting.showAsDropDown(findViewById(R.id.home_edit_top_btn), 0, 0);
 	}
-	protected void CloseAddPopWindowAndOpenSubView(Class<?> cls) {
-		if (popWinSetting != null) {
-			popWinSetting.dismiss();
-			popWinSetting = null;
-		}
 
-		Intent localIntent = new Intent(this, cls);
-		startActivity(localIntent);
-		overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
-	}
-	private void popwin_add_device() {
-		CloseAddPopWindowAndOpenSubView(DeviceManageActivity.class);
-	}
 	private void popwin_set_broad() {
 
 		if (popWinSetting != null) {
@@ -176,7 +162,20 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 		dialogOkButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				
 				dialog.dismiss();
+				String content = ((EditText)dialog.findViewById(R.id.barrage_edit_text)).getText().toString();
+				XinServerManager.addhomenotice(HomeActivity.this, application.getUserid(), homeidString,
+						content, new XinServerManager.onSuccess() {
+							
+							@Override
+							public void run(JSONObject response) throws JSONException {
+								// TODO Auto-generated method stub
+								requestlist();
+								
+							}
+						});
+				
 
 			}
 		});
@@ -302,6 +301,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 			public void run(JSONObject response) throws JSONException {
 				home = application.getHome(homeidString);
 				home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
+				home.notices = XinServerManager.getNoticeFromJson(application,response.getJSONArray("notice"));
 				refreshlist();
 				
 			}
@@ -319,6 +319,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 	private void AsyncMainEntrys() {
 
 		mPullToRefreshViewPager.onRefreshComplete();
+		requestlist();
 //		XinServerManager.query_bindlist(this, application.getUserid(),
 //				new XinServerManager.onSuccess() {
 //

@@ -1,16 +1,14 @@
 package com.txmcu.iair.activity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import cn.classd.dragablegrid.widget.DragableGridview;
 import cn.classd.dragablegrid.widget.DragableGridview.OnItemClickListener;
 import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
@@ -18,6 +16,8 @@ import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.DeviceAdapter;
+import com.txmcu.iair.adapter.Home;
+import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
@@ -32,8 +32,11 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 
 	public DeviceAdapter adapter;
 
+	public Home home;
 	public Boolean editMode = false;
 	iAirApplication application;
+
+	int isAutoAddBoolean =0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,11 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_device_manage);
 
 		application = (iAirApplication) getApplication();
+		home  = (Home)XinSession.getSession().get("home");
 		findViewById(R.id.back_img).setOnClickListener(this);
 
+		Intent intent = getIntent();
+		isAutoAddBoolean = intent.getIntExtra("autoadd", 0);
 		findViewById(R.id.device_choose_refresh_img).setOnClickListener(this);
 		findViewById(R.id.device_edit_btn).setOnClickListener(this);
 
@@ -53,13 +59,36 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 
 		adapter = new DeviceAdapter(this);
 
-		adapter.syncDevices();
-		adapter.notifyDataSetChanged();
+		
 		// initTestData();
 		addGridViewListener();
+		
+		requestlist();
 
 	}
 
+	public void requestlist() {
+		XinServerManager.gethome_detailweather(this, application.getUserid(),
+				home.homeid, new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(JSONObject response) throws JSONException {
+				home = application.getHome(home.homeid);
+				XinServerManager.getSingleHomeFromJson(home, response);
+				home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
+				DeviceManageActivity.this.updateDetailHome(home);
+				
+			}
+		});
+	}
+
+	public void updateDetailHome(Home home)
+	{
+		this.home = home;
+		adapter.syncDevices(this.home);
+		adapter.notifyDataSetChanged();
+		
+	}
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -74,55 +103,63 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 			public void click(int index) {
 				Log.d(TAG, "item : " + index + " -- clicked!");
 
-				Device device = (Device) adapter.getItem(index);
+				final Device device = (Device) adapter.getItem(index);
 				final String snString = device.sn;
 				if (snString.equals("")) {
 
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							DeviceManageActivity.this);
-					builder.setTitle(R.string.xiaoxincreatemode);
-
-					ListView modeList = new ListView(DeviceManageActivity.this);
-					String[] stringArray = new String[] { DeviceManageActivity.this.getString(R.string.addnewxiaoxin), 
-							DeviceManageActivity.this.getString(R.string.bindexistxiaoxin) };
-					ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(
-							DeviceManageActivity.this,
-							android.R.layout.simple_list_item_1,
-							android.R.id.text1, stringArray);
-					modeList.setAdapter(modeAdapter);
-
-					builder.setView(modeList);
-					final Dialog dialog = builder.create();
-
-					modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-						@Override
-						public void onItemClick(AdapterView parent, View view,
-								int position, long id) {
-							if (position == 0) {
-								 Intent localIntent = new Intent(DeviceManageActivity.this,DeviceAddActivity.class);
-								 localIntent.putExtra("homeId", "");
-								 localIntent.putExtra("vsn", "");
-								 startActivity(localIntent);
-								 overridePendingTransition(R.anim.left_enter,  R.anim.alpha_out);
-							} else {
-								 Intent localIntent = new
-								 Intent(DeviceManageActivity.this,DeviceBindActivity.class);
-								
-								 startActivity(localIntent);
-								 overridePendingTransition(R.anim.left_enter,
-								 R.anim.alpha_out);
-								
-
-							}
-
-							dialog.dismiss();
-
-						}
-
-					});
-
-					dialog.show();
+					
+					 Intent localIntent = new Intent(DeviceManageActivity.this,DeviceAddActivity.class);
+					 localIntent.putExtra("homeId", home.homeid);
+					 localIntent.putExtra("vsn", "");
+					 startActivity(localIntent);
+					 overridePendingTransition(R.anim.left_enter,  R.anim.alpha_out);
+					 
+					 
+//					AlertDialog.Builder builder = new AlertDialog.Builder(
+//							DeviceManageActivity.this);
+//					builder.setTitle(R.string.xiaoxincreatemode);
+//
+//					ListView modeList = new ListView(DeviceManageActivity.this);
+//					String[] stringArray = new String[] { DeviceManageActivity.this.getString(R.string.addnewxiaoxin), 
+//							DeviceManageActivity.this.getString(R.string.bindexistxiaoxin) };
+//					ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(
+//							DeviceManageActivity.this,
+//							android.R.layout.simple_list_item_1,
+//							android.R.id.text1, stringArray);
+//					modeList.setAdapter(modeAdapter);
+//
+//					builder.setView(modeList);
+//					final Dialog dialog = builder.create();
+//
+//					modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//						@Override
+//						public void onItemClick(AdapterView parent, View view,
+//								int position, long id) {
+//							if (position == 0) {
+//								 Intent localIntent = new Intent(DeviceManageActivity.this,DeviceAddActivity.class);
+//								 localIntent.putExtra("homeId", home.homeid);
+//								 localIntent.putExtra("vsn", "");
+//								 startActivity(localIntent);
+//								 overridePendingTransition(R.anim.left_enter,  R.anim.alpha_out);
+//							} else {
+//								 Intent localIntent = new
+//								 Intent(DeviceManageActivity.this,DeviceBindActivity.class);
+//								
+//								 startActivity(localIntent);
+//								 overridePendingTransition(R.anim.left_enter,
+//								 R.anim.alpha_out);
+//								
+//
+//							}
+//
+//							dialog.dismiss();
+//
+//						}
+//
+//					});
+//
+//					dialog.show();
 
 
 				} else 
@@ -130,6 +167,28 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 					if (editMode) 
 					{
 						//TODO
+						XinServerManager.unbindhome_xiaoxin(DeviceManageActivity.this, application.getUserid(), home.homeid, device.id,
+								new XinServerManager.onSuccess() {
+							
+							@Override
+							public void run(JSONObject response) throws JSONException {
+								
+								if (response.get("ret").equals("Ok")) {
+									//application.removeXiaoxin(snString);
+									home.removeXiaoxin(device);
+									adapter.syncDevices(home);
+									adapter.notifyDataSetChanged();
+									if (MainActivity.instance != null) {
+										MainActivity.instance
+												.refreshlist();
+									}
+								}
+								//home = application.getHome(homeidString);
+								//home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
+								//refreshlist();
+								
+							}
+						});
 //						XinServerManager.unbind(DeviceManageActivity.this,
 //								application.getUserid(), snString,
 								
@@ -158,7 +217,8 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 						Intent localIntent = new Intent(
 								DeviceManageActivity.this,
 								DeviceModifyActivity.class);
-						localIntent.putExtra("sn", device.sn);
+						localIntent.putExtra("type", 2);
+						XinSession.getSession().put("device", device);
 						startActivity(localIntent);
 						overridePendingTransition(R.anim.left_enter,
 								R.anim.alpha_out);

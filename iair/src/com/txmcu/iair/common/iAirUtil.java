@@ -435,9 +435,30 @@ public class iAirUtil {
 		new AlertDialog.Builder(context).setTitle(title).setMessage(rmsg)
 				.setNegativeButton(R.string.i_known, null).create().show();
 	}
+	public static final void showResultDialog(Context context, String msg,
+			String title,DialogInterface.OnClickListener r) {
+		if(msg == null) return;
+		String rmsg = msg.replace(",", "\n");
+		Log.d("Util", rmsg);
+		new AlertDialog.Builder(context).setTitle(title).setMessage(rmsg)
+				.setPositiveButton("确定", r)
+				.setNegativeButton("取消", null)
+				.create().show();
+	}
 	public static final void showProgressDialog(Context context)
 	{
 		showProgressDialog(context,"","");
+	}
+	public static final void showProgressDialogCancelable(Context context)
+	{
+		showProgressDialog(context,"","",new DialogInterface.OnCancelListener() {
+			
+			@Override
+			public void onCancel(DialogInterface arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	public static final void showProgressDialog(Context context, String title,
 			String message) 

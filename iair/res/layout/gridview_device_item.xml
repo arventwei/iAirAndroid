@@ -43,7 +43,7 @@
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/city_temperature"
+            android:id="@+id/grid_device_id"
             style="@style/clockWeatherText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:textSize="12.0dip" />
 
         <TextView
-            android:id="@+id/bottom_area"
+            android:id="@+id/grid_device_share"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"

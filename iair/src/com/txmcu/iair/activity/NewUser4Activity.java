@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.txmcu.iair.R;
@@ -55,6 +54,9 @@ public class NewUser4Activity extends Activity implements OnClickListener {
 			localIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			this.startActivity(localIntent);
 			this.finish();
+			NewUser1Activity.instance.finish();
+			NewUser2Activity.instance.finish();
+			NewUser3Activity.instance.finish();
 			
 		}
 

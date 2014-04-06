@@ -90,7 +90,7 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 							@Override
 							public void run(JSONObject response) throws JSONException {
 								
-								requesthomelist();
+								XinServerManager.requesthomelist(HomeManageActivity.this,false);
 								//iAirUtil.dismissDialog();
 								//application.homeList = XinServerManager.getHomeFromJson(HomeManageActivity.this,response.getJSONArray("home"));
 								//application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
@@ -170,23 +170,23 @@ public class HomeManageActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	public void requesthomelist() {
-		XinServerManager.getfirstpage_briefinfo(HomeManageActivity.this,application.getUserid(),new XinServerManager.onSuccess() {
-			
-			@Override
-			public void run(JSONObject response) throws JSONException {
-				iAirUtil.dismissDialog();
-				application.homeList = XinServerManager.getHomeFromJson(HomeManageActivity.this,response.getJSONArray("home"));
-				application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
-				// TODO Auto-generated method stub
-				MainActivity.instance.refreshlist();
-				HomeManageActivity.instance.refreshlist();
-				
-			//	synchomebb();
-				
-			}
-		});
-	}
+//	public void requesthomelist() {
+//		XinServerManager.getfirstpage_briefinfo(HomeManageActivity.this,application.getUserid(),new XinServerManager.onSuccess() {
+//			
+//			@Override
+//			public void run(JSONObject response) throws JSONException {
+//				iAirUtil.dismissDialog();
+//				application.homeList = XinServerManager.getHomeFromJson(HomeManageActivity.this,response.getJSONArray("home"));
+//				application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
+//				// TODO Auto-generated method stub
+//				MainActivity.instance.refreshlist();
+//				HomeManageActivity.instance.refreshlist();
+//				
+//			//	synchomebb();
+//				
+//			}
+//		});
+//	}
 	// private void initTestData() {
 	//
 	// adapter.addDevice(2,"father");
