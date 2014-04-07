@@ -256,6 +256,9 @@ public class DeviceAddActivity extends Activity  implements XinOperations,OnClic
 			//MainActivity.scannlist.add(info);
 			iAirUtil.toastMessage(this, getString(R.string.add_device_success));
 			if (DeviceManageActivity.instance != null) {
+				
+				DeviceManageActivity.instance.requestlist();
+				
 				//TODO
 //				XinServerManager.query_bindlist(DeviceManageActivity.instance, application.getUserid(), new XinServerManager.onSuccess() {
 //					

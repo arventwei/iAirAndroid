@@ -121,6 +121,7 @@
             android:configChanges="keyboardHidden|orientation" />
      <activity
             android:name="com.txmcu.iair.activity.DeviceMenuAddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustPan"
             android:configChanges="keyboardHidden|orientation" />
       
       <activity
