@@ -66,13 +66,14 @@
                      android:textSize="16dip" />
 
                  <EditText
-                     android:id="@+id/deviceId"
+                     android:id="@+id/user1_city_name"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:layout_marginLeft="@dimen/add_device_edit_left_padding"
+                     android:editable="false"
                      android:ems="10" >
 
-                     <requestFocus />
+                    
                  </EditText>
              </LinearLayout>
 
