@@ -73,12 +73,16 @@
                 android:text="新家"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <Button
+            
+           <CheckBox
                 android:id="@+id/add_new_home_btn"
-                android:layout_width="200sp"
+                style="@style/setting_item_checkbox"
+                android:textSize="@dimen/detail_text_size"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="添加" />
+                android:layout_alignParentRight="true"
+             />
+          
 
         </LinearLayout>
 

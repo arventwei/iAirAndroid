@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="14.0dip"
             android:layout_toRightOf="@id/add_city_img"
-            android:text="@string/popwin_add_city"
+            android:text="添加/管理城市"
             android:textSize="16.0sp" />
     </RelativeLayout>
 
@@ -59,7 +59,7 @@
             android:layout_marginLeft="14.0dip"
             android:layout_toRightOf="@id/add_home_img"
             android:drawablePadding="5.0dip"
-            android:text="添加家"
+            android:text="添加/管理家"
             android:textSize="16.0sp" />
     </RelativeLayout>
     
@@ -94,7 +94,7 @@
             android:layout_marginLeft="14.0dip"
             android:layout_toRightOf="@id/add_device_img"
             android:drawablePadding="5.0dip"
-            android:text="添加设备"
+            android:text="添加/管理设备"
             android:textSize="16.0sp" />
     </RelativeLayout>
 

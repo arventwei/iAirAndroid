@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="小新"
-        android:textSize="36dip" />
+        android:textSize="@dimen/weather_detail_activity_title_bar_size" />
 
     <TextView
         android:id="@+id/xiaoxin_sn"

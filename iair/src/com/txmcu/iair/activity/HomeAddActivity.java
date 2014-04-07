@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.txmcu.iair.R;
@@ -94,15 +95,20 @@ public class HomeAddActivity extends Activity implements OnClickListener {
 			
 		}
 		else if (view.getId()==R.id.add_new_home_btn) {
-			Intent localIntent = new Intent(
-					HomeAddActivity.this,
-					HomeModifyActivity.class);
-			localIntent.putExtra("type", 1);
+			
+			CheckBox ckbBox =(CheckBox)view;
+			if (ckbBox.isChecked()) {
+				Intent localIntent = new Intent(
+						HomeAddActivity.this,
+						HomeModifyActivity.class);
+				localIntent.putExtra("type", 1);
+			
+				startActivity(localIntent);
+				overridePendingTransition(R.anim.left_enter,
+								R.anim.alpha_out);
+				HomeAddActivity.this.finish();
+			}
 		
-			startActivity(localIntent);
-			overridePendingTransition(R.anim.left_enter,
-							R.anim.alpha_out);
-			HomeAddActivity.this.finish();
 		}
 		else if (view.getId()==R.id.back_img) {
 			finish();
