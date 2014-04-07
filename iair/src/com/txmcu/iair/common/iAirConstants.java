@@ -72,7 +72,7 @@ public interface iAirConstants {
     public static final String unbindhome_xiaoxin  = "http://112.124.58.144/android/unbindhome_xiaoxin";
     public static final String setxiaoxin_switch  = "http://112.124.58.144/android/setxiaoxin_switch";
     
-    public static final String unbinduser_home5  = "http://112.124.58.144/android/unbinduser_home";
+    public static final String setxiaoxin_speed  = "http://112.124.58.144/android/setxiaoxin_speed";
     public static final String unbinduser_home6  = "http://112.124.58.144/android/unbinduser_home";
     public static final String unbinduser_home7  = "http://112.124.58.144/android/unbinduser_home";
     

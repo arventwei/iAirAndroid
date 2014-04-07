@@ -673,6 +673,26 @@ public class XinServerManager {
 		postHttpBase(activity, r, post_params,
 				iAirConstants.setxiaoxin_switch);
 	}
+//	A8.2 【设置风速接口】设置风速
+//	1) 请求：http://112.124.58.144/android/setxiaoxin_speed
+//	2) form数据：userid=xx&sn=xxx&speed=xx
+//	3) 返回：
+//	A.成功：{"ret":"Ok"}
+//	B.失败：{"ret":"Fail"}
+	static public void setxiaoxin_speed(final Activity activity,
+			final String userid,
+			final String sn,
+			final String speed,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("sn", sn);
+		post_params.put("speed", speed);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.setxiaoxin_speed);
+	}
+	//
 	//setxiaoxin_switch
 	//unbindhome_xiaoxin
 	//checkxiaoxin_exist

@@ -213,6 +213,10 @@ public class DetailDeviceActivity extends Activity implements
 					if (newSpeed >= 10)
 						newSpeed = 1;
 					xiaoxinDevice.speed = newSpeed;
+					
+					XinServerManager.setxiaoxin_speed(pageContext,
+							pageContext.application.getUserid(), sn, String.valueOf(newSpeed),
+							null);
 					//TODO
 //					XinServerManager.setxiaoxin_speed(pageContext,
 //							pageContext.application.getUserid(), sn, newSpeed,
