@@ -202,6 +202,7 @@ public class XinServerManager {
 		city.areaId = getJsonString(obj, "area_id");
 		city.name = getJsonString(obj, "area_name");
 		city.temp = getJsonString(obj, "temp");
+		city.temp_info = getJsonString(obj, "temp_info");
 		city.humi = getJsonString(obj, "humi");
 		city.wind_info = getJsonString(obj, "wind_info");
 		city.wind_speed = getJsonString(obj, "wind_speed");
@@ -307,7 +308,7 @@ public class XinServerManager {
 								@Override
 								public void onSuccess(String response) {
 									System.out.println(response);
-									iAirUtil.toastMessage(activity, response);
+									//iAirUtil.toastMessage(activity, response);
 
 									try {
 										JSONObject jsonObject = new JSONObject(
@@ -416,6 +417,21 @@ public class XinServerManager {
 		post_params.put("userid", userid);
 		post_params.put("areaid", areaid);
 		postHttpBase(activity, r, post_params, iAirConstants.binduser_area);
+	}
+//	A2.3 删除城市
+//	A2.3.1 【解除绑定城市接口】在管理页面中，按下2秒钟（或点击右上角的小笔），进入编辑模式；按下某个城市图标右上角的小叉号，解除城市绑定
+//	1) 请求：http://112.124.58.144/android/unbinduser_area
+//	2) form数据：userid=xxx&areaid=yyy
+//	3) 返回：
+//	A.成功：{"ret":"Ok"}
+//	B.失败：{"ret":"Fail"}
+	static public void unbinduser_area(final Activity activity,
+			final String userid, final String areaid, final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("areaid", areaid);
+		postHttpBase(activity, r, post_params, iAirConstants.unbinduser_area);
 	}
 
 	// A1.1.5 【更新家基础信息接口】（该步骤为1.1.2的下一步）更新某个家的基础信息
@@ -692,6 +708,23 @@ public class XinServerManager {
 		postHttpBase(activity, r, post_params,
 				iAirConstants.setxiaoxin_speed);
 	}
+//	A2.1 【取得地区的天气简明信息接口】城市管理页面信息加载
+//	1) 请求：http://112.124.58.144/android/getarealist_briefweather
+//	2) form数据：userid=xxx
+//	3) 返回：
+//	A.成功：{"ret":"Ok","areacount":2,"area":[{"area_id":"001","area_name":"北京","temp_info":"5°~25°","weather":"雨","weather_level":"3", "sortseq":1},{"area_id":"003","area_name":"石家庄","temp_info":"3°~21°","weather":"多云转晴","weather_level":""}]}
+//	B.失败：{"ret":"Fail"}
+	static public void getarealist_briefweather(final Activity activity,
+			final String userid,
+
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+
+		postHttpBase(activity, r, post_params,
+				iAirConstants.getarealist_briefweather);
+	} 
 	//
 	//setxiaoxin_switch
 	//unbindhome_xiaoxin

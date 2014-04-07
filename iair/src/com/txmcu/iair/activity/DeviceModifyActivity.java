@@ -28,6 +28,7 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 	//Button   modify_name_Button;
 	Device device ;
 	String snString;
+	String homeNameString;
 	iAirApplication application;
 	int type=0;	//0-add exist ,1-add new ,2-modify 
 	
@@ -47,6 +48,7 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 		// snString =this.getIntent().getStringExtra("sn");
 		Intent intent = this.getIntent();
 		 type = intent.getIntExtra("type", 0);
+		 homeNameString = intent.getStringExtra("homename");
 		// device = null;//application.getXiaoxin(snString);
 		 device = (Device)XinSession.getSession().get("device");
 		 XinSession.getSession().cleanUpSession();
@@ -56,6 +58,7 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 		findViewById(R.id.ok_btn).setOnClickListener(this);
 		findViewById(R.id.cancel_btn).setOnClickListener(this);
 		findViewById(R.id.deviceActive).setOnClickListener(this);
+		
 		
 		
 		userNameEditText = (EditText)findViewById(R.id.userName);
@@ -70,7 +73,13 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 		deviceShareBox.setChecked(device.share);
 		deviceActiveBox.setChecked(!device.isVirtual);
 		deviceRefreshEditText.setText(String.valueOf(device.refresh_interval));
-		userNameEditText.setText(application.getNickName());
+		String titleString = application.getNickName();
+		if (!homeNameString.equals("")) {
+			titleString+="/";
+			titleString+=homeNameString;
+		}
+				
+		userNameEditText.setText(titleString);
 		
 		userNameEditText.setEnabled(false);
 		deviceIdEditText.setEnabled(false);

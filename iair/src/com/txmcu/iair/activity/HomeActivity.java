@@ -247,6 +247,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 							
 								Intent localIntent = new Intent(pageContext, DetailDeviceActivity.class);
 								localIntent.putExtra("sn", b.sn);
+								XinSession.getSession().put("device", b);
 								pageContext.startActivity(localIntent);
 								pageContext.overridePendingTransition(R.anim.left_enter, R.anim.alpha_out);
 							

@@ -72,7 +72,7 @@ public class DetailDeviceActivity extends Activity implements
 		addButtonListener();
 		Bundle bundle = getIntent().getExtras();
 		String sn = bundle.getString("sn");
-		xiaoxinDevice = application.getXiaoxin(sn);
+		xiaoxinDevice =(Device) XinSession.getSession().get("device");
 
 		findViewById(R.id.device_edit_btn).setOnClickListener(this);
 

@@ -15,6 +15,7 @@ public class City  implements Serializable {
 	public String  name;
 	
 	public String  temp;
+	public String temp_info;
 	public String  humi;
 	public String  pm25;
 	public String wind_info;

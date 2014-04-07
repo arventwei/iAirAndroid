@@ -1,12 +1,19 @@
 package com.txmcu.iair.common;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.util.EncodingUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.Home;
@@ -34,8 +41,72 @@ public class iAirApplication extends Application {
 	{
 	  super.onCreate();
 	  mPerferences = PreferenceManager.getDefaultSharedPreferences(this); 
+	  String areaIdNameString = getFromRaw();
+	  
+	  try {
+		  cityIdNameList.clear();
+			JSONObject jsonObject = new JSONObject( areaIdNameString);
+			JSONArray jArray = jsonObject.getJSONArray("area");
+			for (int i = 0; i < jArray.length(); i++) {
+
+				
+				JSONObject obj  = jArray.getJSONObject(i);
+				String area_id = obj.getString("area_id");
+				String area_name = obj.getString("area_name");
+				AreaIdName aName = new AreaIdName();
+				aName.areaId = area_id;
+				aName.cityName = area_name;
+				cityIdNameList.add(aName);
+				
+			}
+		
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+	  
 	}
 	  
+	public String getAreaIdbyName(String name)
+	{
+		//name = name.replace("", newChar)
+		for (AreaIdName anAreaIdName : cityIdNameList) {
+			if (anAreaIdName.cityName.equals(name)) {
+				return anAreaIdName.areaId;
+			}
+		}
+		return "";
+	}
+	class AreaIdName
+	{
+		public String areaId;
+		public String cityName;
+	}
+	List<AreaIdName> cityIdNameList= new ArrayList<AreaIdName>();
+	////
+	private Boolean isInitedBoolean = false;
+	
+	private static final String ENCODING = "UTF-8"; 
+
+    //从resources中的raw 文件夹中获取文件并读取数据  
+	private String getFromRaw(){  
+        String result = "";  
+            try {  
+                InputStream in = getResources().openRawResource(R.raw.cityid);  
+                //获取文件的字节数  
+                int lenght = in.available();  
+                //创建byte数组  
+                byte[]  buffer = new byte[lenght];  
+                //将文件中的数据读到byte数组中  
+                in.read(buffer);  
+                result = EncodingUtils.getString(buffer, ENCODING);  
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+            return result;  
+    } 
+	////
 	
 	public void setUserid(String userid) {
 		SharedPreferences.Editor mEditor = mPerferences.edit();  

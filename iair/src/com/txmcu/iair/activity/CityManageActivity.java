@@ -1,8 +1,7 @@
 package com.txmcu.iair.activity;
 
-import java.io.InputStream;
-
-import org.apache.http.util.EncodingUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +17,8 @@ import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.adapter.CityAdapter;
 import com.txmcu.iair.common.iAirApplication;
+import com.txmcu.iair.common.iAirUtil;
+import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class CityManageActivity extends Activity implements
 		 OnClickListener {
@@ -55,26 +56,31 @@ public class CityManageActivity extends Activity implements
 	//	stopLocation();
 	}
 	
-	public static final String ENCODING = "UTF-8"; 
-
-    //从resources中的raw 文件夹中获取文件并读取数据  
-    public String getFromRaw(){  
-        String result = "";  
-            try {  
-                InputStream in = getResources().openRawResource(R.raw.cityid);  
-                //获取文件的字节数  
-                int lenght = in.available();  
-                //创建byte数组  
-                byte[]  buffer = new byte[lenght];  
-                //将文件中的数据读到byte数组中  
-                in.read(buffer);  
-                result = EncodingUtils.getString(buffer, ENCODING);  
-            } catch (Exception e) {  
-                e.printStackTrace();  
-            }  
-            return result;  
-    } 
+	
     
+	@Override  
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)  
+    {  
+        //可以根据多个请求代码来作相应的操作  
+        if(20==resultCode)  
+        {  
+            String area_id=data.getExtras().getString("area_id");  
+            String area_name=data.getExtras().getString("area_name");
+            iAirUtil.toastMessage(this, area_id);
+            
+            XinServerManager.binduser_area(this, application.getUserid(), area_id, new XinServerManager.onSuccess() {
+				
+				@Override
+				public void run(JSONObject response) throws JSONException {
+					// TODO Auto-generated method stub
+					requestlist();
+				}
+			});
+          //  TextView_result.setText("书籍名称:"+bookname+"书籍价钱"+booksale+"元");  
+        }  
+        super.onActivityResult(requestCode, resultCode, data);  
+    }  
+	 
     
 	protected void addGridViewListener() {
 		mGridview.setAdapter(adapter);
@@ -92,7 +98,8 @@ public class CityManageActivity extends Activity implements
 					 Intent localIntent = new Intent(CityManageActivity.this,CityListActivity.class);
 					// localIntent.putExtra("homeId", home.homeid);
 					// localIntent.putExtra("vsn", "");
-					 startActivity(localIntent);
+					 startActivityForResult(localIntent,100);
+					// startActivity(localIntent);
 					 overridePendingTransition(R.anim.left_enter,  R.anim.alpha_out);
 		
 
@@ -100,29 +107,22 @@ public class CityManageActivity extends Activity implements
 				{
 					if (editMode) 
 					{
-						//TODO
-//						XinServerManager.unbindhome_xiaoxin(DeviceManageActivity.this, application.getUserid(), home.homeid, device.id,
-//								new XinServerManager.onSuccess() {
-//							
-//							@Override
-//							public void run(JSONObject response) throws JSONException {
-//								
-//								if (response.get("ret").equals("Ok")) {
-//									//application.removeXiaoxin(snString);
-//									home.removeXiaoxin(device);
-//									adapter.syncDevices(home);
-//									adapter.notifyDataSetChanged();
-//									if (MainActivity.instance != null) {
-//										MainActivity.instance
-//												.refreshlist();
-//									}
-//								}
-//								//home = application.getHome(homeidString);
-//								//home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
-//								//refreshlist();
-//								
-//							}
-//						});
+						
+						XinServerManager.unbinduser_area(CityManageActivity.this, application.getUserid(), areaId,
+								new XinServerManager.onSuccess() {
+							
+							@Override
+							public void run(JSONObject response) throws JSONException {
+								
+								if (response.get("ret").equals("Ok")) {
+									//application.removeXiaoxin(snString);
+									requestlist();
+								}
+								
+								
+							}
+						});
+						
 
 
 					} else {
@@ -162,6 +162,23 @@ public class CityManageActivity extends Activity implements
 			adapter.notifyDataSetChanged();
 			break;
 		}
+	}
+
+	private void requestlist() {
+		XinServerManager.getarealist_briefweather(CityManageActivity.this, application.getUserid(), new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(JSONObject response) throws JSONException {
+				// TODO Auto-generated method stub
+				application.cityList  = XinServerManager.getCityFromJson(response.getJSONArray("area"));
+				adapter.sync();
+				adapter.notifyDataSetChanged();
+				
+				if (MainActivity.instance!=null) {
+					MainActivity.instance.refreshlist();
+				}
+			}
+		});
 	}
 
 //	private void initTestData() {

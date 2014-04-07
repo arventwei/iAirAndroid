@@ -138,9 +138,7 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 												.refreshlist();
 									}
 								}
-								//home = application.getHome(homeidString);
-								//home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
-								//refreshlist();
+								
 								
 							}
 						});
@@ -151,6 +149,7 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 								DeviceManageActivity.this,
 								DeviceModifyActivity.class);
 						localIntent.putExtra("type", 2);
+						localIntent.putExtra("homename", home.homename);
 						XinSession.getSession().put("device", device);
 						startActivity(localIntent);
 						overridePendingTransition(R.anim.left_enter,

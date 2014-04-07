@@ -53,7 +53,7 @@
                       android:layout_marginLeft="@dimen/add_device_edit_left_padding"
                       android:layout_weight="9"
                       android:gravity="center"
-                      android:hint="添加小新"
+                      android:hint="请输入家的ID查找"
                       android:ems="10" />
 
                   <Button

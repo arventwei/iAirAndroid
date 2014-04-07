@@ -53,7 +53,7 @@ public interface iAirConstants {
     public static final String gethome_structdata  = "http://112.124.58.144/android/gethome_structdata";
     public static final String setuser_nickname  = "http://112.124.58.144/android/setuser_nickname";
     public static final String getarea_structlist  = "http://112.124.58.144/android/getarea_structlist";
-    public static final String binduser_area  = "http://112.124.58.144/android/binduser_area";
+   // public static final String binduser_area  = "http://112.124.58.144/android/binduser_area";
     public static final String sethome_baseinfo  = "http://112.124.58.144/android/sethome_baseinfo";
     public static final String setxiaoxin_baseinfo  = "http://112.124.58.144/android/setxiaoxin_baseinfo";
     
@@ -73,11 +73,17 @@ public interface iAirConstants {
     public static final String setxiaoxin_switch  = "http://112.124.58.144/android/setxiaoxin_switch";
     
     public static final String setxiaoxin_speed  = "http://112.124.58.144/android/setxiaoxin_speed";
-    public static final String unbinduser_home6  = "http://112.124.58.144/android/unbinduser_home";
-    public static final String unbinduser_home7  = "http://112.124.58.144/android/unbinduser_home";
+    public static final String binduser_area  = "http://112.124.58.144/android/binduser_area";
+    public static final String unbinduser_area  = "http://112.124.58.144/android/unbinduser_area";
     
-    public static final String unbinduser_home8  = "http://112.124.58.144/android/unbinduser_home";
-    
+    public static final String getarealist_briefweather  = "http://112.124.58.144/android/getarealist_briefweather";
+    public static final String getarealist_briefweather2  = "http://112.124.58.144/android/getarealist_briefweather";
+    public static final String getarealist_briefweather3  = "http://112.124.58.144/android/getarealist_briefweather";
+    public static final String getarealist_briefweather4  = "http://112.124.58.144/android/getarealist_briefweather";
+    public static final String getarealist_briefweather5  = "http://112.124.58.144/android/getarealist_briefweather";
+    public static final String getarealist_briefweather6  = "http://112.124.58.144/android/getarealist_briefweather";
+    public static final String getarealist_briefweather7  = "http://112.124.58.144/android/getarealist_briefweather";
+    public static final String getarealist_briefweather8  = "http://112.124.58.144/android/getarealist_briefweather";
     
     
     

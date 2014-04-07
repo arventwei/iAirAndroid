@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PixelFormat;
@@ -32,6 +33,7 @@ import com.txmcu.iair.city.CityModel;
 import com.txmcu.iair.city.DBManager;
 import com.txmcu.iair.city.MyLetterListView;
 import com.txmcu.iair.city.MyLetterListView.OnTouchingLetterChangedListener;
+import com.txmcu.iair.common.iAirApplication;
 
 /**
  * �����б�
@@ -55,12 +57,14 @@ public class CityListActivity extends Activity
     private Handler handlerSerach;
     public static final int SERACHID = 0;
     public static final String KEYSTARING= "keyStaring";
+    iAirApplication application;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.city_list);
 
+		application = (iAirApplication)getApplication();
 		mCityLit = (ListView) findViewById(R.id.city_list);
 		letterListView = (MyLetterListView) findViewById(R.id.cityLetterListView);
 		DBManager dbManager = new DBManager(this);
@@ -112,10 +116,17 @@ public class CityListActivity extends Activity
 		for (int i = 0; i < cursor.getCount(); i++)
 		{
 			cursor.moveToPosition(i);
-			CityModel cityModel = new CityModel();
-			cityModel.setCityName(cursor.getString(cursor.getColumnIndex("CityName")));
-			cityModel.setNameSort(cursor.getString(cursor.getColumnIndex("NameSort")));
-			names.add(cityModel);
+			String cityName = cursor.getString(cursor.getColumnIndex("CityName"));
+			
+			cityName = cityName.replace("市", "");
+			if (!application.getAreaIdbyName(cityName).equals("")) {
+				
+				CityModel cityModel = new CityModel();
+				cityModel.setCityName(cityName);
+				cityModel.setNameSort(cursor.getString(cursor.getColumnIndex("NameSort")));
+				names.add(cityModel);
+			}
+			
 		}
 		return names;
 	}
@@ -133,7 +144,16 @@ public class CityListActivity extends Activity
 		public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3)
 		{
 			CityModel cityModel = (CityModel) mCityLit.getAdapter().getItem(pos);
-			Toast.makeText(CityListActivity.this, cityModel.getCityName(), Toast.LENGTH_SHORT).show();
+			//Toast.makeText(CityListActivity.this, cityModel.getCityName()+application.getAreaIdbyName(cityModel.getCityName()), Toast.LENGTH_SHORT).show();
+			 //判断空，我就不判断了。。。。  
+            Intent data=new Intent();  
+            data.putExtra("area_name",  cityModel.getCityName());  
+            data.putExtra("area_id", application.getAreaIdbyName(cityModel.getCityName()));  
+            //请求代码可以自己设置，这里设置成20  
+            setResult(20, data);  
+            //关闭掉这个Activity  
+            finish();  
+            
 		}
 
 	}

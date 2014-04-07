@@ -25,8 +25,8 @@ public class MessageVo {
         super();
         this.direction = direction;
         this.content = content;
-		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-		this.time = df.format(new  java.util.Date(timestamp)).toString();
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm MM/dd");
+		this.time = df.format(new  java.util.Date(timestamp*1000)).toString();
 		this.userName = userName;
        // this.time = time;
     }

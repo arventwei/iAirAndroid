@@ -1,11 +1,13 @@
 package com.txmcu.iair.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.txmcu.iair.R;
+import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.common.iAirApplication;
 
 public class DetailCityActivity extends Activity implements OnClickListener {
@@ -18,7 +20,7 @@ public class DetailCityActivity extends Activity implements OnClickListener {
 	//public SamplePagerAdapter adapter;
 	
 	//private WifiHotManager wifiHotM;
-	
+	City city;
 	public static DetailCityActivity instance;
 
 	@Override
@@ -27,7 +29,8 @@ public class DetailCityActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		instance = this;
 		setContentView(R.layout.activity_detail_city);
-		
+		Intent intent = getIntent();
+		String areaidString = intent.getStringExtra("area_id");
 		//wifiHotM = WifiHotManager.getInstance(this, this);
 		
 		//getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -82,11 +85,11 @@ public class DetailCityActivity extends Activity implements OnClickListener {
 		
 			break;
 		}
-		case R.id.device_edit_btn:
-		{
-			//StartModifyView();
-			break;
-		}
+//		case R.id.device_edit_btn:
+//		{
+//			//StartModifyView();
+//			break;
+//		}
 		
 
 		}

@@ -85,8 +85,20 @@ public class CityAdapter extends BaseAdapter
 		else {
 			convertView = View.inflate(cityManageActivity, R.layout.gridview_city_item, null);
 			((TextView)convertView.findViewById(R.id.city_name)).setText(b.name);
+			((TextView)convertView.findViewById(R.id.city_temperature)).setText(b.temp_info);
+			((TextView)convertView.findViewById(R.id.bottom_area)).setText(b.weather);
+			
+			if (cityManageActivity.editMode) {
+				convertView.findViewById(R.id.delete_btn).setVisibility(View.VISIBLE);
+			}
+			else {
+				convertView.findViewById(R.id.delete_btn).setVisibility(View.INVISIBLE);
+			}
+			
 		}
+		
 		//((ImageView) convertView.findViewById(R.id.imageView1)).setImageResource(b.getBitmapId());
+		
 		
 		
 		setitemSize(convertView);
