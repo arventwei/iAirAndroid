@@ -17,6 +17,7 @@ public class iAirApplication extends Application {
 
 	
 	
+	
 	private static final String Userid="userid";
 
 	//private List<String> xiaoxinList = new ArrayList<String>();
@@ -85,6 +86,23 @@ public void setNickName(String nickName) {
 			}
 		}
 		return null;
+	}
+	
+	public void setBuyUrl(String url)
+	{
+		SharedPreferences.Editor mEditor = mPerferences.edit();  
+		
+		mEditor.putString("BuyUrl",url);
+		
+	    mEditor.commit(); 
+	}
+	public String getBuy()
+	{
+		//Home ret = new Home();
+		String xiaxinJsonString = mPerferences.getString("BuyUrl", "http://www.baidu.com/");
+		//ret.FromJson(xiaxinJsonString);
+		return xiaxinJsonString;
+		
 	}
 //	public void setHomeList(List<Home> _homeList) {
 //		homeList = _homeList;

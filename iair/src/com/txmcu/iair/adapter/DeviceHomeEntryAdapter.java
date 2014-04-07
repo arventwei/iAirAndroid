@@ -5,20 +5,19 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.txmcu.iair.R;
 import com.txmcu.iair.activity.DeviceManageActivity;
-import com.txmcu.iair.activity.HomeAddActivity;
 import com.txmcu.iair.activity.HomeModifyActivity;
 import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
-import com.txmcu.iair.common.iAirUtil;
 
 public class DeviceHomeEntryAdapter extends BaseAdapter
 {
@@ -128,7 +127,13 @@ public class DeviceHomeEntryAdapter extends BaseAdapter
 					if (((CheckBox) v).isChecked()) {
 						isOn = 1;
 					}
-					if (b.type==1&&isOn==1) {
+					iAirApplication application = (iAirApplication)deviceActivity.getApplication();
+					if (b.type==2&&isOn==1) {
+						Uri uri = Uri.parse(application.getBuy());  
+		                Intent intent = new Intent(Intent.ACTION_VIEW, uri);  
+		                deviceActivity.startActivity(intent);  
+					}
+					else if (b.type==1&&isOn==1) {
 						//! new home/new xiaoxin
 						Intent localIntent = new Intent(
 								deviceActivity,
