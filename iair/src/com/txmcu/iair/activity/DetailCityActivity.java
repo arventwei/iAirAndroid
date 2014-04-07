@@ -1,14 +1,21 @@
 package com.txmcu.iair.activity;
 
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.City;
+import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
+import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class DetailCityActivity extends Activity implements OnClickListener {
 
@@ -29,9 +36,11 @@ public class DetailCityActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		instance = this;
 		setContentView(R.layout.activity_detail_city);
-		Intent intent = getIntent();
-		String areaidString = intent.getStringExtra("area_id");
+		city = (City)XinSession.getSession().get("city");
+		//Intent intent = getIntent();
+		//String areaidString = intent.getStringExtra("area_id");
 		//wifiHotM = WifiHotManager.getInstance(this, this);
+		
 		
 		//getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		application = (iAirApplication) getApplication();
@@ -42,7 +51,23 @@ public class DetailCityActivity extends Activity implements OnClickListener {
 		//adapter = new SamplePagerAdapter(this);
 		//vp.setAdapter(adapter);
 
+		XinServerManager.getarea_detailweather(this, application.getUserid(), city.areaId, 
+		new XinServerManager.onSuccess() {
+			
+			@Override
+			public void run(JSONObject response) throws JSONException {
+				// TODO Auto-generated method stub
+				List<City> citesCities = application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
+				if (citesCities.size()>0) {
+					city = citesCities.get(0);
+				}
+				//XinServerManager.getSingleCityFromJson(city, response
+				updateview();
+			}
+		});
 		addButtonListener();
+		
+		
 		//Bundle bundle = getIntent().getExtras();
 		//String sn = bundle.getString("sn");
 		//xiaoxinDevice = application.getXiaoxin(sn);
@@ -63,6 +88,22 @@ public class DetailCityActivity extends Activity implements OnClickListener {
 		//}
 		// new GetDataTask().execute();
 
+	}
+
+	private void updateview() {
+		((TextView)findViewById(R.id.city_name)).setText(city.name);
+		((TextView)findViewById(R.id.city_aqi)).setText(city.aqi);
+		if (city.aqi_us.equals("")||city.aqi_us.equals("0")) {
+			findViewById(R.id.embassy).setVisibility(View.GONE);
+		}
+		((TextView)findViewById(R.id.city_aqi_us)).setText(city.aqi_us);
+		
+		((TextView)findViewById(R.id.cityTemp)).setText("pm25:"+city.pm25+" "+city.temp_info
+				+" "+city.wind_info+" \n"+city.weekstr+" "+city.datestr+" "+city.datecn);
+		
+		((TextView)findViewById(R.id.city_temp)).setText(city.temp);
+		((TextView)findViewById(R.id.city_weather)).setText(city.weather);
+		((TextView)findViewById(R.id.carlimit)).setText(city.today_car_limit);
 	}
 	
 	public void Destroy()

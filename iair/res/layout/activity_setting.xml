@@ -89,53 +89,6 @@
                 android:layout_height="@dimen/main_setting_divider_height"
                 android:background="@drawable/setting_list_divider" />
 
-            <RelativeLayout
-                android:id="@+id/wallpaper_setting_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/setting_item_height"
-                android:background="@drawable/setting_item_backround"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/wallpaper_setting_textView"
-                    style="@style/setting_menu"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="10.0dip"
-                    android:duplicateParentState="true"
-                    android:text="@string/wallpaper_setting_title" />
-
-                <include layout="@layout/setting_item_goto" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="@dimen/main_setting_divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/setting_list_divider" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/background_setting_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/setting_item_height"
-                android:background="@drawable/setting_item_backround"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/background_setting_textView"
-                    style="@style/setting_menu"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="10.0dip"
-                    android:duplicateParentState="true"
-                    android:text="@string/background_setting_title" />
-
-                <include layout="@layout/setting_item_goto" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/main_setting_divider_height"
-                android:background="@drawable/setting_list_divider" />
-
             <LinearLayout
                 android:id="@+id/auto_update_setting_layout"
                 style="@style/setting_item_layout"

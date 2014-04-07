@@ -33,6 +33,7 @@ import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.adapter.Home;
 import com.txmcu.iair.adapter.MainEntryAdapter;
+import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
@@ -214,6 +215,7 @@ public class MainActivity extends ActivityGroup  implements
 						}
 						Object bObject = mainentryAdapter.getItem(position);
 						if (bObject.getClass() == City.class) {
+							XinSession.getSession().put("city", bObject);
 							Intent localIntent = new Intent(pageContext,
 									DetailCityActivity.class);
 							// localIntent.putExtra("sn", b.sn);

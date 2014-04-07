@@ -28,4 +28,11 @@ public class City  implements Serializable {
 	public int sortseq;
 	
 	
+	public String aqi_us;
+	public String datestr;
+	public String weekstr;
+	public String datecn;	
+	
+	
+	
 }

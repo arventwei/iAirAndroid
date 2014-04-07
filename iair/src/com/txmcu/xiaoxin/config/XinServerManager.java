@@ -212,6 +212,10 @@ public class XinServerManager {
 		city.pm25 = getJsonString(obj, "pm25");
 		city.weather = getJsonString(obj, "weather");
 		city.weather_level = getJsonString(obj, "weather_level");
+		city.aqi_us = getJsonString(obj, "aqi_us");
+		city.datestr = getJsonString(obj, "datestr");
+		city.weekstr = getJsonString(obj, "weekstr");
+		city.datecn = getJsonString(obj, "datecn");
 		city.sortseq = getJsonInt(obj, "sortseq");
 	}
 
@@ -724,6 +728,24 @@ public class XinServerManager {
 
 		postHttpBase(activity, r, post_params,
 				iAirConstants.getarealist_briefweather);
+	} 
+	
+//	A5. 【获取城市详细数据接口】某一个城市详细数据的获取，包括 AQI，美国大使馆AQI，限行车牌号信息，等等信息
+//	1) 请求：http://112.124.58.144/android/getarea_detailweather
+//	2) form数据：userid=xx&areaid=xxx
+//	3) 返回：
+//	A.成功：{"ret":"Ok","areacount":1,"area":[{"area_id":"001","area_name":"北京","datestr":"4/1","weekstr":"周二","datecn":"三月初二","publish_time":"18:11","temp_info":"10~25°","humi":"30","wind_info":"北风 微风","wind_speed":"1", "today_car_limit":"1|6","tmr_car_limit":"2|7","aqi":150, "aqi_us":150, "pm25":90,"pm10":10,"no2":1,"so2":1,"o3":1,"co":1,"weather":"雨","weather_level":"3","temp":”22°"，"body_temp":”18°"，}]}
+//	B.失败：{"ret":"Fail"}	
+	static public void getarea_detailweather(final Activity activity,
+			final String userid,
+			final String areaid,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("areaid", areaid);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.getarea_detailweather);
 	} 
 	//
 	//setxiaoxin_switch

@@ -27,8 +27,8 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 	TextView titleTextView ;
 	//Button   modify_name_Button;
 	Device device ;
-	String snString;
-	String homeNameString;
+	String snString="";
+	String homeNameString="";
 	iAirApplication application;
 	int type=0;	//0-add exist ,1-add new ,2-modify 
 	
