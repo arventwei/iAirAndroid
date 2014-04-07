@@ -57,7 +57,7 @@
     <string name="detail_activity_title">小新家</string>
     
     <string name="broad_dialog_text_title">我要添加公告</string>
-    <string name="broad_dialog_text_hint_content">请输入公告内容(限20字以内)</string>
+    <string name="broad_dialog_text_hint_content">请输入公告内容(限80字以内)</string>
     <string name="broad_dialog_text_hint_grey" />
     <string name="cancel_str">取消</string>
     <string name="confirm_send">发表</string>

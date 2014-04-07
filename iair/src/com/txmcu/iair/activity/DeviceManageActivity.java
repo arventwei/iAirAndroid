@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 import cn.classd.dragablegrid.widget.DragableGridview;
 import cn.classd.dragablegrid.widget.DragableGridview.OnItemClickListener;
 import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
@@ -74,6 +75,7 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 			@Override
 			public void run(JSONObject response) throws JSONException {
 				home = application.getHome(home.homeid);
+				((TextView)findViewById(R.id.device_manager_title)).setText(home.homename);
 				XinServerManager.getSingleHomeFromJson(home, response);
 				home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
 				DeviceManageActivity.this.updateDetailHome(home);

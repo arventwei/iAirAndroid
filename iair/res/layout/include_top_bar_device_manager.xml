@@ -13,7 +13,7 @@
         android:src="@drawable/title_bar_return" />
 
     <TextView
-        android:id="@+id/device_title"
+        android:id="@+id/device_manager_title"
         android:layout_width="0.0dip"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5.0dip"
