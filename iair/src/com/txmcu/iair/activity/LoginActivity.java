@@ -516,9 +516,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 		public void onError(WeiboException arg0) {
 			// TODO Auto-generated method stub
 			LogUtil.i(TAG, "onError"+arg0.toString());
-        	TryLoadMainActivity("sina",
-        			sinaAccessToken.getToken(),
-        					sinaAccessToken.getUid(), getString(R.string.test));
+        	//TryLoadMainActivity("sina",
+        	//		sinaAccessToken.getToken(),
+        	//				sinaAccessToken.getUid(), getString(R.string.test));
 		}
 
 		@Override

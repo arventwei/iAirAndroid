@@ -1,7 +1,8 @@
 package com.txmcu.iair.activity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.InputStream;
+
+import org.apache.http.util.EncodingUtils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,9 +17,7 @@ import cn.classd.dragablegrid.widget.DragableGridview.OnSwappingListener;
 import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.adapter.CityAdapter;
-import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
-import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class CityManageActivity extends Activity implements
 		 OnClickListener {
@@ -55,7 +54,28 @@ public class CityManageActivity extends Activity implements
 		super.onDestroy();
 	//	stopLocation();
 	}
+	
+	public static final String ENCODING = "UTF-8"; 
 
+    //从resources中的raw 文件夹中获取文件并读取数据  
+    public String getFromRaw(){  
+        String result = "";  
+            try {  
+                InputStream in = getResources().openRawResource(R.raw.cityid);  
+                //获取文件的字节数  
+                int lenght = in.available();  
+                //创建byte数组  
+                byte[]  buffer = new byte[lenght];  
+                //将文件中的数据读到byte数组中  
+                in.read(buffer);  
+                result = EncodingUtils.getString(buffer, ENCODING);  
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+            return result;  
+    } 
+    
+    
 	protected void addGridViewListener() {
 		mGridview.setAdapter(adapter);
 
