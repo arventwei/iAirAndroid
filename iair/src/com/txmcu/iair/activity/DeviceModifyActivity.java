@@ -74,7 +74,7 @@ public class DeviceModifyActivity extends Activity implements OnClickListener {
 		deviceActiveBox.setChecked(!device.isVirtual);
 		deviceRefreshEditText.setText(String.valueOf(device.refresh_interval));
 		String titleString = application.getNickName();
-		if (!homeNameString.equals("")) {
+		if (homeNameString!=null&&!homeNameString.equals("")) {
 			titleString+="/";
 			titleString+=homeNameString;
 		}
