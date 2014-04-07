@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -303,6 +304,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 				home.xiaoxins = XinServerManager.getXiaoxinFromJson(response.getJSONArray("xiaoxin"));
 				home.notices = XinServerManager.getNoticeFromJson(application,response.getJSONArray("notice"));
 				refreshlist();
+				((TextView)findViewById(R.id.home_title)).setText(home.homename);
 				
 			}
 		});

@@ -13,12 +13,12 @@
         android:src="@drawable/title_bar_return" />
 
     <TextView
-        android:id="@+id/device_title"
+        android:id="@+id/home_title"
         android:layout_width="0.0dip"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5.0dip"
         android:layout_weight="1.0"
-        android:text="家详情"
+        android:text=""
         android:textColor="@color/title_bar_text"
         android:textSize="@dimen/weather_detail_activity_title_bar_size" />
 
