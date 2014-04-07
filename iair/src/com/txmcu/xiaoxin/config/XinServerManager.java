@@ -179,7 +179,7 @@ public class XinServerManager {
 
 		for (int i = 0; i < jArr.length(); i++) {
 
-			City city = new City();
+			City city = new City("");
 			JSONObject obj = null;
 			try {
 				obj = jArr.getJSONObject(i);

@@ -7,6 +7,10 @@ public class City  implements Serializable {
 	private static final long	serialVersionUID	= 7973994356736512440L;
 
 
+	public  City(String id)
+	{
+		areaId = id;
+	}
 	public String  areaId;
 	public String  name;
 	

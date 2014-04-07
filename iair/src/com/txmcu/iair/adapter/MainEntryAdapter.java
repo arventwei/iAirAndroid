@@ -33,7 +33,7 @@ public class MainEntryAdapter extends BaseAdapter
 	public void syncHomes() {
 		entries.clear();
 		cities.clear();
-		cities.add(new City());//head
+		cities.add(new City(""));//head
 		
 		//Device bj = new Device("1111111");
 		//bj.name=deviceManageActivity.getString(R.string.beijing);

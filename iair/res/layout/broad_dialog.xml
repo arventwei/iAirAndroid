@@ -24,7 +24,7 @@
         android:layout_marginTop="10.0dip"
         android:gravity="top"
         android:hint="@string/broad_dialog_text_hint_grey"
-        android:lines="2" />
+        android:lines="6" />
 
     <LinearLayout
         android:id="@+id/correct_buttonPanel"

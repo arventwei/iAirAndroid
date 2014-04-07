@@ -166,6 +166,7 @@ public class HomeActivity extends Activity implements OnRefreshListener<Vertical
 				
 				dialog.dismiss();
 				String content = ((EditText)dialog.findViewById(R.id.barrage_edit_text)).getText().toString();
+				content = content.trim();
 				XinServerManager.addhomenotice(HomeActivity.this, application.getUserid(), homeidString,
 						content, new XinServerManager.onSuccess() {
 							

@@ -115,54 +115,7 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 					 localIntent.putExtra("vsn", "");
 					 startActivity(localIntent);
 					 overridePendingTransition(R.anim.left_enter,  R.anim.alpha_out);
-					 
-					 
-//					AlertDialog.Builder builder = new AlertDialog.Builder(
-//							DeviceManageActivity.this);
-//					builder.setTitle(R.string.xiaoxincreatemode);
-//
-//					ListView modeList = new ListView(DeviceManageActivity.this);
-//					String[] stringArray = new String[] { DeviceManageActivity.this.getString(R.string.addnewxiaoxin), 
-//							DeviceManageActivity.this.getString(R.string.bindexistxiaoxin) };
-//					ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(
-//							DeviceManageActivity.this,
-//							android.R.layout.simple_list_item_1,
-//							android.R.id.text1, stringArray);
-//					modeList.setAdapter(modeAdapter);
-//
-//					builder.setView(modeList);
-//					final Dialog dialog = builder.create();
-//
-//					modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//						@Override
-//						public void onItemClick(AdapterView parent, View view,
-//								int position, long id) {
-//							if (position == 0) {
-//								 Intent localIntent = new Intent(DeviceManageActivity.this,DeviceAddActivity.class);
-//								 localIntent.putExtra("homeId", home.homeid);
-//								 localIntent.putExtra("vsn", "");
-//								 startActivity(localIntent);
-//								 overridePendingTransition(R.anim.left_enter,  R.anim.alpha_out);
-//							} else {
-//								 Intent localIntent = new
-//								 Intent(DeviceManageActivity.this,DeviceBindActivity.class);
-//								
-//								 startActivity(localIntent);
-//								 overridePendingTransition(R.anim.left_enter,
-//								 R.anim.alpha_out);
-//								
-//
-//							}
-//
-//							dialog.dismiss();
-//
-//						}
-//
-//					});
-//
-//					dialog.show();
-
+		
 
 				} else 
 				{
@@ -191,29 +144,7 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 								
 							}
 						});
-//						XinServerManager.unbind(DeviceManageActivity.this,
-//								application.getUserid(), snString,
-								
-//								new XinServerManager.onSuccess() {
-//
-//									@Override
-//									public void run(String response) {
-//										if (response.equals("Ok")) {
-//											application.removeXiaoxin(snString);
-//											adapter.syncDevices();
-//											adapter.notifyDataSetChanged();
-//											if (MainActivity.instance != null) {
-//												MainActivity.instance
-//														.refreshlist();
-//											}
-//										}
-//
-//										
-//										// Toast.makeText(MainActivity.this,
-//										// R.string.xiaoxin_login_ok,
-//										// Toast.LENGTH_LONG).show();
-//									}
-//								});
+
 
 					} else {
 						Intent localIntent = new Intent(
@@ -225,7 +156,6 @@ public class DeviceManageActivity extends Activity implements OnClickListener {
 						overridePendingTransition(R.anim.left_enter,
 								R.anim.alpha_out);
 					}
-
 				}
 			}
 		});
