@@ -1,9 +1,10 @@
 package com.txmcu.iair.activity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import com.txmcu.iair.adapter.Home;
 import com.txmcu.iair.adapter.MessageAdapter;
 import com.txmcu.iair.adapter.MessageVo;
 import com.txmcu.iair.common.iAirApplication;
+import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class MainDownChatActivity extends Activity implements OnClickListener {
 
@@ -60,6 +62,21 @@ public class MainDownChatActivity extends Activity implements OnClickListener {
 
 		//findViewById(R.id.return_btn).setOnClickListener(this);
 
+	}
+	
+	public void requestlist()
+	{
+		XinServerManager.gethomenotice_bypage(this,application.getUserid(),
+				home.homeid,"0","100",new XinServerManager.onSuccess() {
+					
+					@Override
+					public void run(JSONObject response) throws JSONException {
+						// TODO Auto-generated method stub
+						home.notices = XinServerManager.getNoticeFromJson(application,response.getJSONArray("notice"));
+						messageAdapter.syncMessage(home);
+						messageAdapter.notifyDataSetChanged();
+					}
+				});
 	}
 
 

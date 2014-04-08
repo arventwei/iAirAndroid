@@ -165,7 +165,7 @@ public class CityManageActivity extends Activity implements
 	}
 
 	private void requestlist() {
-		XinServerManager.getarealist_briefweather(CityManageActivity.this, application.getUserid(), new XinServerManager.onSuccess() {
+		XinServerManager.getfirstpage_briefinfo(CityManageActivity.this, application.getUserid(), new XinServerManager.onSuccess() {
 			
 			@Override
 			public void run(JSONObject response) throws JSONException {

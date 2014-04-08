@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.ActivityGroup;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +19,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TabHost;
@@ -26,7 +26,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.verticalview.VerticalViewPager;
 import com.txmcu.iair.R;
@@ -38,7 +38,7 @@ import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
 public class MainActivity extends ActivityGroup  implements
-		OnRefreshListener<VerticalViewPager>, OnClickListener {
+		OnRefreshListener2<VerticalViewPager>, OnClickListener {
 
 
 
@@ -159,12 +159,11 @@ public class MainActivity extends ActivityGroup  implements
 		}
 	}
 
-	@Override
-	public void onRefresh(PullToRefreshBase<VerticalViewPager> refreshView) {
-		mPullToRefreshViewPager.onRefreshComplete();
-		AsyncMainEntrys();
-		// new GetDataTask().execute(this);
-	}
+//	public void onRefresh(PullToRefreshBase<VerticalViewPager> refreshView) {
+//		mPullToRefreshViewPager.onRefreshComplete();
+//		AsyncMainEntrys();
+//		// new GetDataTask().execute(this);
+//	}
 
 	static class SamplePagerAdapter extends
 			com.handmark.verticalview.PagerAdapter {
@@ -320,7 +319,7 @@ public class MainActivity extends ActivityGroup  implements
 				application.cityList = XinServerManager.getCityFromJson(response.getJSONArray("area"));
 				// TODO Auto-generated method stub
 				refreshlist();
-			//	synchomebb();
+			
 				
 			}
 		});
@@ -482,5 +481,36 @@ public class MainActivity extends ActivityGroup  implements
 
 	private void popwin_setting() {
 		CloseSettingPopWindowAndOpenSubView(SettingActivity.class);
+	}
+
+	@Override
+	public void onPullDownToRefresh(
+			PullToRefreshBase<VerticalViewPager> refreshView) {
+		// TODO Auto-generated method stub
+		
+		mPullToRefreshViewPager.onRefreshComplete();
+		AsyncMainEntrys();
+		
+	}
+
+	@Override
+	public void onPullUpToRefresh(
+			PullToRefreshBase<VerticalViewPager> refreshView) {
+		// TODO Auto-generated method stub
+		mPullToRefreshViewPager.onRefreshComplete();
+		//AsyncMainEntrys();
+		SamplePagerAdapter adapter = (SamplePagerAdapter) (mPullToRefreshViewPager
+				.getRefreshableView().getAdapter());
+		
+		
+		Activity currentActivity = getLocalActivityManager().getActivity(adapter.mTabHost.getCurrentTabTag());
+	    if(currentActivity != null && currentActivity instanceof MainDownChatActivity)
+	    {
+	    // 传递给子类
+	    ((MainDownChatActivity)currentActivity).requestlist();
+	    }
+		
+		
+		
 	}
 }

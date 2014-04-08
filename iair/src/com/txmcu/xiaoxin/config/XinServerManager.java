@@ -102,11 +102,11 @@ public class XinServerManager {
 		device.id = getJsonString(obj, "xiaoxinid");
 		device.sn = getJsonString(obj, "sn");
 		device.name = getJsonString(obj, "xiaoxinname");
-		device.isVirtual = getJsonBoolean(obj, "virtual");
+		device.isVirtual = getJsonInt(obj, "virtual")==1;
 		if (device.isVirtual) {
 			device.vsn = device.sn;
 		}
-		device.share = getJsonBoolean(obj, "share");
+		device.share = getJsonInt(obj, "share")==1;
 		device.refresh_interval = getJsonString(obj, "refresh_interval");
 		device.status = getJsonString(obj, "status");
 		device.temp = getJsonString(obj, "temp");
@@ -162,7 +162,7 @@ public class XinServerManager {
 	public static void getSingleHomeFromJson(Home home, JSONObject obj) {
 		home.homeid = getJsonString(obj, "homeid");
 		home.homename = getJsonString(obj, "homename");
-		home.share = getJsonBoolean(obj, "share");
+		home.share = getJsonInt(obj, "share")==1;
 		home.refresh_interval = getJsonString(obj, "refresh_interval");
 		home.status = getJsonString(obj, "status");
 		home.temp = getJsonString(obj, "temp");
@@ -286,16 +286,16 @@ public class XinServerManager {
 		return "";
 	}
 
-	private static Boolean getJsonBoolean(JSONObject obj, String key) {
-		try {
-			Boolean ret = obj.getInt(key) == 1;
-			return ret;
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
+//	private static Boolean getJsonBoolean(JSONObject obj, String key) {
+//		try {
+//			Boolean ret = obj.getInt(key) == 1;
+//			return ret;
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
 
 	private static void postHttpBase(final Activity activity,
 			final onSuccess r, final RequestParams post_params,
@@ -747,7 +747,23 @@ public class XinServerManager {
 		postHttpBase(activity, r, post_params,
 				iAirConstants.getarea_detailweather);
 	} 
-	//
+	
+	static public void gethomenotice_bypage(final Activity activity,
+			final String userid,
+			final String homeid,
+			final String pagesize,
+			final String pageindex,
+			final onSuccess r) {
+
+		RequestParams post_params = new RequestParams();
+		post_params.put("userid", userid);
+		post_params.put("homeid", homeid);
+		post_params.put("pagesize", pagesize);
+		post_params.put("pageindex", pageindex);
+		postHttpBase(activity, r, post_params,
+				iAirConstants.gethomenotice_bypage);
+	} 
+	//gethomenotice_bypage
 	//setxiaoxin_switch
 	//unbindhome_xiaoxin
 	//checkxiaoxin_exist

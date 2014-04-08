@@ -78,7 +78,7 @@ public interface iAirConstants {
     
     public static final String getarealist_briefweather  = "http://112.124.58.144/android/getarealist_briefweather";
     public static final String getarea_detailweather  = "http://112.124.58.144/android/getarea_detailweather";
-    public static final String getarealist_briefweather3  = "http://112.124.58.144/android/getarealist_briefweather";
+    public static final String gethomenotice_bypage  = "http://112.124.58.144/android/gethomenotice_bypage";
     public static final String getarealist_briefweather4  = "http://112.124.58.144/android/getarealist_briefweather";
     public static final String getarealist_briefweather5  = "http://112.124.58.144/android/getarealist_briefweather";
     public static final String getarealist_briefweather6  = "http://112.124.58.144/android/getarealist_briefweather";

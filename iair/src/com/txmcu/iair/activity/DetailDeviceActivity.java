@@ -227,7 +227,7 @@ public class DetailDeviceActivity extends Activity implements
 			});
 			CheckBox switchoff = (CheckBox) xiaoxinView
 					.findViewById(R.id.xiaoxin_switch);
-			switchoff.setChecked(xiaoxinDevice.switchOn != 0);
+			switchoff.setChecked(xiaoxinDevice.switchOn == 0);
 			switchoff.setOnClickListener(new OnClickListener() {
 
 				@Override
