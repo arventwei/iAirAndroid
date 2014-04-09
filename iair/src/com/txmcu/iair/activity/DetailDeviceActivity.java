@@ -237,7 +237,7 @@ public class DetailDeviceActivity extends Activity implements
 					if (((CheckBox) v).isChecked()) {
 						isOn = "1";
 					}
-					xiaoxinDevice.switchOn = ((CheckBox) v).isChecked()?1:0;
+					xiaoxinDevice.switchOn = ((CheckBox) v).isChecked()?0:1;
 					XinServerManager.setxiaoxin_switch(pageContext, pageContext.application.getUserid(),
 							sn, isOn, null);
 					//TODO
