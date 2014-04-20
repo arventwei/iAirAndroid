@@ -20,7 +20,11 @@ import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
-
+/**
+ * 家管理界面
+ * @author Administrator
+ *
+ */
 public class HomeManageActivity extends Activity implements OnClickListener {
 
 	public static final String TAG = "HomeManageActivity";

@@ -10,7 +10,9 @@ import android.widget.EditText;
 import com.txmcu.iair.R;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
-
+/**
+ * 设备绑定界面
+ */
 public class DeviceBindActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "DeviceBindActivity";

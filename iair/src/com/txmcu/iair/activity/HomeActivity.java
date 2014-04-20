@@ -32,7 +32,11 @@ import com.txmcu.iair.adapter.MessageAdapter;
 import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
-
+/**
+ * 家详情界面
+ * @author Administrator
+ *
+ */
 public class HomeActivity extends Activity implements OnRefreshListener<VerticalViewPager>,OnClickListener {
 
 	private static final String TAG = "HomeActivity";

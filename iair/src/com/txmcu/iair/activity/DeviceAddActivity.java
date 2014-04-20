@@ -28,7 +28,11 @@ import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinStateManager;
 import com.txmcu.xiaoxin.config.XinStateManager.ConfigType;
 import com.txmcu.xiaoxin.config.XinStateManager.XinOperations;
-
+/**
+ * 添加设备界面
+ * @author Administrator
+ *
+ */
 public class DeviceAddActivity extends Activity  implements XinOperations,OnClickListener {
 
 	private static final String TAG = "DeviceAddActivity";

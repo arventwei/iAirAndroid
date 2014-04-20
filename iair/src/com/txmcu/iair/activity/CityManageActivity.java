@@ -20,6 +20,11 @@ import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
+/**
+ * 城市管理界面
+ * @author Administrator
+ *
+ */
 public class CityManageActivity extends Activity implements
 		 OnClickListener {
 

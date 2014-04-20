@@ -23,6 +23,11 @@ import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
 
+/**
+ * 添加设备方式的选择界面
+ * @author Administrator
+ *
+ */
 public class DeviceMenuAddActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "DeviceMenuAddActivity";

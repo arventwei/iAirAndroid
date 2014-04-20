@@ -16,7 +16,11 @@ import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
-
+/**
+ * 城市详情界面
+ * @author Administrator
+ *
+ */
 public class DetailCityActivity extends Activity implements OnClickListener {
 
 	//private PullToRefreshViewPager mPullToRefreshViewPager;

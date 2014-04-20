@@ -36,9 +36,9 @@ import com.txmcu.iair.city.MyLetterListView.OnTouchingLetterChangedListener;
 import com.txmcu.iair.common.iAirApplication;
 
 /**
- * �����б�
+ * 城市列表界面
  * 
- * @author sy
+ * @author 
  * 
  */
 public class CityListActivity extends Activity

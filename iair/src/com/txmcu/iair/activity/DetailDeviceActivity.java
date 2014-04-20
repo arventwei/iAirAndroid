@@ -233,9 +233,9 @@ public class DetailDeviceActivity extends Activity implements
 				@Override
 				public void onClick(View v) {
 					String sn = xiaoxinDevice.sn;
-					String isOn = "0";
+					String isOn = "1";
 					if (((CheckBox) v).isChecked()) {
-						isOn = "1";
+						isOn = "0";
 					}
 					xiaoxinDevice.switchOn = ((CheckBox) v).isChecked()?0:1;
 					XinServerManager.setxiaoxin_switch(pageContext, pageContext.application.getUserid(),
