@@ -18,6 +18,10 @@ import com.txmcu.iair.adapter.City;
 import com.txmcu.iair.adapter.Device;
 import com.txmcu.iair.adapter.Home;
 
+/**
+ * 全局变量信息保存的地方
+ * 得到用户名，昵称等等信息
+ */
 public class iAirApplication extends Application {
 	
 	

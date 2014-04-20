@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 创建新家，和购买设备的信息
+ * @author Administrator
+ *
+ */
 public class DeviceHomeEntry  implements Serializable {
 
 	private static final long	serialVersionUID	= 7679994356736512440L;

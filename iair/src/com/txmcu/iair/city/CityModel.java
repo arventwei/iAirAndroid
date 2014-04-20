@@ -1,7 +1,7 @@
 package com.txmcu.iair.city;
 
 /**
- * ��������ʵ����
+ * 城市信息
  * @author sy
  *
  */

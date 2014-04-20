@@ -5,6 +5,11 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * 设备信息详情
+ * @author Administrator
+ *
+ */
 public class Device  implements Serializable {
 
 	private static final long	serialVersionUID	= 7973999356736512441L;

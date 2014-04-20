@@ -11,7 +11,11 @@ import android.widget.TextView;
 
 import com.txmcu.iair.R;
 import com.txmcu.iair.common.iAirApplication;
-
+/**
+ * 设备日志适配器
+ * @author Administrator
+ *
+ */
 public class DeviceLogAdapter extends BaseAdapter
 {
 	

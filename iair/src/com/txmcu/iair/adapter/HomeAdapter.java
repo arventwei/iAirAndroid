@@ -15,6 +15,11 @@ import com.txmcu.iair.R;
 import com.txmcu.iair.activity.HomeManageActivity;
 import com.txmcu.iair.common.iAirApplication;
 
+/**
+ * 家信息适配器
+ * @author Administrator
+ *
+ */
 public class HomeAdapter extends BaseAdapter {
 
 	private List<Home> homes = new ArrayList<Home>();;

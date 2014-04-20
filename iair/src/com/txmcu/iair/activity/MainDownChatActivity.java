@@ -19,7 +19,11 @@ import com.txmcu.iair.adapter.MessageAdapter;
 import com.txmcu.iair.adapter.MessageVo;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
-
+/**
+ * 主界面下半部分的聊天界面
+ * @author Administrator
+ *
+ */
 public class MainDownChatActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "MainDownChatActivity";

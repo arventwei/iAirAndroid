@@ -18,7 +18,11 @@ import com.txmcu.iair.activity.DeviceManageActivity;
 import com.txmcu.iair.activity.HomeModifyActivity;
 import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
-
+/**
+ * 创建新家和购买设备的适配器
+ * @author Administrator
+ *
+ */
 public class DeviceHomeEntryAdapter extends BaseAdapter
 {
 	

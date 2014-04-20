@@ -11,7 +11,11 @@ import android.widget.TextView;
 
 import com.txmcu.iair.R;
 import com.txmcu.iair.common.iAirApplication;
-
+/**
+ * 家详情信息适配器
+ * @author Administrator
+ *
+ */
 public class HomeEntryAdapter extends BaseAdapter
 {
 	

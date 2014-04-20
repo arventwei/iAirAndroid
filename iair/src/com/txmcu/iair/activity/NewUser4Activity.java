@@ -13,7 +13,11 @@ import com.txmcu.iair.R;
 import com.txmcu.iair.adapter.Home;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
-
+/**
+ * 用户引导第4个界面
+ * @author Administrator
+ *
+ */
 public class NewUser4Activity extends Activity implements OnClickListener {
 
 	private static final String TAG = "NewUser4Activity";

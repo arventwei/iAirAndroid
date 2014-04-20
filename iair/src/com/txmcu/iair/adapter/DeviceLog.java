@@ -2,6 +2,11 @@ package com.txmcu.iair.adapter;
 
 import java.io.Serializable;
 
+/**
+ * 设备日志信息
+ * @author Administrator
+ *
+ */
 public class DeviceLog  implements Serializable {
 
 	private static final long	serialVersionUID	= 7973994356736512440L;

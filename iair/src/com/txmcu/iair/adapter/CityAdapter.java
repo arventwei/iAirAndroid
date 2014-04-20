@@ -12,7 +12,11 @@ import android.widget.TextView;
 import com.txmcu.iair.R;
 import com.txmcu.iair.activity.CityManageActivity;
 import com.txmcu.iair.common.iAirApplication;
-
+/**
+ * 城市显示适配器接口
+ * @author Administrator
+ *
+ */
 public class CityAdapter extends BaseAdapter
 {
 	

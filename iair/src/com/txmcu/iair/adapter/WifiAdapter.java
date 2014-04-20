@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.TwoLineListItem;
-
+/**
+ * WIFI列表信息
+ * @author Administrator
+ *
+ */
 public class WifiAdapter extends BaseAdapter
 {
 

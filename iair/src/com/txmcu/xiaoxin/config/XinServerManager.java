@@ -25,6 +25,12 @@ import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
 import com.txmcu.iair.common.iAirUtil;
 
+/**
+ * APP和服务器沟通的协议，采用HTTP POST + JSON格式交互。
+ * 
+ * @author Administrator
+ *
+ */
 public class XinServerManager {
 
 	static String TAG = "XinServerManager";
@@ -34,12 +40,18 @@ public class XinServerManager {
 		// Method descriptor #4 ()V
 		public abstract void run(JSONObject response) throws JSONException;
 	}
-
+	/**
+	 * 创建一个新的HTTP连接
+	 * @return
+	 */
 	static private AsyncHttpClient getHttpClient() {
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.setTimeout(10000);
 		return client;
 	}
+	/**
+	 * 请求家和城市列表，并更新主界面
+	 */
 	public static void requesthomelist(final Activity activity,final Boolean closeself) {
 		requesthomelist(activity,closeself,null);
 	}
@@ -78,6 +90,11 @@ public class XinServerManager {
 		});
 	}
 
+	/**
+	 * 得到一个设备的详细信息，从服务器返回的数据中。
+	 * @param jArr
+	 * @return
+	 */
 	static public List<Device> getXiaoxinFromJson(JSONArray jArr) {
 		List<Device> ret = new ArrayList<Device>();
 
@@ -98,6 +115,11 @@ public class XinServerManager {
 		return ret;
 	}
 
+	/**
+	 * 提取单个设备的详细信息，从服务器返回的数据中
+	 * @param device
+	 * @param obj
+	 */
 	public static void getSingleDeviceFromJson(Device device, JSONObject obj) {
 		device.id = getJsonString(obj, "xiaoxinid");
 		device.sn = getJsonString(obj, "sn");
@@ -121,6 +143,12 @@ public class XinServerManager {
 		device.sortseq = getJsonInt(obj, "sortseq");
 	}
 
+	/**
+	 * 得到家的列表信息，从服务器返回的数据中
+	 * @param activity
+	 * @param jArr
+	 * @return
+	 */
 	static public List<Home> getHomeFromJson(Activity activity,JSONArray jArr) {
 		List<Home> ret = new ArrayList<Home>();
 
@@ -158,7 +186,11 @@ public class XinServerManager {
 		}
 		return ret;
 	}
-
+/**
+ * 得到单个家的信息，从服务器返回的数据中。
+ * @param home
+ * @param obj
+ */
 	public static void getSingleHomeFromJson(Home home, JSONObject obj) {
 		home.homeid = getJsonString(obj, "homeid");
 		home.homename = getJsonString(obj, "homename");
@@ -173,7 +205,11 @@ public class XinServerManager {
 		home.ownernickname = getJsonString(obj, "ownernickname");
 		home.sortseq = getJsonInt(obj, "sortseq");
 	}
-	
+	/**
+	 * 得到城市信息，从服务器返回的信息中
+	 * @param jArr
+	 * @return
+	 */
 	static public List<City> getCityFromJson(JSONArray jArr) {
 		List<City> ret = new ArrayList<City>();
 
@@ -197,7 +233,11 @@ public class XinServerManager {
 		}
 		return ret;
 	}
-
+/**
+ * 得到城市单个信息，从服务器返回的信息中
+ * @param city
+ * @param obj
+ */
 	public static void getSingleCityFromJson(City city, JSONObject obj) {
 		city.areaId = getJsonString(obj, "area_id");
 		city.name = getJsonString(obj, "area_name");
@@ -218,7 +258,12 @@ public class XinServerManager {
 		city.datecn = getJsonString(obj, "datecn");
 		city.sortseq = getJsonInt(obj, "sortseq");
 	}
-
+/**
+ * 得到公告信息列表，从服务器返回的信息中
+ * @param application
+ * @param jArr
+ * @return
+ */
 	static public List<MessageVo> getNoticeFromJson(iAirApplication application,JSONArray jArr) {
 		List<MessageVo> ret = new ArrayList<MessageVo>();
 
@@ -253,6 +298,12 @@ public class XinServerManager {
 		return ret;
 	}
 
+	/**
+	 * 解析JSAON格式的浮点数
+	 * @param obj
+	 * @param key
+	 * @return
+	 */
 	private static float getJsonDouble(JSONObject obj, String key) {
 		try {
 			float ret = (float) obj.getDouble(key);
@@ -263,7 +314,12 @@ public class XinServerManager {
 		}
 		return 0;
 	}
-
+/**
+ * 解析JSON格式的整数
+ * @param obj
+ * @param key
+ * @return
+ */
 	private static int getJsonInt(JSONObject obj, String key) {
 		try {
 			int ret = (int) obj.getInt(key);
@@ -274,7 +330,12 @@ public class XinServerManager {
 		}
 		return 0;
 	}
-
+/**
+ * 解析JSON 格式的字符串
+ * @param obj
+ * @param key
+ * @return
+ */
 	private static String getJsonString(JSONObject obj, String key) {
 		try {
 			String ret = obj.getString(key);
@@ -286,17 +347,15 @@ public class XinServerManager {
 		return "";
 	}
 
-//	private static Boolean getJsonBoolean(JSONObject obj, String key) {
-//		try {
-//			Boolean ret = obj.getInt(key) == 1;
-//			return ret;
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return false;
-//	}
 
+	/**
+	 * 提交一个请求给服务器。这个是所有发送消息都调用的函数，
+	 * 是最低层的调用函数。
+	 * @param activity
+	 * @param r
+	 * @param post_params
+	 * @param postUrlString
+	 */
 	private static void postHttpBase(final Activity activity,
 			final onSuccess r, final RequestParams post_params,
 			final String postUrlString) {
@@ -763,287 +822,6 @@ public class XinServerManager {
 		postHttpBase(activity, r, post_params,
 				iAirConstants.gethomenotice_bypage);
 	} 
-	//gethomenotice_bypage
-	//setxiaoxin_switch
-	//unbindhome_xiaoxin
-	//checkxiaoxin_exist
-	// old interface
 
-	// static public void bind(final Activity activity, final String userid,
-	// final String sn, final onSuccess r) {
-	// RequestParams post_params = new RequestParams();
-	// post_params.put("userid", userid);
-	// post_params.put("sn", sn);
-	//
-	//
-	// postHttpBase(activity, r, post_params, iAirConstants.API_Bind);
-	// }
-	//
-	//
-	// static public void unbind(final Activity activity, final String userid,
-	// final String sn, final onSuccess r) {
-	// RequestParams post_params = new RequestParams();
-	// post_params.put("userid", userid);
-	// post_params.put("sn", sn);
-	//
-	// AsyncHttpClient client = getHttpClient();
-	// client.post(iAirConstants.API_UnBind, post_params,
-	// new AsyncHttpResponseHandler() {
-	// @Override
-	// public void onSuccess(String response) {
-	// System.out.println(response);
-	// iAirUtil.toastMessage(activity, response);
-	// if(r!=null)
-	// {
-	// JSONObject jsonObject=null;
-	// try {
-	// jsonObject = new JSONObject(response);
-	// } catch (JSONException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	//
-	// }
-	// r.run(jsonObject);
-	// }
-	// // r.run(response);
-	// }
-	// });
-	// }
-	//
-	// static public void query_bindlist(final Activity activity, final String
-	// userid,
-	// final onSuccess r)
-	// {
-	// final iAirApplication application = ((iAirApplication) activity
-	// .getApplication());
-	// RequestParams post_params = new RequestParams();
-	// post_params.put("userid", userid);
-	//
-	// AsyncHttpClient client = getHttpClient();
-	// client.post(iAirConstants.API_QueryBindlist, post_params,
-	// new AsyncHttpResponseHandler() {
-	// @Override
-	// public void onSuccess(String response) {
-	// System.out.println(response);
-	// iAirUtil.toastMessage(activity, response);
-	// if (response.equals(iAirConstants.Server_Fail)) {
-	// r.run(response);
-	// return;
-	// }
-	// Map<String, String> snMap = iAirUtil
-	// .getQueryMapFromUrl(response);
-	//
-	// List<String> snlist = new ArrayList<String>();
-	//
-	// final int count = Integer.parseInt(snMap.get("count"));
-	//
-	// if (count == 0) {
-	// r.run(response);
-	// return;
-	// }
-	//
-	// for (int i = 0; i < count; i++) {
-	// String sn = snMap.get("sn" + i);
-	// snlist.add(sn);
-	// }
-	//
-	//
-	// application.setXiaoxinSnList(snlist);
-	//
-	// for (int i = 0; i < count; i++) {
-	// String sn = snlist.get(i);
-	//
-	// final int xiaoin_idx = i;
-	// getxiaoxin(activity,userid,sn,new onSuccess() {
-	//
-	// @Override
-	// public void run(String response) {
-	// // TODO Auto-generated method stub
-	//
-	// if (xiaoin_idx == count-1) {
-	// r.run(response);
-	// }
-	//
-	// }
-	// });
-	// }
-	//
-	//
-	//
-	// }
-	// });
-	// }
-	//
-	//
-	// static public void getxiaoxin(final Activity activity, final String
-	// userid,final String sn,
-	// final onSuccess r)
-	// {
-	// final iAirApplication application = ((iAirApplication) activity
-	// .getApplication());
-	// RequestParams post_params = new RequestParams();
-	// post_params.put("sn", sn);
-	// post_params.put("userid", userid);
-	//
-	// AsyncHttpClient client = getHttpClient();
-	// client.post(iAirConstants.API_GetXiaoxin, post_params,
-	// new AsyncHttpResponseHandler() {
-	// @Override
-	// public void onSuccess(String response) {
-	// //System.out.println(response);
-	// iAirUtil.toastMessage(activity, response);
-	// if (response.equals(iAirConstants.Server_Fail)) {
-	// r.run(response);
-	// return;
-	// }
-	//
-	// Map<String, String> xiaoxinMap = iAirUtil
-	// .getQueryMapFromUrl(response);
-	//
-	// Device xiaoxin = new Device();
-	// xiaoxin.sn = sn;
-	// xiaoxin.name = xiaoxinMap.get("name");
-	// xiaoxin.temp = Double.parseDouble(xiaoxinMap.get("temp"));
-	// xiaoxin.humi = Double.parseDouble(xiaoxinMap.get("humi"));
-	// xiaoxin.pm25 = Double.parseDouble(xiaoxinMap.get("pm25"));
-	// xiaoxin.pa = Double.parseDouble(xiaoxinMap.get("pa"));
-	// xiaoxin.switchOn = Integer.parseInt(xiaoxinMap.get("switch"));
-	// xiaoxin.speed = Integer.parseInt(xiaoxinMap.get("speed"));
-	// xiaoxin.lastUpdateStamp =
-	// Integer.parseInt(xiaoxinMap.get("last_upload_time"));
-	//
-	//
-	//
-	// application.setXiaoxin(xiaoxin);
-	//
-	// r.run(response);
-	// }
-	// });
-	// }
-	//
-	// static public void setxiaoxin_switch(final Activity activity, final
-	// String userid, final String sn,final int isOn,
-	// final onSuccess r)
-	// {
-	// final iAirApplication application = ((iAirApplication) activity
-	// .getApplication());
-	//
-	// Device xiaoxinDevice = application.getXiaoxin(sn);
-	// xiaoxinDevice.switchOn = isOn;
-	// application.setXiaoxin(xiaoxinDevice);
-	//
-	// RequestParams post_params = new RequestParams();
-	//
-	// post_params.put("userid", userid);
-	// post_params.put("sn", sn);
-	// post_params.put("switch", String.valueOf(isOn));
-	//
-	// AsyncHttpClient client = getHttpClient();
-	// client.post(iAirConstants.API_SetXiaoxinSwitch, post_params,
-	// new AsyncHttpResponseHandler() {
-	// @Override
-	// public void onSuccess(String response) {
-	// //System.out.println(response);
-	// iAirUtil.toastMessage(activity, response);
-	// if (response.equals(iAirConstants.Server_Fail)) {
-	// if(r!=null)
-	// r.run(response);
-	// return;
-	// }
-	//
-	// Device xiaoxin = application.getXiaoxin(sn);
-	// xiaoxin.switchOn=isOn;
-	//
-	// application.setXiaoxin(xiaoxin);
-	//
-	// if(r!=null)
-	// r.run(response);
-	// }
-	// });
-	// }
-	//
-	// static public void setxiaoxin_speed(final Activity activity, final String
-	// userid,final String sn,final int speed,
-	// final onSuccess r)
-	// {
-	// final iAirApplication application = ((iAirApplication) activity
-	// .getApplication());
-	//
-	// Device xiaoxinDevice = application.getXiaoxin(sn);
-	// xiaoxinDevice.speed = speed;
-	// application.setXiaoxin(xiaoxinDevice);
-	//
-	//
-	// RequestParams post_params = new RequestParams();
-	// post_params.put("userid", userid);
-	// post_params.put("sn", sn);
-	// post_params.put("speed", String.valueOf(speed));
-	//
-	// AsyncHttpClient client = getHttpClient();
-	// client.post(iAirConstants.API_SetXiaoxinSeed, post_params,
-	// new AsyncHttpResponseHandler() {
-	// @Override
-	// public void onSuccess(String response) {
-	// //System.out.println(response);
-	// iAirUtil.toastMessage(activity, response);
-	// if (response.equals(iAirConstants.Server_Fail)) {
-	// if(r!=null)
-	// r.run(response);
-	// return;
-	// }
-	//
-	//
-	// Device xiaoxin = application.getXiaoxin(sn);
-	//
-	// xiaoxin.speed = speed;
-	// application.setXiaoxin(xiaoxin);
-	//
-	// if(r!=null)
-	// r.run(response);
-	// }
-	// });
-	// }
-	//
-	// static public void setxiaoxin_name(final Activity activity, final String
-	// userid,final String sn,final String name,
-	// final onSuccess r)
-	// {
-	//
-	// final iAirApplication application = ((iAirApplication) activity
-	// .getApplication());
-	//
-	// Device xiaoxinDevice = application.getXiaoxin(sn);
-	// xiaoxinDevice.name = name;
-	// application.setXiaoxin(xiaoxinDevice);
-	//
-	// RequestParams post_params = new RequestParams();
-	//
-	// post_params.put("userid", userid);
-	// post_params.put("sn", sn);
-	// post_params.put("name", name);
-	//
-	// AsyncHttpClient client = getHttpClient();
-	// client.post(iAirConstants.API_SetXiaoxinName, post_params,
-	// new AsyncHttpResponseHandler() {
-	// @Override
-	// public void onSuccess(String response) {
-	// //System.out.println(response);
-	// iAirUtil.toastMessage(activity, response);
-	// if (response.equals(iAirConstants.Server_Fail)) {
-	// if(r!=null)
-	// r.run(response);
-	// return;
-	// }
-	//
-	//
-	// Device xiaoxin = application.getXiaoxin(sn);
-	//
-	// xiaoxin.name = name;
-	// application.setXiaoxin(xiaoxin);
-	//
-	// if(r!=null)
-	// r.run(response);
-	// }
-	// });
-	// }
+	
 }

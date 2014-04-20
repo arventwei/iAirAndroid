@@ -36,7 +36,11 @@ import com.txmcu.iair.adapter.MainEntryAdapter;
 import com.txmcu.iair.common.XinSession;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.xiaoxin.config.XinServerManager;
-
+/**
+ * 主界面
+ * @author Administrator
+ *
+ */
 public class MainActivity extends ActivityGroup  implements
 		OnRefreshListener2<VerticalViewPager>, OnClickListener {
 

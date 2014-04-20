@@ -13,7 +13,7 @@ import android.os.Environment;
 import com.txmcu.iair.R;
 
 /**
- * ��raw�е���ݿ��ļ�д�뵽data��ݿ���
+ * SQLITE保存的城市数据
  * @author sy
  *
  */
@@ -41,7 +41,7 @@ public class DBManager
 	}
 
 	/**
-	 * ����ݿ�
+	 * 打开数据库
 	 * 
 	 * @param dbFile
 	 * @return SQLiteDatabase

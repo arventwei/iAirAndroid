@@ -9,7 +9,11 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.txmcu.iair.R;
-
+/**
+ * 设置界面
+ * @author Administrator
+ *
+ */
 public class SettingActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "iair";

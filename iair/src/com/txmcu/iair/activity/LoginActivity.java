@@ -44,10 +44,14 @@ import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirConstants;
 import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
-
+/**
+ * 登陆界面
+ * @author Administrator
+ *
+ */
 public class LoginActivity extends Activity implements OnClickListener {
 
-	private static final String TAG = "iair";
+	private static final String TAG = "LoginActivity";
 
 	private iAirApplication application;
 	public WeiboAuth mWeiboAuth;
@@ -477,7 +481,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 
 	}
-	
+//	
 	 /**
      * 微博 OpenAPI 回调接口。
      */

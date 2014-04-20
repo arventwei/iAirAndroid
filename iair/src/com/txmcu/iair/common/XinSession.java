@@ -8,6 +8,9 @@ import java.util.Map; public class XinSession {
  
  private static XinSession session;
  
+ /**
+  * 全局信息保存类
+  */
  //Attention here, DO NOT USE keyword 'new' to create this object.
  //Instead, use getSession method.
  @SuppressWarnings("unchecked")

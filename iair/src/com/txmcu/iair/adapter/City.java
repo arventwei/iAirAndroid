@@ -2,6 +2,11 @@ package com.txmcu.iair.adapter;
 
 import java.io.Serializable;
 
+/**
+ * 城市数据信息
+ * @author Administrator
+ *
+ */
 public class City  implements Serializable {
 
 	private static final long	serialVersionUID	= 7973994356736512440L;

@@ -11,6 +11,11 @@ package com.txmcu.iair.adapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 公告信息详情
+ * @author Administrator
+ *
+ */
 public class MessageVo {
     public static final int MESSAGE_FROM = 0;
     public static final int MESSAGE_TO = 1;

@@ -17,7 +17,9 @@
 package com.txmcu.iair.common;
 
 /**
- * BASE 
+ * APP和服务器协议列表
+ * 新浪和QQ的APPKEY
+ * 
  * 
  * @author SINA
  * @since 2013-09-29

@@ -33,6 +33,11 @@ import android.widget.Toast;
 
 import com.txmcu.iair.R;
 
+/**
+ * 常用的工具类
+ * @author Administrator
+ *
+ */
 public class iAirUtil {
 
 	private static final String TAG = "SDK_Sample.Util";

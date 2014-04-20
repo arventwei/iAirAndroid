@@ -9,7 +9,11 @@ import android.text.style.TypefaceSpan;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
+/**
+ * 城市列表界面控件
+ * @author Administrator
+ *
+ */
 public class MyLetterListView extends View
 {
 

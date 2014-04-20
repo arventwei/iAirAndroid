@@ -12,6 +12,11 @@ import android.widget.TextView;
 import com.txmcu.iair.R;
 import com.txmcu.iair.common.iAirApplication;
 
+/**
+ * 主界面列表家和设备信息
+ * @author Administrator
+ *
+ */
 public class MainEntryAdapter extends BaseAdapter
 {
 	

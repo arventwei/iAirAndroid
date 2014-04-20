@@ -15,7 +15,11 @@ import com.txmcu.iair.adapter.Home;
 import com.txmcu.iair.common.iAirApplication;
 import com.txmcu.iair.common.iAirUtil;
 import com.txmcu.xiaoxin.config.XinServerManager;
-
+/**
+ * 用户引导第2个界面
+ * @author Administrator
+ *
+ */
 public class NewUser2Activity extends Activity implements OnClickListener {
 
 	private static final String TAG = "NewUser2Activity";

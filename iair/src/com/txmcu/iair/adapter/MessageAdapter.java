@@ -19,7 +19,11 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.txmcu.iair.R;
-
+/**
+ * 公告信息适配器
+ * @author Administrator
+ *
+ */
 public class MessageAdapter extends BaseAdapter{
     protected static final String TAG = "MessageAdapter";
     private Context context;

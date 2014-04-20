@@ -3,7 +3,11 @@ package com.txmcu.iair.adapter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 家详情信息
+ * @author Administrator
+ *
+ */
 public class Home  implements Serializable {
 
 	private static final long	serialVersionUID	= 7979994356736512440L;

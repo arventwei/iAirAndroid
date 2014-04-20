@@ -17,6 +17,9 @@ import com.txmcu.xiaoxin.config.wifi.WifiHotManager;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.OpretionsType;
 import com.txmcu.xiaoxin.config.wifi.WifiHotManager.WifiBroadCastOperations;
 
+/**
+ * 设备状态管理器
+ */
 public class XinStateManager 
 implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	
@@ -46,6 +49,11 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	public State mCurState = State.Init;
 	public static int TimeOutSecond = 120;
 	
+	/**
+	 * 回调实现的接口函数，
+	 * @author Administrator
+	 *
+	 */
 	public static interface XinOperations {
 
 		/**
@@ -72,6 +80,12 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		return instance;
 	}
 
+
+	/**
+	 * 构造函数，如果当前的WiFi是设备的XIAOXIN_AP，则删除这个WiFi。避免用户WIFI状态切换错误
+	 * @param context
+	 * @param operations
+	 */
 	private XinStateManager(Activity context,XinOperations operations) {
 		this.context = context;
 		this.operations = operations;
@@ -101,6 +115,9 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		//udpclient.operations= this;
 		//backupCurrentWifiState();
 	}
+	/**
+	 * 开始扫描WIFI列表
+	 */
 	private void startScan() {
 		
 		
@@ -162,6 +179,16 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		     }
 		  }.start();
 	}
+	/**
+	 * 用户开始配置设备，此过程需要120秒。
+	 * 
+	 * @param SSID
+	 * @param Pwd
+	 * @param _userid
+	 * @param _sn
+	 * @param vsn
+	 * @param homeId
+	 */
 	public void Config(String SSID,String Pwd,String _userid,String _sn,String vsn,String homeId)
 	{
 		mCurState = State.Config;
@@ -197,13 +224,12 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		udpclient.destroy();
 		
 	}
-//	int wifibackupNetId=-1;
-//	String wifibackupSSID;
-//	String wifibackupChannel;
-//	String wifibackupPwd;
-//	String wifibackupAuthMode;
-//	String wifibackupEncrypType;
-	
+
+	/**
+	 * 获取WIFI的详细信息，如加密方式，加密算法和通道信息
+	 * @param ssid
+	 * @return
+	 */
 	public List<String> getWifiDetailInfo(String ssid)
 	{
 		String channel = "6";
@@ -231,16 +257,12 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 					if(scanRet.capabilities.contains("WPA") && !scanRet.capabilities.contains("WPA2"))  
 	                 {  
 						 AuthMode ="WPAPSK";
-	                    // wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);  
-	                   //  wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);  
-	                    // wc.status = WifiConfiguration.Status.ENABLED;  
+	              
 	                 }  
 					 else if(scanRet.capabilities.contains("WPA2"))  
 	                 {  
 						 AuthMode ="WPA2PSK";
-	                    // wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);  
-	                   //  wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);  
-	                    // wc.status = WifiConfiguration.Status.ENABLED;  
+	             
 	                 }  
 					 else if(scanRet.capabilities.contains("WEP"))   {
 						 
@@ -257,14 +279,10 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	                 if(scanRet.capabilities.contains("TKIP"))  
 	                 {  
 	                	 EncrypType="TKIP";
-	                    // wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);  
-	                   //  wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);  
 	                 }  
 	                 if(scanRet.capabilities.contains("CCMP"))  
 	                 {  
-	                	 EncrypType="AES";
-	                    // wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);  
-	                    // wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);  
+	                	 EncrypType="AES"; 
 	                 }  
 				}
 				break;
@@ -278,9 +296,13 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 		ret.add(EncrypType);
 		ret.add(channel);
 		return ret;
-		//application.setWifibackupAuthMode(authInfo.get(0));
-		//application.setWifibackupEncrypType(authInfo.get(1));
 	}
+	/**
+	 * 检测ssid是否在list中
+	 * @param list
+	 * @param ssid
+	 * @return
+	 */
 	Boolean isWifiContain(List<ScanResult> list,String ssid)
 	{
 		for (ScanResult scanResult : list) {
@@ -293,6 +315,10 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 	String userid;
 	String sn;
 	List<ScanResult> _scannlist = new ArrayList<ScanResult>();
+	/**
+	 * 备份当前已经连接的WIFI，连接完设备后，需要改回当前的配置
+	 * @param scannlist
+	 */
 	private void backupCurrentWifiState(List<ScanResult> scannlist ) 
 	{
 		
@@ -313,22 +339,14 @@ implements WifiBroadCastOperations , Udpclient.UdpclientOperations{
 			application.setWifibackupNetId(info.getNetworkId());
 			curSSIDString = info.getSSID().replace("\"", "");
 			
-			
-			//wifibackupNetId = ;
-			//application.setWifibackupSSID(info.getSSID());
-			//wifibackupSSID = info.getSSID();
-			
-			
-			
 		}
 		
-		//List<String> ssidlist = new ArrayList<String>();
-		//for (ScanResult ret : _scannlist) {
-		//	ssidlist.add(ret.SSID);
-		//}
 		operations.initResult(true,curSSIDString,_scannlist);
 		
 	}
+	/**
+	 * 还原之前备份的设备信息
+	 */
 	public void restoreCurrentWifiState() {
 		//operations.log("restoreCurrentWifiState");
 		if(application.getWifibackupNetId()!=-1)

@@ -12,7 +12,11 @@ import android.widget.TextView;
 import com.txmcu.iair.R;
 import com.txmcu.iair.activity.DeviceManageActivity;
 import com.txmcu.iair.common.iAirApplication;
-
+/**
+ * 设备信息适配器接口
+ * @author Administrator
+ *
+ */
 public class DeviceAdapter extends BaseAdapter
 {
 
